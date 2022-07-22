@@ -5,8 +5,19 @@
         <div class="tool-box">
           <div class="table-title">
             <div></div>
-            <div>总排行榜</div>
+            <div>省份排行榜</div>
             <div>共X种产品</div>
+          </div>
+          <div class="search-select">
+            <el-select v-model="value" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
           </div>
           <input
             type="text"
@@ -212,7 +223,151 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      options: [
+        {
+          value: "选项1",
+          label: "山东",
+        },
+        {
+          value: "选项2",
+          label: "福建",
+        },
+        {
+          value: "选项3",
+          label: "台湾",
+        },
+        {
+          value: "选项4",
+          label: "河北",
+        },
+        {
+          value: "选项5",
+          label: "河南",
+        },
+        {
+          value: "选项6",
+          label: "重庆",
+        },
+        {
+          value: "选项7",
+          label: "湖南",
+        },
+        {
+          value: "选项8",
+          label: "湖北",
+        },
+        {
+          value: "选项9",
+          label: "江西",
+        },
+        {
+          value: "选项10",
+          label: "海南",
+        },
+        {
+          value: "选项11",
+          label: "黑龙江",
+        },
+        {
+          value: "选项12",
+          label: "天津",
+        },
+        {
+          value: "选项13",
+          label: "陕西",
+        },
+        {
+          value: "选项14",
+          label: "贵州",
+        },
+        {
+          value: "选项15",
+          label: "新疆",
+        },
+        {
+          value: "选项16",
+          label: "澳门",
+        },
+        {
+          value: "选项17",
+          label: "江苏",
+        },
+        {
+          value: "选项18",
+          label: "安徽",
+        },
+        {
+          value: "选项19",
+          label: "西藏",
+        },
+        {
+          value: "选项20",
+          label: "吉林",
+        },
+        {
+          value: "选项21",
+          label: "上海",
+        },
+        {
+          value: "选项22",
+          label: "山西",
+        },
+        {
+          value: "选项23",
+          label: "宁夏",
+        },
+        {
+          value: "选项24",
+          label: "甘肃",
+        },
+        {
+          value: "选项25",
+          label: "香港",
+        },
+        {
+          value: "选项26",
+          label: "四川",
+        },
+        {
+          value: "选项27",
+          label: "浙江",
+        },
+        {
+          value: "选项28",
+          label: "广西",
+        },
+        {
+          value: "选项29",
+          label: "云南",
+        },
+        {
+          value: "选项30",
+          label: "内蒙古",
+        },
+        {
+          value: "选项31",
+          label: "辽宁",
+        },
+        {
+          value: "选项32",
+          label: "广东",
+        },
+        {
+          value: "选项33",
+          label: "青海",
+        },
+        {
+          value: "选项34",
+          label: "北京",
+        },
+      ],
+      value: "",
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -275,11 +430,13 @@ export default {};
   line-height: 20px;
   color: #aeaeae;
 }
-
+.el-select {
+  padding-right: 10px;
+}
 .search-input {
   width: 259px;
   border-radius: 4px;
-  height: 32px;
+  height: 40px;
   border: 1px solid #d7d7d7;
   padding-left: 10px;
   padding-right: 25px;
@@ -287,7 +444,7 @@ export default {};
   color: #312f31;
   background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_search.09b85c9.svg);
   background-repeat: no-repeat;
-  background-position: right 5px top 8px;
+  background-position: right 5px top 12px;
 }
 .search-input:focus {
   outline: none;
@@ -560,6 +717,20 @@ tbody {
     font-size: 14px;
     font-family: PingFangSC-Regular;
     display: none;
+  }
+  .el-select {
+    width: 100px;
+  }
+  .search-input {
+    width: 100px;
+  }
+  .tool-box .table-title div:nth-child(3) {
+    display: none;
+    margin-left: 10px;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    line-height: 20px;
+    color: #aeaeae;
   }
 }
 </style>

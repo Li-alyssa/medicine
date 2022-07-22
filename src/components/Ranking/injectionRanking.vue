@@ -1,22 +1,34 @@
 <template>
   <div class="ranking">
-    <div class="ranking-up"></div>
-    <div class="ranking-down"></div>
+    <div class="ranking-up">
+      <index />
+    </div>
+    <div class="ranking-down">
+      <ranking />
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import index from "@/components/Ranking/InjectionRank/index";
+import ranking from "@/components/Ranking/InjectionRank/ranking.vue";
+
+export default {
+  name: "injectionRanking",
+  components: {
+    index,
+    ranking,
+  },
+};
 </script>
 
-<style>
+<style scoped>
 .ranking-up {
   margin-top: 60px;
   position: relative;
   min-height: 245px;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  background-color: red;
 }
 
 .ranking-down {
@@ -25,6 +37,23 @@ export default {};
   margin-bottom: 20px;
   margin-right: auto;
   margin-left: auto;
-  background-color: skyblue;
+}
+@media screen and (min-width: 895px) and (max-width: 1210px) {
+  .ranking-down {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media screen and (max-width: 894px) {
+  .ranking-down {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 </style>

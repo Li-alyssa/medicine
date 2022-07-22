@@ -8,7 +8,7 @@
             ><div class="breadcrumb-item">排行榜</div></router-link
           >
           <div class="breadcrumb-icon"></div>
-          <div class="breadcrumb-item">总排行榜</div>
+          <div class="breadcrumb-item">论文排行榜</div>
           <!-- <div class="breadcrumb-icon"></div> -->
         </div>
       </div>
@@ -17,7 +17,7 @@
           <div class="content-title">
             <h1>
               <span v-model="value">{{ value }}</span>
-              年总排行榜
+              年论文排行榜
             </h1>
             <el-select v-model="value" placeholder="请选择">
               <el-option

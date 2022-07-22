@@ -5,7 +5,7 @@
         <div class="tool-box">
           <div class="table-title">
             <div></div>
-            <div>总排行榜</div>
+            <div>(非)注射排行榜</div>
             <div>共X种产品</div>
           </div>
           <input

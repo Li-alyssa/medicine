@@ -46,6 +46,11 @@
                       >
                       <router-link to="/PatentRank"
                         ><el-dropdown-item
+                          >专利排行榜</el-dropdown-item
+                        ></router-link
+                      >
+                      <router-link to="/EthnicRank"
+                        ><el-dropdown-item
                           >民族药排行榜</el-dropdown-item
                         ></router-link
                       >

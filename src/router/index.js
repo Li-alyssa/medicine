@@ -49,7 +49,12 @@ const routes = [
                 path: '/PatentRank',
                 name: 'PatentRank',
                 component: () => import('../components/Ranking/patentRanking.vue')
+            }, {
+                path: '/EthnicRank',
+                name: 'EthnicRank',
+                component: () => import('../components/Ranking/ethnicRanking.vue')
             },
+
             {
                 path: '/InjectionRank',
                 name: 'InjectionRank',

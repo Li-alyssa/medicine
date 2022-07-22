@@ -5,8 +5,19 @@
         <div class="tool-box">
           <div class="table-title">
             <div></div>
-            <div>总排行榜</div>
+            <div>功能排行榜</div>
             <div>共X种产品</div>
+          </div>
+          <div class="search-select">
+            <el-select v-model="value" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
           </div>
           <input
             type="text"
@@ -212,7 +223,71 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      options: [
+        {
+          value: "选项1",
+          label: "心脑血管疾病用药(注射剂)",
+        },
+        {
+          value: "选项2",
+          label: "心脑血管疾病用药(口服药)",
+        },
+        {
+          value: "选项3",
+          label: "代谢类疾病",
+        },
+        {
+          value: "选项4",
+          label: "呼吸系统疾病用药",
+        },
+        {
+          value: "选项5",
+          label: "骨骼肌肉系统用药",
+        },
+        {
+          value: "选项6",
+          label: "泌尿系统用药",
+        },
+        {
+          value: "选项7",
+          label: "消化系统用药",
+        },
+        {
+          value: "选项8",
+          label: "肿瘤用药",
+        },
+        {
+          value: "选项9",
+          label: "神经系统用药",
+        },
+        {
+          value: "选项10",
+          label: "妇科用药",
+        },
+        {
+          value: "选项11",
+          label: "肛肠皮肤用药",
+        },
+        {
+          value: "选项12",
+          label: "五官科用药",
+        },
+        {
+          value: "选项13",
+          label: "儿科用药",
+        },
+        {
+          value: "选项14",
+          label: "补益类",
+        },
+      ],
+      value: "",
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -275,11 +350,13 @@ export default {};
   line-height: 20px;
   color: #aeaeae;
 }
-
+.el-select {
+  padding-right: 10px;
+}
 .search-input {
   width: 259px;
   border-radius: 4px;
-  height: 32px;
+  height: 40px;
   border: 1px solid #d7d7d7;
   padding-left: 10px;
   padding-right: 25px;
@@ -287,7 +364,7 @@ export default {};
   color: #312f31;
   background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_search.09b85c9.svg);
   background-repeat: no-repeat;
-  background-position: right 5px top 8px;
+  background-position: right 5px top 12px;
 }
 .search-input:focus {
   outline: none;
@@ -560,6 +637,20 @@ tbody {
     font-size: 14px;
     font-family: PingFangSC-Regular;
     display: none;
+  }
+  .el-select {
+    width: 100px;
+  }
+  .search-input {
+    width: 100px;
+  }
+  .tool-box .table-title div:nth-child(3) {
+    display: none;
+    margin-left: 10px;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    line-height: 20px;
+    color: #aeaeae;
   }
 }
 </style>
