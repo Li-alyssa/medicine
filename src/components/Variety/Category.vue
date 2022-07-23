@@ -2,7 +2,7 @@
   <div class="medicine_container">
     <div class="medi_container">
       <div class="medi_title">共查询到XXX种药品</div>
-      <router-link to="/">
+      <router-link to="/variety/:id">
         <div class="medi_main">
           <div class="main_container">
             <div class="logo_container">

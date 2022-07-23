@@ -4,7 +4,7 @@
     <div class="container">
       <div id="breadcrumb">
         <div class="breadcrumb">
-          <router-link to="/"
+          <router-link to="/Rank"
             ><div class="breadcrumb-item">排行榜</div></router-link
           >
           <div class="breadcrumb-icon"></div>

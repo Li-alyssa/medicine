@@ -26,6 +26,16 @@ const routes = [
                 component: () => import('../components/variety.vue')
             },
             {
+                path: '/variety/:id',
+                name: 'product',
+                component: () => import('../components/product.vue')
+            },
+            {
+                path: '/Rank',
+                name: 'Rank',
+                component: () => import('../components/Rank.vue')
+            },
+            {
                 path: '/TotalRank',
                 name: 'TotalRank',
                 component: () => import('../components/Ranking/totalRanking.vue')
