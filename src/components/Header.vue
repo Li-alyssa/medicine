@@ -19,10 +19,13 @@
               <li>
                 <!-- <a href="/">排行榜</a> -->
                 <el-col>
-                  <el-dropdown trigger="click">
-                    <span class="el-dropdown-link">
-                      排行榜<i class="el-icon-arrow-down el-icon--right"></i>
-                    </span>
+                  <el-dropdown>
+                    <router-link to="/Rank"
+                      ><span class="el-dropdown-link">
+                        排行榜<i
+                          class="el-icon-arrow-down el-icon--right"
+                        ></i> </span
+                    ></router-link>
                     <el-dropdown-menu slot="dropdown">
                       <router-link to="/TotalRank"
                         ><el-dropdown-item

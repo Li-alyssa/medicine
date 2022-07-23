@@ -51,13 +51,24 @@
           </div>
         </div>
       </div>
-      <div class="right-container"></div>
+      <div class="right-container">
+        <rank />
+        <chart />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import rank from "@/components/Products/rightContainer/rank.vue";
+import chart from "@/components/Products/rightContainer/chart.vue";
+
+export default {
+  components: {
+    rank,
+    chart,
+  },
+};
 </script>
 
 <style scoped>
@@ -189,5 +200,11 @@ export default {};
   font-family: pingfang-SC;
   font-size: 14px;
   color: #312f31;
+}
+
+.right-container {
+  float: right;
+  width: 780px;
+  position: relative;
 }
 </style>

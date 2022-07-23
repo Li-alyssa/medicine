@@ -7,6 +7,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 //引入VueRouter
 import router from './router'
 
+//引入 Echarts
+import * as echarts from "echarts"
+Vue.prototype.$echarts = echarts
+
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
