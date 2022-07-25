@@ -81,10 +81,13 @@ export default {};
 }
 
 .left {
-  width: 4px;
-  height: 16px;
-  background-color: #e5002d;
-  border-radius: 0 2px 2px 0;
+  position: absolute;
+  top: 0;
+  left: 14px;
+  width: 36px;
+  height: 4px;
+  background-color: #409eff;
+  border-radius: 0 0 2px 2px;
 }
 
 .title span {
@@ -116,8 +119,8 @@ export default {};
   padding-bottom: 15px;
   background-image: linear-gradient(
     1turn,
-    rgba(214, 11, 10, 0.03),
-    rgba(214, 11, 10, 0.08)
+    rgba(10, 149, 214, 0.03),
+    rgba(61, 10, 214, 0.08)
   );
   border-radius: 4px;
 }
@@ -207,7 +210,7 @@ export default {};
   white-space: nowrap;
 }
 .round {
-  border: 1px solid #d60b0a;
+  border: 1px solid #409eff;
   background-color: #fff;
   width: 6px;
   height: 6px;
@@ -216,7 +219,7 @@ export default {};
   margin: 30px 0 5px;
 }
 .round-last {
-  border: 1px solid #d60b0a;
+  border: 1px solid #409eff;
   background-color: #fff;
   width: 6px;
   height: 6px;
@@ -231,7 +234,7 @@ export default {};
   top: 2px;
   height: 1px;
   width: 91px;
-  border-bottom: 2px dashed #d7d7d7;
+  border-bottom: 2px solid #d7d7d7;
 }
 .year {
   font-family: PingFang SC;

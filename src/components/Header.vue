@@ -8,11 +8,14 @@
         ><div class="grid-content">
           <div class="header_logo">
             <a href="/">
-              <img src="../assets/logo.png" />
+              <img src="http://plc.bbtcml.com/img/1639812519(1).8527a9d1.jpg" />
             </a>
           </div>
           <div class="header_nav">
             <ul>
+              <li>
+                <router-link to="/home">公司</router-link>
+              </li>
               <li>
                 <router-link to="/variety">品种</router-link>
               </li>
@@ -108,7 +111,7 @@ export default {
 }
 
 .header_logo img {
-  width: 35px;
+  width: 120px;
   height: 35px;
   margin-top: 12px;
 }

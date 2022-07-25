@@ -24,7 +24,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .main {
   margin-bottom: 20px;
   position: relative;
@@ -43,16 +43,20 @@ export default {
 }
 
 .left {
-  width: 4px;
-  height: 16px;
-  background-color: #e5002d;
-  border-radius: 0 2px 2px 0;
+  position: absolute;
+  top: 0;
+  left: 14px;
+  width: 36px;
+  height: 4px;
+  background-color: #409eff;
+  border-radius: 0 0 2px 2px;
 }
 
 .title span {
   margin-left: 12px;
   font-family: PingFangSC-Semibold;
   font-size: 16px;
+  /* border-bottom: 2px solid #409eff; */
   color: #312f31;
 }
 
