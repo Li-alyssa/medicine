@@ -28,27 +28,27 @@
           <div class="line-hist">
             <div class="item-rank">
               <div class="rank">1</div>
-              <div class="round"></div>
+              <div class="round el-icon-medal"></div>
               <div class="year">2018</div>
             </div>
             <div class="item-rank">
               <div class="rank">1</div>
-              <div class="round"></div>
+              <div class="round el-icon-medal"></div>
               <div class="year">2019</div>
             </div>
             <div class="item-rank">
               <div class="rank">1</div>
-              <div class="round"></div>
+              <div class="round el-icon-medal"></div>
               <div class="year">2020</div>
             </div>
             <div class="item-rank">
               <div class="rank">1</div>
-              <div class="round"></div>
+              <div class="round el-icon-medal"></div>
               <div class="year">2021</div>
             </div>
             <div class="item-rank">
               <div class="rank">1</div>
-              <div class="round-last"></div>
+              <div class="round-last el-icon-medal-1"></div>
               <div class="year">2022</div>
             </div>
           </div>
@@ -211,18 +211,19 @@ export default {};
 }
 .round {
   border: 1px solid #409eff;
-  background-color: #fff;
-  width: 6px;
-  height: 6px;
+  background-color: #409eff;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   position: relative;
   margin: 30px 0 5px;
+  color: #fff;
 }
 .round-last {
   border: 1px solid #409eff;
   background-color: #fff;
-  width: 6px;
-  height: 6px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   position: relative;
   margin: 30px 0 5px;
@@ -230,10 +231,10 @@ export default {};
 .round:after {
   position: absolute;
   content: "";
-  left: 9px;
+  left: 35px;
   top: 2px;
   height: 1px;
-  width: 91px;
+  width: 50px;
   border-bottom: 2px solid #d7d7d7;
 }
 .year {

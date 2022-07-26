@@ -76,7 +76,7 @@
       </div>
       <div class="right-container">
         <rank />
-        <chart />
+        <!-- <chart /> -->
         <remark />
       </div>
     </div>
@@ -85,13 +85,13 @@
 
 <script>
 import rank from "@/components/Products/rightContainer/rank.vue";
-import chart from "@/components/Products/rightContainer/chart.vue";
+// import chart from "@/components/Products/rightContainer/chart.vue";
 import remark from "@/components/Products/rightContainer/remark.vue";
 
 export default {
   components: {
     rank,
-    chart,
+    // chart,
     remark,
   },
 };

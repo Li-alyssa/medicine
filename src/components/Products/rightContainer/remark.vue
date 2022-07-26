@@ -9,37 +9,67 @@
         <div class="score-item">
           <span>起效速度</span>
           <div class="progress">
-            <el-progress :percentage="74" :format="format"></el-progress>
+            <el-progress
+              :text-inside="true"
+              :stroke-width="18"
+              :percentage="74"
+              :format="format"
+            ></el-progress>
           </div>
         </div>
         <div class="score-item">
           <span>起效速度</span>
           <div class="progress">
-            <el-progress :percentage="74" :format="format"></el-progress>
+            <el-progress
+              :text-inside="true"
+              :stroke-width="18"
+              :percentage="74"
+              :format="format"
+            ></el-progress>
           </div>
         </div>
         <div class="score-item">
           <span>起效速度</span>
           <div class="progress">
-            <el-progress :percentage="74" :format="format"></el-progress>
+            <el-progress
+              :text-inside="true"
+              :stroke-width="18"
+              :percentage="74"
+              :format="format"
+            ></el-progress>
           </div>
         </div>
         <div class="score-item">
           <span>起效速度</span>
           <div class="progress">
-            <el-progress :percentage="74" :format="format"></el-progress>
+            <el-progress
+              :text-inside="true"
+              :stroke-width="18"
+              :percentage="74"
+              :format="format"
+            ></el-progress>
           </div>
         </div>
         <div class="score-item">
           <span>起效速度</span>
           <div class="progress">
-            <el-progress :percentage="74" :format="format"></el-progress>
+            <el-progress
+              :text-inside="true"
+              :stroke-width="18"
+              :percentage="74"
+              :format="format"
+            ></el-progress>
           </div>
         </div>
         <div class="score-item">
           <span>起效速度</span>
           <div class="progress">
-            <el-progress :percentage="74" :format="format"></el-progress>
+            <el-progress
+              :text-inside="true"
+              :stroke-width="18"
+              :percentage="74"
+              :format="format"
+            ></el-progress>
           </div>
         </div>
       </div>
@@ -59,6 +89,66 @@
             <span>查看所有评论&nbsp;></span>
           </div>
           <div class="line"></div>
+        </div>
+        <div class="cmt-container">
+          <div class="head">
+            <el-avatar class="user-logo">user</el-avatar>
+            <div class="user-name">评论昵称</div>
+            <div class="user-type">医生</div>
+            <div class="rec-tip">推荐了此款</div>
+          </div>
+          <div class="content">
+            <div class="content-score-box">
+              <span>起效速度:5</span>
+              <span>起效速度:5</span>
+              <span>起效速度:5</span>
+              <span>起效速度:5</span>
+              <span>起效速度:5</span>
+            </div>
+            <div class="content-label-box"></div>
+            <div class="content-text-box">
+              <div class="text-expansion">除了分太高啥都特好</div>
+            </div>
+            <div class="content-vote-box">
+              <div class="vote">
+                <el-button icon="el-icon-caret-top" class="agree-btn">
+                  <span>赞成</span>
+                  <span>23</span></el-button
+                >
+              </div>
+              <div class="date">2021-07-25</div>
+            </div>
+          </div>
+        </div>
+        <div class="cmt-container">
+          <div class="head">
+            <el-avatar class="user-logo">user</el-avatar>
+            <div class="user-name">评论昵称</div>
+            <div class="user-type">医生</div>
+            <div class="rec-tip">推荐了此款</div>
+          </div>
+          <div class="content">
+            <div class="content-score-box">
+              <span>起效速度:5</span>
+              <span>起效速度:5</span>
+              <span>起效速度:5</span>
+              <span>起效速度:5</span>
+              <span>起效速度:5</span>
+            </div>
+            <div class="content-label-box"></div>
+            <div class="content-text-box">
+              <div class="text-expansion">除了分太高啥都特好</div>
+            </div>
+            <div class="content-vote-box">
+              <div class="vote">
+                <el-button icon="el-icon-caret-top" class="agree-btn">
+                  <span>赞成</span>
+                  <span>23</span></el-button
+                >
+              </div>
+              <div class="date">2021-07-25</div>
+            </div>
+          </div>
         </div>
         <div class="cmt-container">
           <div class="head">
