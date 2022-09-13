@@ -7,6 +7,13 @@ import 'element-ui/lib/theme-chalk/index.css';
 //引入VueRouter
 import router from './router'
 
+// 引入axios
+import axios from 'axios';
+// 挂载到vue原型链上
+Vue.prototype.axios = axios;
+
+
+
 //引入 Echarts
 import * as echarts from "echarts"
 Vue.prototype.$echarts = echarts

@@ -2,8 +2,9 @@
   <div id="home">
     <el-container>
       <Header />
+
       <el-main>
-        <router-view></router-view>
+        <router-view> </router-view>
       </el-main>
       <Footer />
     </el-container>
@@ -14,11 +15,30 @@
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 
+import axios from "axios";
 export default {
   name: "Home",
+  data() {
+    return {
+      id: "",
+    };
+  },
   components: {
     Header,
     Footer,
+  },
+  mounted() {
+    axios
+      .get("/user/userinfo")
+      .then((res) => {
+        console.log(res);
+        // console.log(res.data.id);
+        this.id = res.data.id;
+        console.log(this.id);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
 };
 </script>
