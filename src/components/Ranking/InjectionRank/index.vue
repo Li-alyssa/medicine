@@ -16,7 +16,7 @@
         <div id="content">
           <div class="content-title">
             <h1>
-              <span v-model="value">{{ value }}</span>
+              <span>{{ value }}</span>
               年(非)注射排行榜
             </h1>
             <el-select v-model="value" placeholder="请选择">
@@ -99,7 +99,7 @@ export default {
 
 <style scoped>
 .top-bar {
-  background-image: url(E:\medicine_project\src\assets\1.jpg);
+  background-image: url(@/assets/1.jpg);
   position: relative;
   min-height: 245px;
   background-repeat: no-repeat;

@@ -2,7 +2,6 @@
   <div id="home">
     <el-container>
       <Header />
-
       <el-main>
         <router-view> </router-view>
       </el-main>
@@ -15,7 +14,6 @@
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 
-import axios from "axios";
 export default {
   name: "Home",
   data() {
@@ -27,19 +25,7 @@ export default {
     Header,
     Footer,
   },
-  mounted() {
-    axios
-      .get("/user/userinfo")
-      .then((res) => {
-        console.log(res);
-        // console.log(res.data.id);
-        this.id = res.data.id;
-        console.log(this.id);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  },
+  mounted() {},
 };
 </script>
 
@@ -47,7 +33,7 @@ export default {
 .el-main {
   background-color: #f4f3f4;
   width: 100%;
-  height: 2000px;
+  height: 100%;
   margin: 0;
   padding: 0;
   /* overflow: hidden; */
@@ -55,7 +41,7 @@ export default {
 
 .el-container {
   width: 100%;
-  min-height: 100%;
+  min-height: calc(100vh);
   display: flex;
   flex-direction: column;
   justify-content: space-between;

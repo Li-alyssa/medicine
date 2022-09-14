@@ -21,19 +21,36 @@ const routes = [
                 // component: () => import('../views/Index.vue')
             },
             {
-                path: '/variety',
-                name: 'variety',
-                component: () => import('../components/variety.vue')
+                path: '/companies',
+                name: 'companies',
+                component: () => import('../components/company.vue')
+            },
+            // {
+            //     path: '/variety',
+            //     name: 'variety',
+            //     component: () => import('../components/variety.vue')
+            // },
+            // {
+            //     path: '/variety/:id',
+            //     name: 'product',
+            //     component: () => import('../components/product.vue')
+            // },
+
+            {
+                path: '/goods',
+                name: 'goods',
+                component: () => import('../components/goods.vue')
             },
             {
-                path: '/variety/:id',
+                path: '/product/:id',
                 name: 'product',
-                component: () => import('../components/product.vue')
+                component: () => import('../components/product.vue'),
+
             },
             {
                 path: '/Rank',
                 name: 'Rank',
-                component: () => import('../components/Rank.vue')
+                component: () => import('../components/Rank.vue'),
             },
             {
                 path: '/TotalRank',

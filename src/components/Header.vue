@@ -14,13 +14,18 @@
           <div class="header_nav">
             <ul>
               <li>
-                <router-link to="/home">公司</router-link>
+                <router-link to="/home">首页</router-link>
               </li>
-              <li>
+              <!-- <li>
                 <router-link to="/variety">品种</router-link>
+              </li> -->
+              <li>
+                <router-link to="/companies">企业</router-link>
               </li>
               <li>
-                <!-- <a href="/">排行榜</a> -->
+                <router-link to="/goods">产品</router-link>
+              </li>
+              <li>
                 <el-col>
                   <el-dropdown>
                     <router-link to="/Rank"
@@ -69,6 +74,7 @@
                   </el-dropdown>
                 </el-col>
               </li>
+
               <!-- <li>
                 <a href="/">登录/注册</a>
               </li> -->

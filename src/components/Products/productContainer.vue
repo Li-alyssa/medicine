@@ -6,7 +6,9 @@
           <div class="medi-container">
             <div class="medi-msg">
               <div class="medi-info">
-                <el-image :src="src"></el-image>
+                <el-image
+                  src="https://www.shanghairanking.cn/_nuxt/img/top_shadow.e02e29f.png"
+                ></el-image>
                 <div class="medi-name">
                   <span>安康欣胶囊</span>
                   <span>安徽华润金蟾药业股份有限公司</span>
@@ -76,8 +78,76 @@
       </div>
       <div class="right-container">
         <rank />
+        <div class="reason">
+          <div class="title">
+            <div class="left"></div>
+            <span>选择理由</span>
+          </div>
+          <div class="reason-main">
+            <div class="reason-main-tag">111</div>
+            <div class="reason-main-tag">111</div>
+            <div class="reason-main-tag">111</div>
+            <div class="reason-main-tag">111</div>
+            <div class="reason-main-tag">111</div>
+            <div class="reason-main-tag">111</div>
+            <div class="reason-main-tag">111</div>
+          </div>
+        </div>
+        <div class="tabs">
+          <el-tabs v-model="activeName">
+            <el-tab-pane label="说明书文件" name="first"
+              >这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊</el-tab-pane
+            >
+            <el-tab-pane label="医保准入" name="second">
+              <img src="../.././assets/1.jpg" alt="" style="width: 100%" />
+            </el-tab-pane>
+            <el-tab-pane label="海外销售" name="third"
+              ><img src="../.././assets/1.jpg" alt="" style="width: 100%"
+            /></el-tab-pane>
+            <el-tab-pane label="药品价格" name="fourth"
+              ><img src="../.././assets/1.jpg" alt="" style="width: 100%" />
+            </el-tab-pane>
+            <el-tab-pane label="论文列表" name="fifth">
+              <el-table :data="tableData" stripe style="width: 100%">
+                <el-table-column prop="title" label="论文名称" width="180">
+                </el-table-column>
+                <el-table-column prop="name" label="作者" width="180">
+                </el-table-column>
+                <el-table-column prop="date" label="发表日期">
+                </el-table-column>
+                <el-table-column prop="introduction" label="简介">
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="专利列表" name="sixth">
+              <el-table :data="tableData" stripe style="width: 100%">
+                <el-table-column prop="title" label="专利名称" width="180">
+                </el-table-column>
+                <el-table-column prop="name" label="作者" width="180">
+                </el-table-column>
+                <el-table-column prop="date" label="发表日期" width="width">
+                </el-table-column>
+                <el-table-column prop="introduction" label="简介" width="width">
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+        <div class="photos">
+          <div class="title">
+            <div class="left"></div>
+            <span>产品获奖/新闻报道</span>
+          </div>
+          <div class="photos-main">
+            <el-carousel :interval="4000" type="card" height="200px">
+              <el-carousel-item v-for="item in 6" :key="item">
+                <h3 class="medium">{{ item }}</h3>
+              </el-carousel-item>
+            </el-carousel>
+          </div>
+        </div>
         <!-- <chart /> -->
-        <remark />
+        <!-- <remark /> -->
       </div>
     </div>
   </div>
@@ -86,14 +156,21 @@
 <script>
 import rank from "@/components/Products/rightContainer/rank.vue";
 // import chart from "@/components/Products/rightContainer/chart.vue";
-import remark from "@/components/Products/rightContainer/remark.vue";
+// import remark from "@/components/Products/rightContainer/remark.vue";
 
 export default {
+  data() {
+    return {
+      activeName: "second",
+      tableData: [],
+    };
+  },
   components: {
     rank,
     // chart,
-    remark,
+    // remark,
   },
+  methods: {},
 };
 </script>
 
@@ -367,5 +444,112 @@ export default {
   float: right;
   width: 780px;
   position: relative;
+}
+.reason {
+  margin-bottom: 20px;
+  position: relative;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 0 16px 16px;
+}
+.reason-main {
+  width: 100%;
+  /* background-color: red; */
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.reason-main-tag {
+  width: 24%;
+  margin-right: 1.1%;
+  height: 200px;
+  display: inline-block;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+}
+.tabs {
+  margin-bottom: 20px;
+  position: relative;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 0 16px 16px;
+}
+.photos {
+  margin-bottom: 20px;
+  position: relative;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 0 16px 16px;
+}
+
+.title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 45px;
+  margin-left: -16px;
+  pointer-events: none;
+}
+
+.left {
+  position: absolute;
+  top: 0;
+  left: 14px;
+  width: 36px;
+  height: 4px;
+  background-color: #409eff;
+  border-radius: 0 0 2px 2px;
+}
+
+.title span {
+  margin-left: 12px;
+  font-family: PingFangSC-Semibold;
+  font-size: 16px;
+  color: #312f31;
+}
+
+.photos-main {
+  /* display: flex; */
+  /* align-items: center; */
+  /* position: relative; */
+  width: 100%;
+}
+.el-carousel__item {
+  border-radius: 8px;
+}
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
+
+/* // 滚动条宽度 */
+div::-webkit-scrollbar {
+  height: 8px;
+}
+/* // 滚动条轨道 */
+div::-webkit-scrollbar-track {
+  background: #fff;
+  border-radius: 10px;
+}
+/* // 小滑块 */
+div::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.scroll-left {
+  margin-right: 10px;
 }
 </style>
