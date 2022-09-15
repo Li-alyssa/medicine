@@ -1,19 +1,8 @@
 <template>
-  <div id="home">
-    <el-container>
-      <Header />
-      <el-main>
-        <router-view> </router-view>
-      </el-main>
-      <Footer />
-    </el-container>
-  </div>
+  <div id="home">首页</div>
 </template>
 
 <script>
-import Header from "./components/Header.vue";
-import Footer from "./components/Footer.vue";
-
 export default {
   name: "Home",
   data() {
@@ -21,15 +10,21 @@ export default {
       id: "",
     };
   },
-  components: {
-    Header,
-    Footer,
-  },
+
   mounted() {},
 };
 </script>
 
 <style>
+#home {
+  padding-top: 60px;
+  overflow: hidden;
+  display: flex;
+  height: calc(100vh - 124px);
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
 .el-main {
   background-color: #f4f3f4;
   width: 100%;

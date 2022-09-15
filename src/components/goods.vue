@@ -7,17 +7,17 @@
         <el-button type="danger">搜索</el-button>
       </div>
       <div class="select">
-        <el-select placeholder="处方药/OTC">
-          <el-option> </el-option>
+        <el-select placeholder="处方药/OTC" v-model="value">
+          <el-option :value="goods.id"> </el-option>
         </el-select>
-        <el-select placeholder="给药途径">
-          <el-option> </el-option>
+        <el-select placeholder="给药途径" v-model="value">
+          <el-option :value="goods.id"> </el-option>
         </el-select>
-        <el-select placeholder="市场准入">
-          <el-option> </el-option>
+        <el-select placeholder="市场准入" v-model="value">
+          <el-option :value="goods.id"> </el-option>
         </el-select>
-        <el-select placeholder="治疗领域">
-          <el-option> </el-option>
+        <el-select placeholder="治疗领域" v-model="value">
+          <el-option :value="goods.id"> </el-option>
         </el-select>
       </div>
     </div>
@@ -67,6 +67,7 @@ export default {
   data() {
     return {
       input: "",
+      value: "",
       goods: [
         {
           id: 1,
