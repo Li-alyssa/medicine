@@ -25,5 +25,11 @@ Vue.use(ElementUI);
 
 new Vue({
   router,
+  //全局事件总线$bus配置
+  beforeCreate() {
+    Vue.prototype.$bus = this;
+    //全局使用$API
+    Vue.prototype.$API = API;
+  },
   render: h => h(App),
 }).$mount('#app')

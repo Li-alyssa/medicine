@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <el-container>
-      <Header />
+      <Header v-show="$route.meta.show" />
       <el-main>
         <router-view> </router-view>
       </el-main>
-      <Footer />
+      <Footer v-show="$route.meta.show" />
     </el-container>
   </div>
 </template>

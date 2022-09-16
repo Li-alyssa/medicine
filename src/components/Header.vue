@@ -75,9 +75,10 @@
                 </el-col>
               </li>
 
-              <!-- <li>
-                <a href="/">登录/注册</a>
-              </li> -->
+              <li class="loginAndRegister">
+                <span @click="$router.push('/login')">登录</span>
+                <span @click="$router.push('/register')">/注册</span>
+              </li>
             </ul>
           </div>
         </div></el-col
@@ -92,6 +93,10 @@
 <script>
 export default {
   name: "shange",
+  data() {
+    return {};
+  },
+  methods: {},
 };
 </script>
 
@@ -131,10 +136,19 @@ export default {
   float: left;
   position: relative;
 }
+
+.header_nav ul li a:focus {
+  color: red;
+  border-bottom: 4px solid red;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
 .header_nav ul li a {
   padding: 17px 0;
   margin-right: 68px;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .el-dropdown-link {
@@ -146,10 +160,14 @@ export default {
 .el-icon-arrow-down {
   font-size: 12px;
 }
-.demonstration {
+/* .demonstration {
   display: block;
   color: #8492a6;
   font-size: 14px;
   margin-bottom: 20px;
+} */
+
+.loginAndRegister {
+  cursor: pointer;
 }
 </style>

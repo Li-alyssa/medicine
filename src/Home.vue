@@ -1,8 +1,13 @@
 <template>
-  <div id="home">首页</div>
+  <div id="home">
+    <top />
+    <index />
+  </div>
 </template>
 
 <script>
+import top from "@/components/Rank/top.vue";
+import index from "@/components/Rank/index";
 export default {
   name: "Home",
   data() {
@@ -10,7 +15,10 @@ export default {
       id: "",
     };
   },
-
+  components: {
+    top,
+    index,
+  },
   mounted() {},
 };
 </script>
@@ -19,10 +27,7 @@ export default {
 #home {
   padding-top: 60px;
   overflow: hidden;
-  display: flex;
   height: calc(100vh - 124px);
-  justify-content: center;
-  align-items: center;
   background-color: #fff;
 }
 .el-main {
