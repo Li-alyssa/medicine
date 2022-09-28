@@ -193,37 +193,16 @@
         </div>
       </div>
     </div>
-    <div id="content-side">
-      <div class="rank-table-box">
-        <div class="title">
-          <div></div>
-          <span>排行榜侧边栏</span>
-        </div>
-        <div class="rank-table-line">
-          <router-link to="/" class="rank-table-item">
-            <span>总排行榜</span>
-            <img
-              src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
-              alt=""
-            />
-          </router-link>
-        </div>
-        <div class="rank-table-line">
-          <router-link to="/" class="rank-table-item">
-            <span>功能排行榜</span>
-            <img
-              src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
-              alt=""
-            />
-          </router-link>
-        </div>
-      </div>
-    </div>
+    <rankingSide />
   </div>
 </template>
 
 <script>
+import rankingSide from "../rankingSide.vue";
 export default {
+  components: {
+    rankingSide,
+  },
   data() {
     return {
       options: [
