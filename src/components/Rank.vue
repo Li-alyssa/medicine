@@ -88,7 +88,7 @@ export default {
 }
 
 .rank-item {
-  width: 57%;
+  width: 50%;
   background-color: #fff;
   margin: 20px auto 0;
   border-radius: 4px;
@@ -173,5 +173,39 @@ export default {
 }
 .rank-item-bcur-text a:hover {
   color: #409eff;
+}
+@media screen and (min-width: 768px) and (max-width: 1920px) {
+  .rank-item {
+    width: 60%;
+    /* height: 100%; */
+  }
+
+  .rank-item-right {
+    width: 32%;
+    margin-top: auto;
+    margin-bottom: auto;
+    /* background-color: yellow; */
+  }
+  .rank-item-right img {
+    object-fit: cover;
+    /* background-color: yellow; */
+  }
+}
+@media only screen and (max-width: 768px) {
+  .rank-item {
+    width: 80%;
+    /* height: 100%; */
+  }
+
+  .rank-item-right {
+    width: 32%;
+    margin-top: auto;
+    margin-bottom: auto;
+    /* background-color: yellow; */
+  }
+  .rank-item-right img {
+    object-fit: cover;
+    /* background-color: yellow; */
+  }
 }
 </style>  

@@ -23,9 +23,15 @@
       </div>
     </div>
     <div class="container">
-      <el-tabs type="border-card">
-        <el-tab-pane label="生产品种">
-          <el-table :data="tableData" stripe style="width: 100%" border>
+      <el-tabs type="border-card" v-model="activeName">
+        <el-tab-pane label="生产品种" name="first">
+          <el-table
+            :data="tableData"
+            stripe
+            style="width: 100%"
+            border
+            v-if="activeName === 'first'"
+          >
             <el-table-column prop="bianhao" label="编号" width="180">
             </el-table-column>
             <el-table-column
@@ -46,8 +52,14 @@
             </el-table-column>
           </el-table>
         </el-tab-pane>
-        <el-tab-pane label="科研论文">
-          <el-table :data="tableData" stripe style="width: 100%" border>
+        <el-tab-pane label="科研论文" name="second">
+          <el-table
+            :data="tableData"
+            stripe
+            style="width: 100%"
+            border
+            v-if="activeName === 'second'"
+          >
             <el-table-column prop="bianhao" label="编号" width="80">
             </el-table-column>
             <el-table-column prop="timu" label="题目" width="width">
@@ -61,8 +73,14 @@
             <el-table-column prop="操作" label="操作" width="110">
             </el-table-column> </el-table
         ></el-tab-pane>
-        <el-tab-pane label="发明专利">
-          <el-table :data="tableData" stripe style="width: 100%" border>
+        <el-tab-pane label="发明专利" name="third">
+          <el-table
+            :data="tableData"
+            stripe
+            style="width: 100%"
+            border
+            v-if="activeName === 'third'"
+          >
             <el-table-column prop="bianhao" label="编号" width="80">
             </el-table-column>
             <el-table-column prop="timu" label="专利名称" width="width">
@@ -77,8 +95,14 @@
             </el-table-column>
           </el-table>
         </el-tab-pane>
-        <el-tab-pane label="科技奖励">
-          <el-table :data="tableData" stripe style="width: 100%" border>
+        <el-tab-pane label="科技奖励" name="forth">
+          <el-table
+            :data="tableData"
+            stripe
+            style="width: 100%"
+            border
+            v-if="activeName === 'forth'"
+          >
             <el-table-column prop="bianhao" label="编号" width="80">
             </el-table-column>
             <el-table-column prop="timu" label="获奖项目" width="width">
@@ -102,6 +126,7 @@ export default {
   data() {
     return {
       tableData: [],
+      activeName: "first",
     };
   },
 };

@@ -94,17 +94,33 @@ export default {
   padding: 40px 0 0;
 }
 .el-select {
-  margin: 0 2%;
+  /* margin: 0 2%; */
+  margin: 0 30px;
 }
 @media screen and (max-width: 768px) {
   .search {
     display: flex;
-    /* justify-content: center; */
+    justify-content: center;
     flex-direction: row;
     align-items: center;
     padding-bottom: 40px;
     padding-right: 15%;
     padding-left: 15%;
+  }
+
+  .select {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    width: 100%;
+  }
+
+  .el-select {
+    /* margin: 0 2%; */
+    margin-top: 10px;
   }
 }
 
@@ -116,6 +132,15 @@ export default {
     padding-bottom: 40px;
     padding-right: 20%;
     padding-left: 20%;
+  }
+
+  .select {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    width: 100%;
   }
 }
 
@@ -135,9 +160,7 @@ export default {
     justify-content: center;
     align-items: center;
     padding-bottom: 20px;
-    padding-right: 30%;
-    padding-left: 30%;
-    /* background-color: red; */
+    width: 100%;
   }
 }
 

@@ -22,6 +22,8 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI);
 
+//统一接收api文件夹内的全部请求函数
+import * as API from '@/api';
 
 new Vue({
   router,

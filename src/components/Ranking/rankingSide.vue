@@ -23,6 +23,51 @@
           />
         </router-link>
       </div>
+      <div class="rank-table-line">
+        <router-link to="/" class="rank-table-item">
+          <span>省份排行榜</span>
+          <img
+            src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
+            alt=""
+          />
+        </router-link>
+      </div>
+      <div class="rank-table-line">
+        <router-link to="/" class="rank-table-item">
+          <span>论文排行榜</span>
+          <img
+            src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
+            alt=""
+          />
+        </router-link>
+      </div>
+      <div class="rank-table-line">
+        <router-link to="/" class="rank-table-item">
+          <span>专利排行榜</span>
+          <img
+            src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
+            alt=""
+          />
+        </router-link>
+      </div>
+      <div class="rank-table-line">
+        <router-link to="/" class="rank-table-item">
+          <span>民族药排行榜</span>
+          <img
+            src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
+            alt=""
+          />
+        </router-link>
+      </div>
+      <div class="rank-table-line">
+        <router-link to="/" class="rank-table-item">
+          <span>(非)注射排行榜</span>
+          <img
+            src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
+            alt=""
+          />
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
