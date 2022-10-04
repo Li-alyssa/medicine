@@ -96,7 +96,7 @@ export default {
   name: "shange",
   data() {
     return {
-      menu: false,
+      menu: true,
     };
   },
   methods: {

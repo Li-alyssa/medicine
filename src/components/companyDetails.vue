@@ -21,6 +21,26 @@
           </div>
         </div>
       </div>
+      <div class="introduction-container-mobile">
+        <div class="company-img">
+          <el-image
+            src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
+          >
+            <div slot="placeholder" class="image-slot">
+              加载中<span class="dot">...</span>
+            </div>
+          </el-image>
+        </div>
+        <div class="company-title">
+          <div class="company-title-name">公司名</div>
+          <div class="company-title-tag">标签</div>
+        </div>
+        <div class="company-introduce">
+          <div class="company-introduce-container">
+            公司简介:这家公司历史十分悠久！
+          </div>
+        </div>
+      </div>
     </div>
     <div class="container">
       <el-tabs type="border-card" v-model="activeName">
@@ -48,7 +68,12 @@
               align="center"
             >
             </el-table-column>
-            <el-table-column prop="caozuo" label="操作" width="180">
+            <el-table-column
+              prop="caozuo"
+              label="操作"
+              width="80"
+              fixed="right"
+            >
             </el-table-column>
           </el-table>
         </el-tab-pane>
@@ -132,17 +157,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #companyDetails {
   overflow: hidden;
   margin-top: 60px;
 }
 
-.introduction {
+#companyDetails .introduction {
   /* background-color: #fff; */
   padding: 10px;
 }
-.introduction-container {
+#companyDetails .introduction-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -153,60 +178,153 @@ export default {
   background-color: #fff;
   border-radius: 10px;
 }
-.company-img {
+#companyDetails .company-img {
   /* margin: 10px; */
   /* background-color: #111; */
   height: 100%;
-  width: 20%;
+  width: 20vmin;
   display: flex;
   justify-content: center;
   align-items: center;
   /* object-fit: cover; */
 }
-.el-image {
+#companyDetails .el-image {
   padding: 10px;
 }
-.company-title {
+#companyDetails .company-title {
   /* background-color: #ccc; */
   height: 100%;
+  margin-top: 10vmin;
   width: 15%;
-  display: flex;
+  /* display: flex; */
   /* justify-content: center; */
-  align-items: center;
-  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* flex-direction: column; */
 }
-.company-title-name {
-  margin-top: 20%;
+#companyDetails .company-title-name {
+  /* margin-top: 20%; */
   /* background-color: red; */
   color: #111;
   font-size: 24px;
   font-weight: bolder;
   font-family: "Party LET";
 }
-.company-title-tag {
+#companyDetails .company-title-tag {
   /* background-color: blue; */
   margin-top: 5px;
   color: #ccc;
 }
 
-.company-introduce {
+#companyDetails .company-introduce {
   /* background-color: #ddd; */
   /* border-left: 1px solid #ccc; */
   height: 100%;
   width: 65%;
 }
-.company-introduce-container {
+#companyDetails .company-introduce-container {
   margin-top: 30px;
   margin-left: 20px;
 }
-.container {
+#companyDetails .container {
   width: 1180px;
   margin-right: auto;
   margin-left: auto;
   background-color: #fff;
   border-radius: 10px;
 }
-.el-tabs {
+#companyDetails .el-tabs {
   width: 100%;
+}
+
+#companyDetails .introduction-container-mobile {
+  display: none;
+}
+@media only screen and (max-width: 768px) {
+  #companyDetails .introduction-container {
+    width: 100%;
+    display: none;
+  }
+  #companyDetails .introduction-container-mobile {
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    /* height: 200px; */
+    background-color: #fff;
+    border-radius: 10px;
+  }
+  #companyDetails .introduction-container-mobile .company-img {
+    /* margin: 10px; */
+    /* background-color: #111; */
+    height: 80%;
+    width: 80%;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    /* object-fit: cover; */
+  }
+  #companyDetails .el-image {
+    padding: 0;
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+  #companyDetails .introduction-container-mobile .company-title {
+    /* background-color: #ccc; */
+    height: 100%;
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: column;
+  }
+  #companyDetails .company-title-name {
+    /* margin-top: 20%; */
+    /* background-color: red; */
+    color: #111;
+    font-size: 24px;
+    font-weight: bolder;
+    font-family: "Party LET";
+  }
+  #companyDetails .company-title-tag {
+    /* background-color: blue; */
+    margin-top: 5px;
+    color: #ccc;
+  }
+
+  #companyDetails .introduction-container-mobile .company-introduce {
+    /* background-color: #ddd;   */
+    /* border-left: 1px solid #ccc; */
+    height: 100%;
+    width: 80%;
+  }
+  #companyDetails .introduction-container-mobile .company-introduce-container {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+  #companyDetails .container {
+    width: 98%;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1250px) {
+  #companyDetails .introduction-container {
+    width: 100%;
+  }
+
+  #companyDetails .container {
+    width: 98%;
+  }
+}
+#companyDetails .el-table__body-wrapper::-webkit-scrollbar {
+  /*width: 0;宽度为0隐藏*/
+  width: 0px;
 }
 </style>

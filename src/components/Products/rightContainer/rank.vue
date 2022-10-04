@@ -242,4 +242,13 @@ export default {};
   font-size: 15px;
   color: #605e60;
 }
+
+@media only screen and (max-width: 850px) {
+  .round:after {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 850px) and (max-width: 1250px) {
+}
 </style>

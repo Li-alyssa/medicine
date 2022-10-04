@@ -76,7 +76,70 @@
           </div>
         </div>
       </div>
+
       <div class="right-container">
+        <div class="top-container">
+          <div class="top-title">
+            <div class="medi-info">
+              <el-image
+                src="https://www.shanghairanking.cn/_nuxt/img/top_shadow.e02e29f.png"
+              ></el-image>
+              <div class="medi-name">
+                <span>安康欣胶囊</span>
+                <span>安徽华润金蟾药业股份有限公司</span>
+              </div>
+              <div class="number-container">
+                <div class="items">国药准字Z34020272</div>
+              </div>
+            </div>
+            <div class="recommed-container">
+              <div class="rec-left">
+                <div class="rec-num">98%</div>
+                <div class="rec-text">使用者推荐</div>
+                <div class="rec-participate">xxx人参与</div>
+              </div>
+              <div class="rec-right">
+                <div class="item-top">
+                  <div class="img-container">
+                    <img
+                      src="https://www.shanghairanking.cn/_nuxt/img/tuijian_hui.74ac9fa.svg"
+                      alt=""
+                    />
+                  </div>
+                  <span>推荐</span>
+                </div>
+                <div class="item-bottom">
+                  <div class="img-container">
+                    <img
+                      src="https://www.shanghairanking.cn/_nuxt/img/butuijian.17030ab.svg"
+                      alt=""
+                    />
+                  </div>
+                  <span>不推荐</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="top-introduce">
+            <div class="contant-msg">
+              <span
+                >【功能主治】解毒，消肿，止痛。用于中、晚期肿瘤，慢性乙型肝炎等症。</span
+              >
+              <span>【处方组成】干蟾皮提取物</span>
+              <span>【性状】本品为薄膜衣片</span>
+              <span>【规格】盒</span>
+              <span>【用法用量】一日2次</span>
+            </div>
+            <div class="medicine-title">
+              <div class="info-tab">
+                <span class="active">药品介绍</span>
+              </div>
+              <p>
+                这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字
+              </p>
+            </div>
+          </div>
+        </div>
         <rank />
         <div class="reason">
           <div class="title">
@@ -190,15 +253,16 @@ export default {
 }
 
 .left-container {
-  position: sticky;
-  top: 70px;
+  /* position: sticky; */
+  position: relative;
+  /* top: 70px; */
   float: left;
   background-color: #fff;
   width: 382px;
   padding: 32px 0;
   border-radius: 4px;
-  height: calc(100vh - 208px);
-  min-height: 456px;
+  /* height: calc(100vh - 208px); */
+  /* min-height: 456px; */
   margin-bottom: 20px;
 }
 
@@ -285,7 +349,7 @@ export default {
 }
 
 .scroll-container {
-  height: calc(100vh - 428px);
+  /* height: calc(100vh - 428px); */
   overflow-y: auto;
   margin-top: 22px;
 }
@@ -551,5 +615,71 @@ div::-webkit-scrollbar-thumb {
 
 .scroll-left {
   margin-right: 10px;
+}
+
+.top-container {
+  display: none;
+  margin-bottom: 20px;
+  position: relative;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 0 16px 16px;
+}
+
+.el-image {
+  display: inline-block;
+  width: 74px;
+  height: 74px;
+}
+
+.top-title .el-image {
+  margin-top: 20px;
+}
+@media only screen and (max-width: 850px) {
+  .left-container {
+    display: none;
+  }
+  .container {
+    width: 100%;
+  }
+  .right-container {
+    width: 80%;
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .top-container {
+    /* width: 80%; */
+    display: block;
+    margin-bottom: 20px;
+    position: relative;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 0 16px 16px;
+  }
+}
+
+@media screen and (min-width: 850px) and (max-width: 1250px) {
+  .left-container {
+    display: none;
+  }
+  .container {
+    width: 100%;
+  }
+  .right-container {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .top-container {
+    display: block;
+    margin-bottom: 20px;
+    position: relative;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 0 16px 16px;
+  }
 }
 </style>

@@ -43,4 +43,17 @@ export default {};
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
+
+@media only screen and (max-width: 850px) {
+  .breadcrumb-header {
+    /* width: 100vmin; */
+    display: none;
+  }
+}
+
+@media screen and (min-width: 850px) and (max-width: 1250px) {
+  .breadcrumb-header {
+    width: 80vmin;
+  }
+}
 </style>
