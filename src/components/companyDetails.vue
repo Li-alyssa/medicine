@@ -12,12 +12,14 @@
           </el-image>
         </div>
         <div class="company-title">
-          <div class="company-title-name">公司名</div>
-          <div class="company-title-tag">标签</div>
+          <div class="company-title-name">{{ CompanyInfo.name }}</div>
+          <div class="company-title-tag">
+            {{ CompanyInfo.tagJson.toString() }}
+          </div>
         </div>
         <div class="company-introduce">
           <div class="company-introduce-container">
-            公司简介:这家公司历史十分悠久！
+            公司简介:{{ CompanyInfo.details }}
           </div>
         </div>
       </div>
@@ -32,12 +34,14 @@
           </el-image>
         </div>
         <div class="company-title">
-          <div class="company-title-name">公司名</div>
-          <div class="company-title-tag">标签</div>
+          <div class="company-title-name">{{ CompanyInfo.name }}</div>
+          <div class="company-title-tag">
+            {{ CompanyInfo.tagJson.toString() }}
+          </div>
         </div>
         <div class="company-introduce">
           <div class="company-introduce-container">
-            公司简介:这家公司历史十分悠久！
+            公司简介:{{ CompanyInfo.details }}
           </div>
         </div>
       </div>
@@ -52,7 +56,12 @@
             border
             v-if="activeName === 'first'"
           >
-            <el-table-column prop="bianhao" label="编号" width="180">
+            <el-table-column
+              label="序号"
+              type="index"
+              width="80"
+              align="center"
+            >
             </el-table-column>
             <el-table-column
               prop="mingcheng"
@@ -79,68 +88,136 @@
         </el-tab-pane>
         <el-tab-pane label="科研论文" name="second">
           <el-table
-            :data="tableData"
+            :data="paperList"
             stripe
             style="width: 100%"
             border
             v-if="activeName === 'second'"
           >
-            <el-table-column prop="bianhao" label="编号" width="80">
+            <el-table-column
+              label="序号"
+              type="index"
+              width="80"
+              align="center"
+            >
             </el-table-column>
-            <el-table-column prop="timu" label="题目" width="width">
+            <el-table-column prop="title" label="论文名称" width="180">
             </el-table-column>
-            <el-table-column prop="year" label="发表年份" width="110">
+            <el-table-column prop="author" label="作者" width="180">
             </el-table-column>
-            <el-table-column prop="leixing" label="检错类型" width="110">
+            <el-table-column prop="journal" label="期刊名称" width="180">
             </el-table-column>
-            <el-table-column prop="yinzi" label="影响因子" width="110">
-            </el-table-column>
-            <el-table-column prop="操作" label="操作" width="110">
-            </el-table-column> </el-table
-        ></el-tab-pane>
+            <el-table-column prop="year" label="发表年份"> </el-table-column>
+            <el-table-column prop="type" label="期刊类型"> </el-table-column>
+          </el-table>
+        </el-tab-pane>
         <el-tab-pane label="发明专利" name="third">
           <el-table
-            :data="tableData"
+            :data="patentList"
             stripe
             style="width: 100%"
             border
             v-if="activeName === 'third'"
           >
-            <el-table-column prop="bianhao" label="编号" width="80">
+            <el-table-column
+              label="序号"
+              type="index"
+              width="80"
+              align="center"
+            >
             </el-table-column>
-            <el-table-column prop="timu" label="专利名称" width="width">
+            <el-table-column prop="name" label="专利名称" width="180">
             </el-table-column>
-            <el-table-column prop="year" label="公开年" width="110">
+            <el-table-column prop="type" label="专利类型" width="180">
             </el-table-column>
-            <el-table-column prop="leixing" label="专利类型" width="110">
+            <el-table-column prop="status" label="法律状态" width="width">
             </el-table-column>
-            <el-table-column prop="yinzi" label="法律状态" width="110">
+            <el-table-column
+              prop="authorizationYear"
+              label="申请年份"
+              width="width"
+            >
             </el-table-column>
-            <el-table-column prop="caozuo" label="操作" width="110">
+            <el-table-column
+              prop="applicationNum"
+              label="公开年份"
+              width="width"
+            >
             </el-table-column>
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="科技奖励" name="forth">
           <el-table
-            :data="tableData"
+            :data="awardList"
             stripe
             style="width: 100%"
             border
             v-if="activeName === 'forth'"
           >
-            <el-table-column prop="bianhao" label="编号" width="80">
+            <el-table-column
+              label="序号"
+              type="index"
+              width="80"
+              align="center"
+            >
             </el-table-column>
-            <el-table-column prop="timu" label="获奖项目" width="width">
+            <el-table-column prop="name" label="获奖项目" width="180">
             </el-table-column>
-            <el-table-column prop="year" label="奖励类型" width="width">
+            <el-table-column prop="issued" label="颁奖单位" width="180">
             </el-table-column>
-            <el-table-column prop="leixing" label="奖励等级" width="width">
+            <el-table-column prop="level" label="奖励等级" width="width">
             </el-table-column>
-            <el-table-column prop="yinzi" label="获奖时间" width="width">
-            </el-table-column> </el-table
+            <el-table-column prop="type" label="奖励类型" width="width">
+            </el-table-column>
+            <el-table-column prop="year" label="获奖年份" width="width">
+            </el-table-column></el-table
         ></el-tab-pane>
-        <el-tab-pane label="科技项目">科技项目</el-tab-pane>
-        <el-tab-pane label="指南共识">指南共识</el-tab-pane>
+        <el-tab-pane label="科技项目" name="fifth">
+          <el-table
+            :data="supportList"
+            stripe
+            style="width: 100%"
+            border
+            v-if="activeName === 'fifth'"
+          >
+            <el-table-column
+              label="序号"
+              type="index"
+              width="80"
+              align="center"
+            >
+            </el-table-column>
+            <el-table-column prop="name" label="项目名称" width="180">
+            </el-table-column>
+            <el-table-column prop="level" label="项目等级" width="width">
+            </el-table-column>
+            <el-table-column prop="type" label="项目类型" width="width">
+            </el-table-column>
+            <el-table-column prop="year" label="项目年份" width="width">
+            </el-table-column></el-table
+        ></el-tab-pane>
+        <el-tab-pane label="指南共识" name="sixth">
+          <el-table
+            :data="gcList"
+            stripe
+            style="width: 100%"
+            border
+            v-if="activeName === 'sixth'"
+          >
+            <el-table-column
+              label="序号"
+              type="index"
+              width="80"
+              align="center"
+            >
+            </el-table-column>
+            <el-table-column prop="name" label="获奖项目" width="width">
+            </el-table-column>
+            <el-table-column prop="issued" label="发布单位" width="width">
+            </el-table-column>
+            <el-table-column prop="year" label="发布时间" width="width">
+            </el-table-column></el-table
+        ></el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -152,7 +229,107 @@ export default {
     return {
       tableData: [],
       activeName: "first",
+      pageNum: 1,
+      pageSize: 10,
+      paperList: [],
+      patentList: [],
+      supportList: [],
+      awardList: [],
+      gcList: [],
+      CompanyInfo: {
+        tagJson: "",
+      },
     };
+  },
+  created() {
+    //获取父级传递的信息
+    this.CompanyInfo = this.$route.query;
+  },
+  methods: {
+    //获取产品论文列表
+    async getCompanyPaper() {
+      try {
+        const data = {
+          companyId: this.$route.query.id,
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+        };
+        let result = await this.$API.reqGetCompanyOrProductPaper(data);
+        // console.log(result);
+        this.paperList = result.response.list;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+
+    //获取产品专利列表
+    async getCompanyPatent() {
+      try {
+        const data = {
+          companyId: this.$route.query.id,
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+        };
+        let result = await this.$API.reqGetCompanyOrProductPatent(data);
+        // console.log(result);
+        this.patentList = result.response.list;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    //获取产品奖励列表
+    async getCompanyAward() {
+      try {
+        const data = {
+          companyId: this.$route.query.id,
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+        };
+        let result = await this.$API.reqGetCompanyAward(data);
+        // console.log(result);
+        this.awardList = result.response.list;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+
+    //获取产品项目列表
+    async getCompanySupport() {
+      try {
+        const data = {
+          companyId: this.$route.query.id,
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+        };
+        let result = await this.$API.reqGetCompanySupport(data);
+        console.log(result);
+        this.supportList = result.response.list;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    //获取产品指南列表
+    async getCompanyGc() {
+      try {
+        const data = {
+          companyId: this.$route.query.id,
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+        };
+        let result = await this.$API.reqGetCompanyGc(data);
+        console.log(result);
+        this.gcList = result.response.list;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+  },
+  mounted() {
+    this.getCompanyPaper();
+    this.getCompanyPatent();
+    this.getCompanyAward();
+    this.getCompanySupport();
+    this.getCompanyGc();
   },
 };
 </script>

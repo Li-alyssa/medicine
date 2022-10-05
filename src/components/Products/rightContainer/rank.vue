@@ -13,45 +13,35 @@
                 src="https://www.shanghairanking.cn/_nuxt/img/left_ornaments_gold.1421cac.svg"
                 alt=""
               />
-              <span>1</span>
+              <span>{{ rankInfo.best }}</span>
               <img
                 src="https://www.shanghairanking.cn/_nuxt/img/right_ornaments_gold.2482357.svg"
                 alt=""
               />
             </div>
             <div class="category-latest">
-              <span>总排行榜</span>
+              <span>{{ rankInfo.name }}</span>
             </div>
           </div>
         </div>
         <div class="rank-line">
-          <div class="line-hist">
-            <div class="item-rank">
-              <div class="rank">1</div>
-              <div class="round el-icon-medal"></div>
-              <div class="year">2018</div>
-            </div>
-            <div class="item-rank">
-              <div class="rank">1</div>
-              <div class="round el-icon-medal"></div>
-              <div class="year">2019</div>
-            </div>
-            <div class="item-rank">
-              <div class="rank">1</div>
-              <div class="round el-icon-medal"></div>
-              <div class="year">2020</div>
-            </div>
-            <div class="item-rank">
-              <div class="rank">1</div>
-              <div class="round el-icon-medal"></div>
-              <div class="year">2021</div>
-            </div>
-            <div class="item-rank">
-              <div class="rank">1</div>
-              <div class="round-last el-icon-medal-1"></div>
-              <div class="year">2022</div>
-            </div>
-          </div>
+          <ul class="line-hist">
+            <li
+              class="item-rank"
+              v-for="(rk, index) in rankInfo.list"
+              :key="index"
+            >
+              <div class="rank">{{ rk.ranking }}</div>
+              <div
+                :class="
+                  index !== rankInfo.list.length - 1
+                    ? 'round el-icon-medal'
+                    : 'round-last el-icon-medal-1'
+                "
+              ></div>
+              <div class="year">{{ rk.year }}</div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -59,7 +49,29 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      rankInfo: {},
+    };
+  },
+  methods: {
+    async getProductRanking() {
+      try {
+        let result = await this.$API.reqGetProductRanking(
+          this.$route.params.id
+        );
+        console.log(result);
+        this.rankInfo = result.response[0];
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+  },
+  mounted() {
+    this.getProductRanking();
+  },
+};
 </script>
 
 <style scoped>

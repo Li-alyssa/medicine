@@ -10,11 +10,11 @@
                   src="https://www.shanghairanking.cn/_nuxt/img/top_shadow.e02e29f.png"
                 ></el-image>
                 <div class="medi-name">
-                  <span>安康欣胶囊</span>
-                  <span>安徽华润金蟾药业股份有限公司</span>
+                  <span>{{ goodsInfo.name }}</span>
+                  <span>{{ goodsInfo.company }}</span>
                 </div>
                 <div class="number-container">
-                  <div class="items">国药准字Z34020272</div>
+                  <div class="items">联系电话:{{ goodsInfo.phone }}</div>
                 </div>
               </div>
               <div class="labels-head">
@@ -25,13 +25,11 @@
               </div>
               <div class="scroll-container">
                 <div class="contant-msg">
-                  <span
-                    >【功能主治】解毒，消肿，止痛。用于中、晚期肿瘤，慢性乙型肝炎等症。</span
-                  >
-                  <span>【处方组成】干蟾皮提取物</span>
-                  <span>【性状】本品为薄膜衣片</span>
-                  <span>【规格】盒</span>
-                  <span>【用法用量】一日2次</span>
+                  <span>【标签】{{ strTags }}</span>
+                  <span>【处方药/OTC】{{ goodsInfo.otc }}</span>
+                  <span>【给药途径】{{ goodsInfo.route }}</span>
+                  <span>【市场准入】{{ strToString }}</span>
+                  <span>【治疗领域】{{ goodsInfo.domain }}</span>
                 </div>
 
                 <div class="recommed-container">
@@ -67,7 +65,7 @@
                       <span class="active">药品介绍</span>
                     </div>
                     <p>
-                      这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字
+                      {{ goodsInfo.instruction }}
                     </p>
                   </div>
                 </div>
@@ -85,11 +83,11 @@
                 src="https://www.shanghairanking.cn/_nuxt/img/top_shadow.e02e29f.png"
               ></el-image>
               <div class="medi-name">
-                <span>安康欣胶囊</span>
-                <span>安徽华润金蟾药业股份有限公司</span>
+                <span>{{ goodsInfo.name }}</span>
+                <span>{{ goodsInfo.company }}</span>
               </div>
               <div class="number-container">
-                <div class="items">国药准字Z34020272</div>
+                <div class="items">联系电话:{{ goodsInfo.phone }}</div>
               </div>
             </div>
             <div class="recommed-container">
@@ -122,20 +120,18 @@
           </div>
           <div class="top-introduce">
             <div class="contant-msg">
-              <span
-                >【功能主治】解毒，消肿，止痛。用于中、晚期肿瘤，慢性乙型肝炎等症。</span
-              >
-              <span>【处方组成】干蟾皮提取物</span>
-              <span>【性状】本品为薄膜衣片</span>
-              <span>【规格】盒</span>
-              <span>【用法用量】一日2次</span>
+              <span>【标签】{{ strTags }}</span>
+              <span>【处方药/OTC】{{ goodsInfo.otc }}</span>
+              <span>【给药途径】{{ goodsInfo.route }}</span>
+              <span>【市场准入】{{ strToString }}</span>
+              <span>【治疗领域】{{ goodsInfo.domain }}</span>
             </div>
             <div class="medicine-title">
               <div class="info-tab">
                 <span class="active">药品介绍</span>
               </div>
               <p>
-                这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字这里是一段介绍性文字
+                {{ goodsInfo.instruction }}
               </p>
             </div>
           </div>
@@ -147,13 +143,13 @@
             <span>选择理由</span>
           </div>
           <div class="reason-main">
-            <div class="reason-main-tag">111</div>
-            <div class="reason-main-tag">111</div>
-            <div class="reason-main-tag">111</div>
-            <div class="reason-main-tag">111</div>
-            <div class="reason-main-tag">111</div>
-            <div class="reason-main-tag">111</div>
-            <div class="reason-main-tag">111</div>
+            <div
+              class="reason-main-tag"
+              v-for="(gl, index) in goodsIntroduction"
+              :key="gl.id"
+            >
+              {{ gl.text }}
+            </div>
           </div>
         </div>
         <div class="tabs">
@@ -171,26 +167,38 @@
               ><img src="../.././assets/1.jpg" alt="" style="width: 100%" />
             </el-tab-pane>
             <el-tab-pane label="论文列表" name="fifth">
-              <el-table :data="tableData" stripe style="width: 100%">
+              <el-table :data="paperList" stripe style="width: 100%">
                 <el-table-column prop="title" label="论文名称" width="180">
                 </el-table-column>
-                <el-table-column prop="name" label="作者" width="180">
+                <el-table-column prop="author" label="作者" width="180">
                 </el-table-column>
-                <el-table-column prop="date" label="发表日期">
+                <el-table-column prop="journal" label="期刊名称" width="180">
                 </el-table-column>
-                <el-table-column prop="introduction" label="简介">
+                <el-table-column prop="year" label="发表年份">
+                </el-table-column>
+                <el-table-column prop="type" label="期刊类型">
                 </el-table-column>
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="专利列表" name="sixth">
-              <el-table :data="tableData" stripe style="width: 100%">
-                <el-table-column prop="title" label="专利名称" width="180">
+              <el-table :data="patentList" stripe style="width: 100%">
+                <el-table-column prop="name" label="专利名称" width="180">
                 </el-table-column>
-                <el-table-column prop="name" label="作者" width="180">
+                <el-table-column prop="type" label="专利类型" width="180">
                 </el-table-column>
-                <el-table-column prop="date" label="发表日期" width="width">
+                <el-table-column prop="status" label="法律状态" width="width">
                 </el-table-column>
-                <el-table-column prop="introduction" label="简介" width="width">
+                <el-table-column
+                  prop="authorizationYear"
+                  label="申请年份"
+                  width="width"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="applicationNum"
+                  label="公开年份"
+                  width="width"
+                >
                 </el-table-column>
               </el-table>
             </el-tab-pane>
@@ -226,6 +234,13 @@ export default {
     return {
       activeName: "second",
       tableData: [],
+      goodsInfo: {
+        access: [],
+        tags: [],
+      },
+      goodsIntroduction: [],
+      paperList: [],
+      patentList: [],
     };
   },
   components: {
@@ -233,7 +248,76 @@ export default {
     // chart,
     // remark,
   },
-  methods: {},
+  methods: {
+    //获取产品详情信息
+    async getGoodInfo() {
+      try {
+        let result = await this.$API.reqGetProductInfo(this.$route.params.id);
+        // console.log(result);
+        this.goodsInfo = result.response;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    //获取产品介绍
+    async getProductIntroduction() {
+      try {
+        let result = await this.$API.reqGetProductIntroduction(
+          this.$route.params.id
+        );
+        // console.log(result);
+        this.goodsIntroduction = result.response;
+        // this.goodsInfo = result.response;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    //获取产品论文列表
+    async getProductPaper() {
+      try {
+        const data = {
+          productId: this.$route.params.id,
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+        };
+        let result = await this.$API.reqGetCompanyOrProductPaper(data);
+        // console.log(result);
+        this.paperList = result.response.list;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+
+    //获取产品专利列表
+    async getProductPatent() {
+      try {
+        const data = {
+          productId: this.$route.params.id,
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+        };
+        let result = await this.$API.reqGetCompanyOrProductPatent(data);
+        // console.log(result);
+        this.patentList = result.response.list;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+  },
+  mounted() {
+    this.getGoodInfo();
+    this.getProductIntroduction();
+    this.getProductPaper();
+    this.getProductPatent();
+  },
+  computed: {
+    strToString() {
+      return this.goodsInfo.access.toString();
+    },
+    strTags() {
+      return this.goodsInfo.tags.toString();
+    },
+  },
 };
 </script>
 

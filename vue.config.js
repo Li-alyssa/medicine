@@ -3,17 +3,17 @@ module.exports = defineConfig({
   transpileDependencies: true,
   // 关闭eslint校验
   lintOnSave: false,
-  // devServer: {
-  //   // 配置不同的后台API地址
-  //   proxy: {
-  //     '/api': {
-  //       target: 'http://115.25.46.76:8090',
-  //       ws: false,
-  //       changeOrigin: true,
-  //       pathRewrite: {
-  //         '^/api': ''
-  //       }
-  //     }
-  //   }
-  // }
+  devServer: {
+    // 配置不同的后台API地址
+    proxy: {
+      '/api': {
+        target: 'http://47.94.136.1/chinmedy/rank/',
+        ws: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
+  }
 })

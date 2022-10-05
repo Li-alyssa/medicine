@@ -6,28 +6,14 @@
         </el-input>
         <el-button type="danger">搜索</el-button>
       </div>
-      <div class="select">
-        <el-select placeholder="处方药/OTC" v-model="value">
-          <el-option :value="goods.id"> </el-option>
-        </el-select>
-        <el-select placeholder="给药途径" v-model="value">
-          <el-option :value="goods.id"> </el-option>
-        </el-select>
-        <el-select placeholder="市场准入" v-model="value">
-          <el-option :value="goods.id"> </el-option>
-        </el-select>
-        <el-select placeholder="治疗领域" v-model="value">
-          <el-option :value="goods.id"> </el-option>
-        </el-select>
-      </div>
     </div>
     <div class="Category">
       <div class="medicine_container">
         <div class="medi_container">
-          <div class="medi_title">共查询到XXX家企业</div>
+          <div class="medi_title">共查询到{{ total }}家企业</div>
           <ul>
-            <li v-for="(goods, index) in goods" :key="index">
-              <router-link :to="`/companies/${goods.id}`">
+            <li v-for="(company, index) in companyList" :key="company.id">
+              <div @click="toCompanyDetail(company)">
                 <div class="medi_main">
                   <div class="main_container">
                     <div class="logo_container">
@@ -39,9 +25,9 @@
                     </div>
                     <div class="title_container">
                       <div>
-                        <span>上海医药集团青岛国风药业股份有限公司</span>
-                        <div>电话:15116463554</div>
-                        <div>地址:青岛经济技术开发区松花江路18号</div>
+                        <span>{{ company.name }}</span>
+                        <div>省份:{{ company.province }}</div>
+                        <div>简介:{{ company.details }}</div>
                         <div>
                           <p
                             style="
@@ -52,17 +38,28 @@
                           >
                             主营品种:
                           </p>
-                          <span>养心氏片</span>
-                          <span>养心氏片</span>
-                          <span>养心氏片</span>
+                          <span
+                            v-for="(tag, index) in JSON.parse(company.tagJson)"
+                            >{{ tag }}
+                          </span>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </router-link>
+              </div>
             </li>
           </ul>
+          <el-pagination
+            background
+            @current-change="handleCurrentChange"
+            :current-page="pageNum"
+            :page-size="pageSize"
+            :total="total"
+            layout="prev, pager, next, jumper"
+            style="margin-top: 20px; text-align: center"
+          >
+          </el-pagination>
         </div>
       </div>
     </div>
@@ -75,19 +72,45 @@ export default {
   data() {
     return {
       input: "",
-      value: "",
-      goods: [
-        {
-          id: 1,
-        },
-        {
-          id: 2,
-        },
-        {
-          id: 3,
-        },
-      ],
+      pageNum: 1,
+      pageSize: 10,
+      total: 0,
+      companyList: [],
+      companyId: 0,
     };
+  },
+  methods: {
+    //获取公司列表
+    async getCompanyList() {
+      let data = {};
+      data["pageNum"] = this.pageNum;
+      data["pageSize"] = this.pageSize;
+      try {
+        let result = await this.$API.reqGetCompanyList(data);
+        // console.log(result);
+        this.companyList = result.response.list;
+        this.total = result.response.total;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+
+    //控制分页
+    handleCurrentChange() {},
+    toCompanyDetail(query) {
+      this.$router.push({
+        name: "companyDetails",
+        query: {
+          id: query.id,
+          name: query.name,
+          details: query.details,
+          tagJson: JSON.parse(query.tagJson),
+        },
+      });
+    },
+  },
+  mounted() {
+    this.getCompanyList();
   },
 };
 </script>
@@ -101,10 +124,6 @@ export default {
   background-color: #fff;
   padding: 40px 0 0;
 }
-.el-select {
-  /* margin: 0 2%; */
-  margin: 0 30px;
-}
 @media screen and (max-width: 768px) {
   .search {
     display: flex;
@@ -114,21 +133,6 @@ export default {
     padding-bottom: 40px;
     padding-right: 15%;
     padding-left: 15%;
-  }
-
-  .select {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-bottom: 20px;
-    width: 100%;
-  }
-
-  .el-select {
-    /* margin: 0 2%; */
-    margin-top: 10px;
   }
 }
 
@@ -141,15 +145,6 @@ export default {
     padding-right: 20%;
     padding-left: 20%;
   }
-
-  .select {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 20px;
-    width: 100%;
-  }
 }
 
 @media screen and (min-width: 1920px) {
@@ -160,15 +155,6 @@ export default {
     padding-bottom: 40px;
     padding-right: 30%;
     padding-left: 30%;
-  }
-
-  .select {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 20px;
-    width: 100%;
   }
 }
 

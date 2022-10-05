@@ -9,7 +9,13 @@
 </template>
 
 <script scoped>
-export default {};
+export default {
+  data() {
+    return {
+      titleName: "",
+    };
+  },
+};
 </script>
 
 <style>

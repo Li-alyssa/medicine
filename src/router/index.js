@@ -26,7 +26,7 @@ const routes = [
         meta: { show: true }
 
     }, {
-        path: '/companies/:id',
+        path: '/companyDetails',
         name: 'companyDetails',
         component: () => import('../components/companyDetails.vue'),
         meta: { show: true }

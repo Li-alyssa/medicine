@@ -3,17 +3,99 @@
 import requests from './request';
 
 
-// export const reqPageList = (page, pageSize) => {
-//     //发请求
-//     return requests({
-//         url: `/mskCommand/mskCommand/showTableList/${page}/${pageSize}`,
-//         method: 'get'
-//     })
-// }
+//公司列表接口
+export const reqGetCompanyList = (data) => {
+    //发请求
+    return requests({
+        url: '/company/',
+        method: 'post',
+        data
+    })
+}
 
-// export const reqDownload = (time) => {
-//     return requests({
-//         url: `/mskCommand/mskCommand/getdata?time=${time}`,
-//         method: 'post'
-//     })
-// }
+//产品列表接口
+export const reqGetProductList = (data) => {
+    //发请求
+    return requests({
+        url: '/product/',
+        method: 'post',
+        data
+    })
+}
+
+//产品详情接口
+export const reqGetProductInfo = (id) => {
+    //发请求
+    return requests({
+        url: `/product/${id}`,
+        method: 'get'
+    })
+}
+
+//产品介绍接口
+export const reqGetProductIntroduction = (id) => {
+    //发请求
+    return requests({
+        url: `/introduction/${id}`,
+        method: 'get'
+    })
+}
+
+//产品/公司论文列表接口
+export const reqGetCompanyOrProductPaper = (data) => {
+    //发请求
+    return requests({
+        url: '/paper/',
+        method: 'post',
+        data
+    })
+}
+
+//产品/公司专利列表接口
+export const reqGetCompanyOrProductPatent = (data) => {
+    //发请求
+    return requests({
+        url: '/patent/',
+        method: 'post',
+        data
+    })
+}
+
+//产品排行接口
+export const reqGetProductRanking = (id) => {
+    //发请求
+    return requests({
+        url: `/ranking/${id}`,
+        method: 'get'
+    })
+}
+
+//公司项目列表接口
+export const reqGetCompanySupport = (data) => {
+    //发请求
+    return requests({
+        url: '/support/',
+        method: 'post',
+        data
+    })
+}
+
+//公司获奖列表接口
+export const reqGetCompanyAward = (data) => {
+    //发请求
+    return requests({
+        url: '/award/',
+        method: 'post',
+        data
+    })
+}
+
+//公司指南列表接口
+export const reqGetCompanyGc = (data) => {
+    //发请求
+    return requests({
+        url: '/gc/',
+        method: 'post',
+        data
+    })
+}

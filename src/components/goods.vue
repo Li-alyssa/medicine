@@ -7,46 +7,72 @@
         <el-button type="danger">搜索</el-button>
       </div>
       <div class="select">
-        <el-select placeholder="处方药/OTC" v-model="value">
-          <el-option :value="goods.id"> </el-option>
+        <el-select placeholder="处方药/OTC" v-model="value1">
+          <el-option
+            v-for="item in OtcType"
+            :key="item.id"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
         </el-select>
-        <el-select placeholder="给药途径" v-model="value">
-          <el-option :value="goods.id"> </el-option>
+        <el-select placeholder="给药途径" v-model="value2">
+          <el-option
+            v-for="item in RouteType"
+            :key="item.id"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
         </el-select>
-        <el-select placeholder="市场准入" v-model="value">
-          <el-option :value="goods.id"> </el-option>
+        <el-select placeholder="市场准入" v-model="value3">
+          <el-option
+            v-for="item in AccessType"
+            :key="item.id"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
         </el-select>
-        <el-select placeholder="治疗领域" v-model="value">
-          <el-option :value="goods.id"> </el-option>
+        <el-select placeholder="治疗领域" v-model="value4">
+          <el-option
+            v-for="item in DomainType"
+            :key="item.id"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
         </el-select>
       </div>
     </div>
     <div class="Category">
       <div class="medicine_container">
         <div class="medi_container">
-          <div class="medi_title">共查询到XXX种药品</div>
+          <div class="medi_title">共查询到{{ total }}种药品</div>
           <ul>
-            <li v-for="(goods, index) in goods" :key="index">
+            <li v-for="(goods, index) in goodList" :key="goods.id">
               <router-link :to="`/product/${goods.id}`">
                 <div class="medi_main">
                   <div class="main_container">
-                    <div class="logo_container">
+                    <!-- <div class="logo_container">
                       <img
                         data-v-375288e5=""
                         onerror="javascript:this.src='/images/blank.svg';"
                         src="https://www.shanghairanking.cn/_uni/logo/27532357.png"
                         alt="清华大学"
                       />
-                    </div>
+                    </div> -->
                     <div class="title_container">
                       <div>
-                        <span>安康欣胶囊</span>
-                        <div>生产公司:安徽高山药业有限公司</div>
-                        <div>批准文号:国药准字Z20023377</div>
+                        <span>{{ goods.name }}</span>
+                        <div>生产公司:{{ goods.company }}</div>
+                        <div>药品类别:{{ goods.domain }}</div>
                         <div>
-                          <span>发明专利： 0</span>
-                          <span>相关论文： 1</span>
-                          <span>未纳入医保</span>
+                          <span
+                            v-for="(tag, index) in goods.tags"
+                            :key="tag.index"
+                            >{{ tag }}</span
+                          >
                         </div>
                       </div>
                     </div>
@@ -55,6 +81,16 @@
               </router-link>
             </li>
           </ul>
+          <el-pagination
+            background
+            @current-change="handleCurrentChange"
+            :current-page="pageNum"
+            :page-size="pageSize"
+            :total="total"
+            layout="prev, pager, next, jumper"
+            style="margin-top: 20px; text-align: center"
+          >
+          </el-pagination>
         </div>
       </div>
     </div>
@@ -62,24 +98,185 @@
 </template>
 
 <script>
+import requests from "@/api/request";
 export default {
   name: "goods",
   data() {
     return {
+      query: {
+        page: 1,
+        size: 20,
+        total: 1110,
+      },
       input: "",
-      value: "",
-      goods: [
+      value1: "",
+      value2: "",
+      value3: "",
+      value4: "",
+      otc: null,
+      route: null,
+      access: null,
+      domain: null,
+      province: null,
+      pageNum: 1,
+      pageSize: 10,
+      total: 0,
+      OtcType: [
         {
           id: 1,
+          value: "RX",
+          label: "处方药",
         },
         {
           id: 2,
+          value: "OTC",
+          label: "非处方药",
+        },
+      ],
+      RouteType: [
+        {
+          id: 1,
+          value: "ZS",
+          label: "注射",
+        },
+        {
+          id: 2,
+          value: "KF",
+          label: "口服",
         },
         {
           id: 3,
+          value: "DYY",
+          label: "滴眼液",
+        },
+        {
+          id: 4,
+          value: "WY",
+          label: "外用",
         },
       ],
+      AccessType: [
+        {
+          id: 1,
+          value: "GB",
+          label: "国保",
+        },
+        {
+          id: 2,
+          value: "JY",
+          label: "基药",
+        },
+        {
+          id: 3,
+          value: "GT",
+          label: "国谈",
+        },
+        {
+          id: 4,
+          value: "JC",
+          label: "集采",
+        },
+      ],
+      DomainType: [
+        {
+          id: 1,
+          value: "XNXGZS",
+          label: "心脑血管疾病用药（注射类）",
+        },
+        {
+          id: 2,
+          value: "XNXGKF",
+          label: "心脑血管疾病用药（口服药）",
+        },
+        {
+          id: 3,
+          value: "DX",
+          label: "代谢类疾病用药",
+        },
+        {
+          id: 4,
+          value: "HX",
+          label: "呼吸系统疾病用药",
+        },
+        {
+          id: 5,
+          value: "GG",
+          label: "骨骼肌肉系统用药",
+        },
+        {
+          id: 6,
+          value: "MN",
+          label: "泌尿系统用药",
+        },
+        {
+          id: 7,
+          value: "XH",
+          label: "消化系统用药",
+        },
+        {
+          id: 8,
+          value: "ZL",
+          label: "肿瘤用药",
+        },
+        {
+          id: 9,
+          value: "SJ",
+          label: "神经系统用药",
+        },
+        {
+          id: 10,
+          value: "FK",
+          label: "妇科用药",
+        },
+        {
+          id: 11,
+          value: "GC",
+          label: "肛肠皮肤用药",
+        },
+        {
+          id: 12,
+          value: "WG",
+          label: "五官科用药",
+        },
+        {
+          id: 13,
+          value: "EK",
+          label: "儿科用药",
+        },
+        {
+          id: 14,
+          value: "BY",
+          label: "补益类",
+        },
+      ],
+      goodList: [],
     };
+  },
+  methods: {
+    //商品控制分页模块
+    handleCurrentChange() {},
+    async getProductInfo() {
+      const data = {
+        otc: this.otc,
+        route: this.route,
+        access: this.access,
+        domain: this.domain,
+        province: this.province,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
+      };
+      try {
+        let result = await this.$API.reqGetProductList(data);
+        console.log(result);
+        this.goodList = result.response.list;
+        this.total = result.response.total;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+  },
+  mounted() {
+    this.getProductInfo();
   },
 };
 </script>
