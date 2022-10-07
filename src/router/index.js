@@ -63,6 +63,13 @@ const routes = [
 
     },
     {
+        path: '/:name',
+        name: 'RankList',
+        component: () => import('../components/Ranking/ranking.vue'),
+        meta: { show: true }
+
+    },
+    {
         path: '/TotalRank',
         name: 'TotalRank',
         component: () => import('../components/Ranking/totalRanking.vue'),

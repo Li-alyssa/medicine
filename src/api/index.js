@@ -99,3 +99,13 @@ export const reqGetCompanyGc = (data) => {
         data
     })
 }
+
+//排行榜接口
+export const reqGetRanking = (data) => {
+    //发请求
+    return requests({
+        url: '/ranking/',
+        method: 'post',
+        data
+    })
+}

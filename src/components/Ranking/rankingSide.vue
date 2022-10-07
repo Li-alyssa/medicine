@@ -5,75 +5,75 @@
         <div></div>
         <span>排行榜侧边栏</span>
       </div>
-      <div class="rank-table-line">
-        <router-link to="/" class="rank-table-item">
-          <span>总排行榜</span>
-          <img
-            src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
-            alt=""
-          />
-        </router-link>
-      </div>
-      <div class="rank-table-line">
-        <router-link to="/" class="rank-table-item">
-          <span>功能排行榜</span>
-          <img
-            src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
-            alt=""
-          />
-        </router-link>
-      </div>
-      <div class="rank-table-line">
-        <router-link to="/" class="rank-table-item">
-          <span>省份排行榜</span>
-          <img
-            src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
-            alt=""
-          />
-        </router-link>
-      </div>
-      <div class="rank-table-line">
-        <router-link to="/" class="rank-table-item">
-          <span>论文排行榜</span>
-          <img
-            src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
-            alt=""
-          />
-        </router-link>
-      </div>
-      <div class="rank-table-line">
-        <router-link to="/" class="rank-table-item">
-          <span>专利排行榜</span>
-          <img
-            src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
-            alt=""
-          />
-        </router-link>
-      </div>
-      <div class="rank-table-line">
-        <router-link to="/" class="rank-table-item">
-          <span>民族药排行榜</span>
-          <img
-            src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
-            alt=""
-          />
-        </router-link>
-      </div>
-      <div class="rank-table-line">
-        <router-link to="/" class="rank-table-item">
-          <span>(非)注射排行榜</span>
-          <img
-            src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
-            alt=""
-          />
-        </router-link>
-      </div>
+      <ul>
+        <li
+          class="rank-table-line"
+          v-for="(item, index) in rankList"
+          :key="item.listId"
+        >
+          <router-link
+            :to="{
+              path: `/${item.route}`,
+              query: { listId: item.listId, value: item.value },
+            }"
+            class="rank-table-item"
+          >
+            <span>{{ item.value }}</span>
+            <img
+              src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
+              alt=""
+            />
+          </router-link>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      rankList: [
+        {
+          listId: 1,
+          value: "总排行榜",
+          route: "TotalRank",
+        },
+        {
+          listId: 2,
+          value: "功能排行榜",
+          route: "FeatureRank",
+        },
+        {
+          listId: 3,
+          value: "省份排行榜",
+          route: "ProvinceRank",
+        },
+        {
+          listId: 4,
+          value: "论文排行榜",
+          route: "ThesisRank",
+        },
+        {
+          listId: 5,
+          value: "专利排行榜",
+          route: "PatentRank",
+        },
+        {
+          listId: 6,
+          value: "民族药排行榜",
+          route: "EthnicRank",
+        },
+        {
+          listId: 7,
+          value: "(非)注射排行榜",
+          route: "InjectionRank",
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style scoped>

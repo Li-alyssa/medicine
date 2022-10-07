@@ -32,46 +32,23 @@
                   >排行榜</span
                 ></router-link
               >
+
               <el-dropdown-menu slot="dropdown">
-                <router-link to="/TotalRank"
-                  ><el-dropdown-item
-                    ><span @click="menuBtn">总排行榜</span></el-dropdown-item
-                  ></router-link
-                >
-                <router-link to="/FeatureRank"
-                  ><el-dropdown-item
-                    ><span @click="menuBtn">功能排行榜</span></el-dropdown-item
-                  ></router-link
-                >
-                <router-link to="/ProvinceRank">
-                  <el-dropdown-item
-                    ><span @click="menuBtn">省份排行榜</span></el-dropdown-item
-                  ></router-link
-                >
-                <router-link to="/ThesisRank"
-                  ><el-dropdown-item
-                    ><span @click="menuBtn">论文排行榜</span></el-dropdown-item
-                  ></router-link
-                >
-                <router-link to="/PatentRank"
-                  ><el-dropdown-item
-                    ><span @click="menuBtn">专利排行榜</span></el-dropdown-item
-                  ></router-link
-                >
-                <router-link to="/EthnicRank"
-                  ><el-dropdown-item
-                    ><span @click="menuBtn"
-                      >民族药排行榜</span
-                    ></el-dropdown-item
-                  ></router-link
-                >
-                <router-link to="/InjectionRank">
-                  <el-dropdown-item
-                    ><span @click="menuBtn"
-                      >(非)注射排行榜</span
-                    ></el-dropdown-item
-                  ></router-link
-                >
+                <ul>
+                  <li v-for="(rank, index) in rankList" :key="rank.id">
+                    <router-link
+                      :to="{
+                        path: `/${rank.route}`,
+                        query: { listId: rank.listId, value: rank.value },
+                      }"
+                      ><el-dropdown-item
+                        ><span @click="menuBtn">{{
+                          rank.value
+                        }}</span></el-dropdown-item
+                      ></router-link
+                    >
+                  </li>
+                </ul>
               </el-dropdown-menu>
             </el-dropdown>
           </el-col>
@@ -97,6 +74,43 @@ export default {
   data() {
     return {
       menu: true,
+      rankList: [
+        {
+          listId: 1,
+          value: "总排行榜",
+          route: "TotalRank",
+        },
+        {
+          listId: 2,
+          value: "功能排行榜",
+          route: "FeatureRank",
+        },
+        {
+          listId: 3,
+          value: "省份排行榜",
+          route: "ProvinceRank",
+        },
+        {
+          listId: 4,
+          value: "论文排行榜",
+          route: "ThesisRank",
+        },
+        {
+          listId: 5,
+          value: "专利排行榜",
+          route: "PatentRank",
+        },
+        {
+          listId: 6,
+          value: "民族药排行榜",
+          route: "EthnicRank",
+        },
+        {
+          listId: 7,
+          value: "(非)注射排行榜",
+          route: "InjectionRank",
+        },
+      ],
     };
   },
   methods: {
