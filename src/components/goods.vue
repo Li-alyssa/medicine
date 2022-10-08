@@ -51,7 +51,7 @@
           <div class="medi_title">共查询到{{ total }}种药品</div>
           <ul>
             <li v-for="(goods, index) in goodList" :key="goods.id">
-              <router-link :to="`/product/${goods.id}`">
+              <router-link :to="`/product/${goods.id}/${goods.name}`">
                 <div class="medi_main">
                   <div class="main_container">
                     <!-- <div class="logo_container">

@@ -75,9 +75,11 @@
                       <div>
                         <div class="tooltip">
                           <div class="link-container">
-                            <router-link to="/" class="name">{{
-                              item.productName
-                            }}</router-link>
+                            <router-link
+                              :to="`/product/${item.id}`"
+                              class="name"
+                              >{{ item.productName }}</router-link
+                            >
                           </div>
                         </div>
                       </div>

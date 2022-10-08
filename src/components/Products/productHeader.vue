@@ -1,9 +1,9 @@
 <template>
   <div class="breadcrumb-header">
     <div class="breadcrumb">
-      <router-link to="/variety" class="breadcrumb-item">品种</router-link>
+      <router-link to="/goods" class="breadcrumb-item">品种</router-link>
       <div class="breadcrumb-icon"></div>
-      <div class="breadcrumb-item">安康欣胶囊</div>
+      <div class="breadcrumb-item">{{ $route.params.name }}</div>
     </div>
   </div>
 </template>
