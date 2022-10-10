@@ -16,13 +16,13 @@
               <div @click="toCompanyDetail(company)">
                 <div class="medi_main">
                   <div class="main_container">
-                    <div class="logo_container">
+                    <!-- <div class="logo_container">
                       <img
                         data-v-375288e5=""
                         src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
                         alt=""
                       />
-                    </div>
+                    </div> -->
                     <div class="title_container">
                       <div>
                         <span>{{ company.name }}</span>
@@ -96,7 +96,11 @@ export default {
     },
 
     //控制分页
-    handleCurrentChange() {},
+    handleCurrentChange(val) {
+      // console.log(val);
+      this.$set(this, "pageNum", val);
+      this.getCompanyList();
+    },
     toCompanyDetail(query) {
       this.$router.push({
         name: "companyDetails",

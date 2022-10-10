@@ -7,7 +7,12 @@
         <el-button type="danger">搜索</el-button>
       </div>
       <div class="select">
-        <el-select placeholder="处方药/OTC" v-model="value1">
+        <el-select
+          placeholder="处方药/OTC"
+          v-model="value1"
+          @change="getOptionOneList(value1)"
+          clearable
+        >
           <el-option
             v-for="item in OtcType"
             :key="item.id"
@@ -16,7 +21,12 @@
           >
           </el-option>
         </el-select>
-        <el-select placeholder="给药途径" v-model="value2">
+        <el-select
+          placeholder="给药途径"
+          v-model="value2"
+          @change="getOptionTwoList(value2)"
+          clearable
+        >
           <el-option
             v-for="item in RouteType"
             :key="item.id"
@@ -25,7 +35,12 @@
           >
           </el-option>
         </el-select>
-        <el-select placeholder="市场准入" v-model="value3">
+        <el-select
+          placeholder="市场准入"
+          v-model="value3"
+          @change="getOptionThreeList(value3)"
+          clearable
+        >
           <el-option
             v-for="item in AccessType"
             :key="item.id"
@@ -34,7 +49,12 @@
           >
           </el-option>
         </el-select>
-        <el-select placeholder="治疗领域" v-model="value4">
+        <el-select
+          placeholder="治疗领域"
+          v-model="value4"
+          @change="getOptionFourList(value4)"
+          clearable
+        >
           <el-option
             v-for="item in DomainType"
             :key="item.id"
@@ -103,11 +123,6 @@ export default {
   name: "goods",
   data() {
     return {
-      query: {
-        page: 1,
-        size: 20,
-        total: 1110,
-      },
       input: "",
       value1: "",
       value2: "",
@@ -123,129 +138,107 @@ export default {
       total: 0,
       OtcType: [
         {
-          id: 1,
-          value: "RX",
+          value: 1,
           label: "处方药",
         },
         {
-          id: 2,
-          value: "OTC",
+          value: 2,
           label: "非处方药",
         },
       ],
       RouteType: [
         {
-          id: 1,
-          value: "ZS",
+          value: 1,
           label: "注射",
         },
         {
-          id: 2,
-          value: "KF",
+          value: 2,
           label: "口服",
         },
         {
-          id: 3,
-          value: "DYY",
+          value: 3,
           label: "滴眼液",
         },
         {
-          id: 4,
-          value: "WY",
+          value: 4,
           label: "外用",
         },
       ],
       AccessType: [
         {
-          id: 1,
-          value: "GB",
+          value: 1,
           label: "国保",
         },
         {
-          id: 2,
-          value: "JY",
+          value: 2,
           label: "基药",
         },
         {
-          id: 3,
-          value: "GT",
+          value: 3,
           label: "国谈",
         },
         {
-          id: 4,
-          value: "JC",
+          value: 4,
           label: "集采",
         },
       ],
       DomainType: [
         {
-          id: 1,
-          value: "XNXGZS",
+          value: 1,
+
           label: "心脑血管疾病用药（注射类）",
         },
         {
-          id: 2,
-          value: "XNXGKF",
+          value: 2,
+
           label: "心脑血管疾病用药（口服药）",
         },
         {
-          id: 3,
-          value: "DX",
+          value: 3,
           label: "代谢类疾病用药",
         },
         {
-          id: 4,
-          value: "HX",
+          value: 4,
           label: "呼吸系统疾病用药",
         },
         {
-          id: 5,
-          value: "GG",
+          value: 5,
           label: "骨骼肌肉系统用药",
         },
         {
-          id: 6,
-          value: "MN",
+          value: 6,
           label: "泌尿系统用药",
         },
         {
-          id: 7,
-          value: "XH",
+          value: 7,
           label: "消化系统用药",
         },
         {
-          id: 8,
-          value: "ZL",
+          value: 8,
           label: "肿瘤用药",
         },
         {
-          id: 9,
-          value: "SJ",
+          value: 9,
           label: "神经系统用药",
         },
         {
-          id: 10,
-          value: "FK",
+          value: 10,
           label: "妇科用药",
         },
         {
-          id: 11,
-          value: "GC",
+          value: 11,
           label: "肛肠皮肤用药",
         },
         {
-          id: 12,
-          value: "WG",
+          value: 12,
           label: "五官科用药",
         },
         {
-          id: 13,
-          value: "EK",
+          value: 13,
           label: "儿科用药",
         },
         {
-          id: 14,
-          value: "BY",
+          value: 14,
           label: "补益类",
         },
       ],
@@ -254,7 +247,11 @@ export default {
   },
   methods: {
     //商品控制分页模块
-    handleCurrentChange() {},
+    handleCurrentChange(val) {
+      console.log(val);
+      this.$set(this, "pageNum", val);
+      this.getProductInfo();
+    },
     async getProductInfo() {
       const data = {
         otc: this.otc,
@@ -274,10 +271,37 @@ export default {
         console.log(error.message);
       }
     },
+    //查看选择器选项
+    getOptionOneList(val) {
+      console.log(val);
+      this.otc = val;
+      this.getProductInfo();
+    },
+    getOptionTwoList(val) {
+      this.route = val;
+      console.log(val);
+      this.getProductInfo();
+    },
+    getOptionThreeList(val) {
+      this.access = val;
+      console.log(val);
+      this.getProductInfo();
+    },
+    getOptionFourList(val) {
+      this.domain = val;
+      console.log(val);
+      this.getProductInfo();
+    },
   },
   mounted() {
     this.getProductInfo();
   },
+  // created() {
+  //   this.value1 = this.OtcType[0].value;
+  //   this.value2 = this.RouteType[0].value;
+  //   this.value3 = this.AccessType[0].value;
+  //   this.value4 = this.DomainType[0].value;
+  // },
 };
 </script>
 
@@ -293,72 +317,6 @@ export default {
 .el-select {
   /* margin: 0 2%; */
   margin: 0 30px;
-}
-@media screen and (max-width: 768px) {
-  .search {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    align-items: center;
-    padding-bottom: 40px;
-    padding-right: 15%;
-    padding-left: 15%;
-  }
-
-  .select {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-bottom: 20px;
-    width: 100%;
-  }
-
-  .el-select {
-    /* margin: 0 2%; */
-    margin-top: 10px;
-  }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1920px) {
-  .search {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 40px;
-    padding-right: 20%;
-    padding-left: 20%;
-  }
-
-  .select {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 20px;
-    width: 100%;
-  }
-}
-
-@media screen and (min-width: 1920px) {
-  .search {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 40px;
-    padding-right: 30%;
-    padding-left: 30%;
-  }
-
-  .select {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 20px;
-    width: 100%;
-  }
 }
 
 .el-input /deep/ .el-input__inner {
@@ -493,6 +451,84 @@ img {
   .medicine_container .medi_container {
     width: 95%;
     margin: 16px auto 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .search {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 40px;
+    padding-right: 15%;
+    padding-left: 15%;
+  }
+
+  .select {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    width: 100%;
+  }
+
+  .el-select {
+    margin: 0 2%;
+    margin-top: 10px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1920px) {
+  .search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+    padding-right: 20%;
+    padding-left: 20%;
+  }
+
+  .select {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    /* width: 100%; */
+    padding-right: 20%;
+    padding-left: 20%;
+  }
+
+  .el-select {
+    /* width: 5%; */
+    margin: 0 5px;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+    padding-right: 30%;
+    padding-left: 30%;
+  }
+
+  .select {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    width: 100%;
+  }
+
+  .el-select {
+    width: 8%;
   }
 }
 </style>

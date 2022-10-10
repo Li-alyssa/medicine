@@ -167,7 +167,12 @@
               ><img src="../.././assets/1.jpg" alt="" style="width: 100%" />
             </el-tab-pane>
             <el-tab-pane label="论文列表" name="fifth">
-              <el-table :data="paperList" stripe style="width: 100%">
+              <el-table
+                :data="paperList"
+                stripe
+                style="width: 100%"
+                v-if="activeName === 'fifth'"
+              >
                 <el-table-column prop="title" label="论文名称" width="180">
                 </el-table-column>
                 <el-table-column prop="author" label="作者" width="180">
@@ -181,7 +186,12 @@
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="专利列表" name="sixth">
-              <el-table :data="patentList" stripe style="width: 100%">
+              <el-table
+                :data="patentList"
+                stripe
+                style="width: 100%"
+                v-if="activeName === 'sixth'"
+              >
                 <el-table-column prop="name" label="专利名称" width="180">
                 </el-table-column>
                 <el-table-column prop="type" label="专利类型" width="180">

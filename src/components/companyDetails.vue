@@ -2,7 +2,7 @@
   <div id="companyDetails">
     <div class="introduction">
       <div class="introduction-container">
-        <div class="company-img">
+        <!-- <div class="company-img">
           <el-image
             src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
           >
@@ -10,7 +10,7 @@
               加载中<span class="dot">...</span>
             </div>
           </el-image>
-        </div>
+        </div> -->
         <div class="company-title">
           <div class="company-title-name">{{ CompanyInfo.name }}</div>
           <div class="company-title-tag">
@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="introduction-container-mobile">
-        <div class="company-img">
+        <!-- <div class="company-img">
           <el-image
             src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
           >
@@ -32,7 +32,7 @@
               加载中<span class="dot">...</span>
             </div>
           </el-image>
-        </div>
+        </div> -->
         <div class="company-title">
           <div class="company-title-name">{{ CompanyInfo.name }}</div>
           <div class="company-title-tag">

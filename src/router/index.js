@@ -20,6 +20,18 @@ const routes = [
         meta: { show: true }
     },
     {
+        path: '/login',
+        name: 'Login',
+        component: () => import('../components/login/index.vue'),
+        meta: { show: false }
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: () => import('../components/register/index.vue'),
+        meta: { show: false }
+    },
+    {
         path: '/companies',
         name: 'companies',
         component: () => import('../components/company.vue'),
@@ -117,18 +129,7 @@ const routes = [
         component: () => import('../components/Ranking/injectionRanking.vue'),
         meta: { show: true }
     },
-    {
-        path: '/login',
-        name: 'Login',
-        component: () => import('../components/login'),
-        meta: { show: false }
-    },
-    {
-        path: '/register',
-        name: 'Register',
-        component: () => import('../components/register'),
-        meta: { show: false }
-    }
+
 ]
 
 
