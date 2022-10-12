@@ -61,6 +61,7 @@ export default {
         username: "admin",
         password: "123456",
       },
+      showname: true,
       username: "",
       password: "",
       loading: false,
@@ -73,7 +74,16 @@ export default {
         this.username === this.loginForm.username &&
         this.password === this.loginForm.password
       ) {
+        var user = {};
+        user.username = this.username;
+        user.password = this.password;
+
+        this.$bus.$emit("showName", this.showname);
+        localStorage.setItem("userinfo", JSON.stringify(user));
         this.$router.push("/home");
+      } else {
+        this.showname = false;
+        this.$bus.$emit("showName", this.showname);
       }
     },
     goRegister() {

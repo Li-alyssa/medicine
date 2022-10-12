@@ -110,6 +110,16 @@
             <el-table-column prop="year" label="发表年份"> </el-table-column>
             <el-table-column prop="type" label="期刊类型"> </el-table-column>
           </el-table>
+          <el-pagination
+            background
+            @current-change="handleCurrentChangePaper"
+            :current-page="paperQuery.pageNum"
+            :page-size="paperQuery.pageSize"
+            :total="paperQuery.paperTotal"
+            layout="prev, pager, next, jumper"
+            style="margin-top: 20px; text-align: center"
+          >
+          </el-pagination>
         </el-tab-pane>
         <el-tab-pane label="发明专利" name="third">
           <el-table
@@ -145,6 +155,16 @@
             >
             </el-table-column>
           </el-table>
+          <el-pagination
+            background
+            @current-change="handleCurrentChangePatent"
+            :current-page="patentQuery.pageNum"
+            :page-size="patentQuery.pageSize"
+            :total="patentQuery.patentTotal"
+            layout="prev, pager, next, jumper"
+            style="margin-top: 20px; text-align: center"
+          >
+          </el-pagination>
         </el-tab-pane>
         <el-tab-pane label="科技奖励" name="forth">
           <el-table
@@ -170,8 +190,19 @@
             <el-table-column prop="type" label="奖励类型" width="width">
             </el-table-column>
             <el-table-column prop="year" label="获奖年份" width="width">
-            </el-table-column></el-table
-        ></el-tab-pane>
+            </el-table-column
+          ></el-table>
+          <el-pagination
+            background
+            @current-change="handleCurrentChangeAward"
+            :current-page="awardQuery.pageNum"
+            :page-size="awardQuery.pageSize"
+            :total="awardQuery.awardTotal"
+            layout="prev, pager, next, jumper"
+            style="margin-top: 20px; text-align: center"
+          >
+          </el-pagination>
+        </el-tab-pane>
         <el-tab-pane label="科技项目" name="fifth">
           <el-table
             :data="supportList"
@@ -194,8 +225,19 @@
             <el-table-column prop="type" label="项目类型" width="width">
             </el-table-column>
             <el-table-column prop="year" label="项目年份" width="width">
-            </el-table-column></el-table
-        ></el-tab-pane>
+            </el-table-column
+          ></el-table>
+          <el-pagination
+            background
+            @current-change="handleCurrentChangeSupport"
+            :current-page="supportQuery.pageNum"
+            :page-size="supportQuery.pageSize"
+            :total="supportQuery.supportTotal"
+            layout="prev, pager, next, jumper"
+            style="margin-top: 20px; text-align: center"
+          >
+          </el-pagination>
+        </el-tab-pane>
         <el-tab-pane label="指南共识" name="sixth">
           <el-table
             :data="gcList"
@@ -216,7 +258,19 @@
             <el-table-column prop="issued" label="发布单位" width="width">
             </el-table-column>
             <el-table-column prop="year" label="发布时间" width="width">
-            </el-table-column></el-table
+            </el-table-column
+          ></el-table>
+
+          <el-pagination
+            background
+            @current-change="handleCurrentChangeGc"
+            :current-page="gcQuery.pageNum"
+            :page-size="gcQuery.pageSize"
+            :total="gcQuery.gcTotal"
+            layout="prev, pager, next, jumper"
+            style="margin-top: 20px; text-align: center"
+          >
+          </el-pagination
         ></el-tab-pane>
       </el-tabs>
     </div>
@@ -229,8 +283,32 @@ export default {
     return {
       tableData: [],
       activeName: "first",
-      pageNum: 1,
-      pageSize: 10,
+      paperQuery: {
+        pageNum: 1,
+        pageSize: 10,
+        paperTotal: 0,
+      },
+      patentQuery: {
+        pageNum: 1,
+        pageSize: 10,
+        patentTotal: 0,
+      },
+      awardQuery: {
+        pageNum: 1,
+        pageSize: 10,
+        awardTotal: 0,
+      },
+      supportQuery: {
+        pageNum: 1,
+        pageSize: 10,
+        supportTotal: 0,
+      },
+      gcQuery: {
+        pageNum: 1,
+        pageSize: 10,
+        gcTotal: 0,
+      },
+
       paperList: [],
       patentList: [],
       supportList: [],
@@ -251,12 +329,13 @@ export default {
       try {
         const data = {
           companyId: this.$route.query.id,
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
+          pageNum: this.paperQuery.pageNum,
+          pageSize: this.paperQuery.pageSize,
         };
         let result = await this.$API.reqGetCompanyOrProductPaper(data);
         // console.log(result);
         this.paperList = result.response.list;
+        this.paperQuery.paperTotal = result.response.total;
       } catch (error) {
         console.log(error.message);
       }
@@ -267,12 +346,13 @@ export default {
       try {
         const data = {
           companyId: this.$route.query.id,
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
+          pageNum: this.patentQuery.pageNum,
+          pageSize: this.patentQuery.pageSize,
         };
         let result = await this.$API.reqGetCompanyOrProductPatent(data);
         // console.log(result);
         this.patentList = result.response.list;
+        this.patentQuery.patentTotal = result.response.total;
       } catch (error) {
         console.log(error.message);
       }
@@ -282,12 +362,13 @@ export default {
       try {
         const data = {
           companyId: this.$route.query.id,
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
+          pageNum: this.awardQuery.pageNum,
+          pageSize: this.awardQuery.pageSize,
         };
         let result = await this.$API.reqGetCompanyAward(data);
         // console.log(result);
         this.awardList = result.response.list;
+        this.awardQuery.awardTotal = result.response.total;
       } catch (error) {
         console.log(error.message);
       }
@@ -298,12 +379,13 @@ export default {
       try {
         const data = {
           companyId: this.$route.query.id,
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
+          pageNum: this.supportQuery.pageNum,
+          pageSize: this.supportQuery.pageSize,
         };
         let result = await this.$API.reqGetCompanySupport(data);
         console.log(result);
         this.supportList = result.response.list;
+        this.supportQuery.supportTotal = result.response.total;
       } catch (error) {
         console.log(error.message);
       }
@@ -313,15 +395,42 @@ export default {
       try {
         const data = {
           companyId: this.$route.query.id,
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
+          pageNum: this.gcQuery.pageNum,
+          pageSize: this.gcQuery.pageSize,
         };
         let result = await this.$API.reqGetCompanyGc(data);
         console.log(result);
         this.gcList = result.response.list;
+        this.gcQuery.gcTotal = result.response.total;
       } catch (error) {
         console.log(error.message);
       }
+    },
+
+    handleCurrentChangePaper(val) {
+      // console.log(val);
+      this.$set(this.paperQuery, "pageNum", val);
+      this.getCompanyPaper();
+    },
+    handleCurrentChangePatent(val) {
+      // console.log(val);
+      this.$set(this.patentQuery, "pageNum", val);
+      this.getCompanyPatent();
+    },
+    handleCurrentChangeAward(val) {
+      // console.log(val);
+      this.$set(this.awardQuery, "pageNum", val);
+      this.getCompanyAward();
+    },
+    handleCurrentChangeSupport(val) {
+      // console.log(val);
+      this.$set(this.supportQuery, "pageNum", val);
+      this.getCompanySupport();
+    },
+    handleCurrentChangeGc(val) {
+      // console.log(val);
+      this.$set(this.gcQuery, "pageNum", val);
+      this.getCompanyGc();
     },
   },
   mounted() {

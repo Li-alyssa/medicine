@@ -40,11 +40,11 @@
               </el-option>
             </el-select>
           </div>
-          <input
+          <!-- <input
             type="text"
             class="search-input"
             placeholder="请输入药品名称"
-          />
+          /> -->
         </div>
         <div class="rk-table-box">
           <table class="rk-table">
@@ -457,7 +457,7 @@ export default {
 .tool-box .table-title div:first-child {
   width: 4px;
   height: 18px;
-  background-color: #e5002d;
+  background-color: #409eff;
   border-radius: 0 2px 2px 0;
 }
 
@@ -615,7 +615,7 @@ tbody {
 }
 
 .name:hover {
-  color: #e5002d;
+  color: #409eff;
 }
 
 .number {
@@ -648,7 +648,7 @@ tbody {
 .rank-table-box .title div {
   width: 4px;
   height: 18px;
-  background-color: #e5002d;
+  background-color: #409eff;
   border-radius: 0 2px 2px 0;
 }
 .rank-table-box .title span {

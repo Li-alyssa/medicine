@@ -109,3 +109,42 @@ export const reqGetRanking = (data) => {
         data
     })
 }
+
+//上传图片接口
+export const reqUpLoadPhoto = (data) => {
+    //发请求
+    return requests({
+        url: '/picture/upload',
+        method: 'post',
+        data
+    })
+}
+
+//添加图片接口
+export const reqAddUpLoadPhoto = (data) => {
+    //发请求
+    return requests({
+        url: '/picture/',
+        method: 'post',
+        data
+    })
+}
+
+//查询图片接口
+export const reqCheckUpLoadPhoto = (data) => {
+    //发请求
+    return requests({
+        url: '/picture/list',
+        method: 'post',
+        data
+    })
+}
+
+//下载图片接口
+export const reqDownloadUpLoadPhoto = (serial) => {
+    //发请求
+    return requests({
+        url: `/picture/list/${serial}`,
+        method: 'get',
+    })
+}

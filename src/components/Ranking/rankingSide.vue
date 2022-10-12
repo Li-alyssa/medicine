@@ -97,7 +97,7 @@ export default {
 .rank-table-box .title div {
   width: 4px;
   height: 18px;
-  background-color: #e5002d;
+  background-color: #409eff;
   border-radius: 0 2px 2px 0;
 }
 .rank-table-box .title span {

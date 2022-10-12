@@ -153,10 +153,13 @@
           </div>
         </div>
         <div class="tabs">
+          <div class="upPhoto-container" @click="dialogVisible = true">
+            <i class="el-icon-upload"></i>
+          </div>
           <el-tabs v-model="activeName">
-            <el-tab-pane label="说明书文件" name="first"
-              >这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊这里有好多好多的文字啊</el-tab-pane
-            >
+            <el-tab-pane label="说明书文件" name="first">{{
+              goodsInfo.instruction
+            }}</el-tab-pane>
             <el-tab-pane label="医保准入" name="second">
               <img src="../.././assets/1.jpg" alt="" style="width: 100%" />
             </el-tab-pane>
@@ -184,6 +187,16 @@
                 <el-table-column prop="type" label="期刊类型">
                 </el-table-column>
               </el-table>
+              <el-pagination
+                background
+                @current-change="handleCurrentChangePaper"
+                :current-page="paperQuery.pageNum"
+                :page-size="paperQuery.pageSize"
+                :total="paperQuery.paperTotal"
+                layout="prev, pager, next, jumper"
+                style="margin-top: 20px; text-align: center"
+              >
+              </el-pagination>
             </el-tab-pane>
             <el-tab-pane label="专利列表" name="sixth">
               <el-table
@@ -211,6 +224,16 @@
                 >
                 </el-table-column>
               </el-table>
+              <el-pagination
+                background
+                @current-change="handleCurrentChangePatent"
+                :current-page="patentQuery.pageNum"
+                :page-size="patentQuery.pageSize"
+                :total="patentQuery.patentTotal"
+                layout="prev, pager, next, jumper"
+                style="margin-top: 20px; text-align: center"
+              >
+              </el-pagination>
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -227,6 +250,27 @@
             </el-carousel>
           </div>
         </div>
+        <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+          <el-upload
+            class="upload-demo"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-exceed="handleExceed"
+            :on-success="handleSuccess"
+            :file-list="fileList"
+            :limit="fileLimit"
+            :before-upload="beforeUpload"
+            list-type="picture"
+          >
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">
+              只能上传jpg/png文件,且不超过500kb
+            </div>
+          </el-upload>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="handleUpload">确认上传</el-button>
+          </span>
+        </el-dialog>
         <!-- <chart /> -->
         <!-- <remark /> -->
       </div>
@@ -249,8 +293,29 @@ export default {
         tags: [],
       },
       goodsIntroduction: [],
+      paperQuery: {
+        pageNum: 1,
+        pageSize: 10,
+        paperTotal: 0,
+      },
+      patentQuery: {
+        pageNum: 1,
+        pageSize: 10,
+        patentTotal: 0,
+      },
       paperList: [],
       patentList: [],
+
+      dialogVisible: false,
+      fileList: [],
+      filePhoto: [],
+      fileUrl: "",
+      // 允许的文件类型
+      fileType: ["png", "jpg", "bmp", "jpeg"],
+      // 运行上传文件大小，单位 M
+      fileSize: 50,
+      // 附件数量限制
+      fileLimit: 1,
     };
   },
   components: {
@@ -287,12 +352,13 @@ export default {
       try {
         const data = {
           productId: this.$route.params.id,
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
+          pageNum: this.paperQuery.pageNum,
+          pageSize: this.paperQuery.pageSize,
         };
         let result = await this.$API.reqGetCompanyOrProductPaper(data);
         // console.log(result);
         this.paperList = result.response.list;
+        this.paperQuery.paperTotal = result.response.total;
       } catch (error) {
         console.log(error.message);
       }
@@ -303,15 +369,72 @@ export default {
       try {
         const data = {
           productId: this.$route.params.id,
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
+          pageNum: this.patentQuery.pageNum,
+          pageSize: this.patentQuery.pageSize,
         };
         let result = await this.$API.reqGetCompanyOrProductPatent(data);
         // console.log(result);
         this.patentList = result.response.list;
+        this.patentQuery.patentTotal = result.response.total;
       } catch (error) {
         console.log(error.message);
       }
+    },
+
+    //确认上传图片  调用函数
+    async handleUpload() {
+      let data = new FormData();
+      data.append("file", this.filePhoto.raw);
+      console.log(data);
+      let result = await this.$API.reqUpLoadPhoto(data);
+      console.log(result);
+      this.dialogVisible = false;
+      this.filePhoto = [];
+    },
+
+    //上传文件之前
+    beforeUpload(file) {
+      if (file.type != "" || file.type != null || file.type != undefined) {
+        //截取文件的后缀，判断文件类型
+        const FileExt = file.name.replace(/.+\./, "").toLowerCase();
+        //计算文件的大小
+        const isLt5M = file.size / 1024 / 1024 < 50; //这里做文件大小限制
+        //如果大于50M
+        if (!isLt5M) {
+          this.$showMessage("上传文件大小不能超过 50MB!");
+          return false;
+        }
+        //如果文件类型不在允许上传的范围内
+        if (this.fileType.includes(FileExt)) {
+          return true;
+        } else {
+          this.$message.error("上传文件格式不正确!");
+          return false;
+        }
+      }
+    },
+    //超出文件个数的回调
+    handleExceed() {
+      this.$message({
+        type: "warning",
+        message: "超出最大上传文件数量的限制！",
+      });
+      return;
+    },
+    //上传文件成功
+    handleSuccess(file, fileList) {
+      this.filePhoto = fileList;
+    },
+    //控制分页
+    handleCurrentChangePaper(val) {
+      // console.log(val);
+      this.$set(this.paperQuery, "pageNum", val);
+      this.getProductPaper();
+    },
+    handleCurrentChangePatent(val) {
+      // console.log(val);
+      this.$set(this.patentQuery, "pageNum", val);
+      this.getProductPatent();
     },
   },
   mounted() {
@@ -728,6 +851,17 @@ div::-webkit-scrollbar-thumb {
 
 .top-title .el-image {
   margin-top: 20px;
+}
+
+.upPhoto-container {
+  position: absolute;
+  top: 140px;
+  right: -45px;
+}
+.upPhoto-container i {
+  font-size: 40px;
+  color: #409eff;
+  cursor: pointer;
 }
 @media only screen and (max-width: 850px) {
   .left-container {

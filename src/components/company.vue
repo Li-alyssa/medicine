@@ -178,7 +178,7 @@ export default {
 .el-button {
   padding: 0 15px;
   font-size: 16px;
-  background: #d60b0a;
+  background: #409eff;
   color: #fff;
   font-weight: 500;
   vertical-align: middle;
@@ -251,7 +251,7 @@ img {
   align-items: center; */
 }
 .medi_main .main_container:hover .title_container div:first-child {
-  color: #d60b0a;
+  color: #409eff;
 }
 .medi_main .main_container .title_container div:nth-child(2) {
   font-family: PingFangSC-Regular;

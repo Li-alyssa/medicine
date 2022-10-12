@@ -61,7 +61,7 @@ export default {
         let result = await this.$API.reqGetProductRanking(
           this.$route.params.id
         );
-        console.log(result);
+        // console.log(result);
         this.rankInfo = result.response[0];
       } catch (error) {
         console.log(error.message);

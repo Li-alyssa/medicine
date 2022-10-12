@@ -2,9 +2,9 @@
   <el-header>
     <div class="header_nav">
       <div class="header_logo">
-        <a href="/">
+        <router-link to="/home">
           <img src="http://plc.bbtcml.com/img/1639812519(1).8527a9d1.jpg" />
-        </a>
+        </router-link>
       </div>
       <ul :class="menu ? 'nav-links' : 'mobile-menu'">
         <li class="active" @click="menuBtn">
@@ -53,9 +53,20 @@
             </el-dropdown>
           </el-col>
         </li>
-        <li class="loginAndRegister" @click="menuBtn">
+        <li class="loginAndRegister" @click="menuBtn" v-if="!showname">
           <span @click="$router.push('/login')">登录</span>
           <span @click="$router.push('/register')">/注册</span>
+        </li>
+        <li class="loginAndRegister" @click="menuBtn" v-if="showname">
+          <el-dropdown>
+            <span class="el-dropdown-link">
+              {{ userInfo.username
+              }}<i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </li>
       </ul>
       <img
@@ -74,6 +85,8 @@ export default {
   data() {
     return {
       menu: true,
+      showname: false,
+      userInfo: {},
       rankList: [
         {
           listId: 1,
@@ -118,8 +131,19 @@ export default {
       this.menu = !this.menu;
       // console.log(this.menu);
     },
+
+    //获取用户登录信息
+    getUserInfo() {
+      this.$bus.$on("showName", (res) => {
+        this.showname = res;
+        console.log(res);
+      });
+      this.userInfo = JSON.parse(localStorage.getItem("userinfo"));
+    },
   },
-  mounted() {},
+  mounted() {
+    this.getUserInfo();
+  },
 };
 </script>
 
@@ -142,6 +166,10 @@ export default {
   justify-content: center;
   /* padding: 20px; */
   columns: whitesmoke;
+  /* background-color: red; */
+}
+.header_logo {
+  margin-right: 250px;
 }
 .header_logo img {
   width: 150px;
@@ -202,6 +230,10 @@ export default {
 @media only screen and (max-width: 850px) {
   .header_nav {
     padding: 0;
+  }
+
+  .header_logo {
+    margin-right: 0;
   }
   .header_logo img {
     width: 150px;

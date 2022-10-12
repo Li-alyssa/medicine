@@ -9,7 +9,7 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        redirect: "/home",
+        redirect: "/login",
         meta: { show: true }
 
     },
@@ -80,54 +80,6 @@ const routes = [
         component: () => import('../components/Ranking/ranking.vue'),
         meta: { show: true }
 
-    },
-    {
-        path: '/TotalRank',
-        name: 'TotalRank',
-        component: () => import('../components/Ranking/totalRanking.vue'),
-        meta: { show: true }
-
-    },
-    {
-        path: '/FeatureRank',
-        name: 'FeatureRank',
-        component: () => import('../components/Ranking/featureRanking.vue'),
-        meta: { show: true }
-
-    },
-    {
-        path: '/ProvinceRank',
-        name: 'ProvinceRank',
-        component: () => import('../components/Ranking/provinceRanking.vue'),
-        meta: { show: true }
-
-    },
-    {
-        path: '/ThesisRank',
-        name: 'ThesisRank',
-        component: () => import('../components/Ranking/thesisRanking.vue'),
-        meta: { show: true }
-
-    },
-    {
-        path: '/PatentRank',
-        name: 'PatentRank',
-        component: () => import('../components/Ranking/patentRanking.vue'),
-        meta: { show: true }
-
-    }, {
-        path: '/EthnicRank',
-        name: 'EthnicRank',
-        component: () => import('../components/Ranking/ethnicRanking.vue'),
-        meta: { show: true }
-
-    },
-
-    {
-        path: '/InjectionRank',
-        name: 'InjectionRank',
-        component: () => import('../components/Ranking/injectionRanking.vue'),
-        meta: { show: true }
     },
 
 ]
