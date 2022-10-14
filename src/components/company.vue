@@ -2,9 +2,14 @@
   <div class="company">
     <div class="search_container">
       <div class="search">
-        <el-input placeholder="请输入内容" v-model="input" clearable>
+        <el-input
+          placeholder="请输入内容"
+          v-model="input"
+          clearable
+          @keyup.enter.native="handleSearch()"
+        >
         </el-input>
-        <el-button type="danger">搜索</el-button>
+        <el-button type="danger" @click="handleSearch">搜索</el-button>
       </div>
     </div>
     <div class="Category">
@@ -112,7 +117,24 @@ export default {
         },
       });
     },
+
+    async handleSearch() {
+      let data = {
+        name: this.input,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
+      };
+      try {
+        let result = await this.$API.reqGetCompanyList(data);
+        // console.log(result);
+        this.companyList = result.response.list;
+        this.total = result.response.total;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
   },
+
   mounted() {
     this.getCompanyList();
   },

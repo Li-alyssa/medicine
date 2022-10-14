@@ -2,9 +2,14 @@
   <div class="goods">
     <div class="search_container">
       <div class="search">
-        <el-input placeholder="请输入内容" v-model="input" clearable>
+        <el-input
+          placeholder="请输入内容"
+          v-model="input"
+          clearable
+          @keyup.enter.native="handleSearch()"
+        >
         </el-input>
-        <el-button type="danger">搜索</el-button>
+        <el-button type="danger" @click="handleSearch">搜索</el-button>
       </div>
       <div class="select">
         <el-select
@@ -96,6 +101,16 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      :class="
+                        goods.special ? 'container-badge el-icon-guide' : ''
+                      "
+                    >
+                      <span v-show="goods.special">入驻产品</span>
+                    </div>
+                    <div
+                      :class="goods.special ? 'container-badge-right' : ''"
+                    ></div>
                   </div>
                 </div>
               </router-link>
@@ -271,6 +286,26 @@ export default {
         console.log(error.message);
       }
     },
+
+    async handleSearch() {
+      const data = {
+        otc: this.otc,
+        route: this.route,
+        access: this.access,
+        domain: this.domain,
+        name: this.input,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
+      };
+      try {
+        let result = await this.$API.reqGetProductList(data);
+        console.log(result);
+        this.goodList = result.response.list;
+        this.total = result.response.total;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
     //查看选择器选项
     getOptionOneList(val) {
       console.log(val);
@@ -353,6 +388,33 @@ export default {
 .medicine_container .medi_container {
   width: 876px;
   margin: 16px auto 0;
+  position: relative;
+}
+
+.container-badge {
+  position: absolute;
+  top: 0;
+  right: -4px;
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  background-color: #409eff;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  color: #fff;
+}
+.container-badge-right {
+  position: absolute;
+  top: 0;
+  right: -14px;
+  width: 0;
+  height: 18px;
+  border: 6px solid #000;
+  border-top-color: #409eff;
+  border-bottom-color: #f4f3f4;
+  border-right-color: #f4f3f4;
+  border-left-color: #409eff;
 }
 .medi_container .medi_title {
   font-family: PingFang SC;

@@ -144,7 +144,8 @@ export const reqCheckUpLoadPhoto = (data) => {
 export const reqDownloadUpLoadPhoto = (serial) => {
     //发请求
     return requests({
-        url: `/picture/list/${serial}`,
+        url: `/picture/download/${serial}`,
         method: 'get',
+        responseType: 'blob'
     })
 }

@@ -53,20 +53,28 @@
             </el-dropdown>
           </el-col>
         </li>
-        <li class="loginAndRegister" @click="menuBtn" v-if="!showname">
-          <span @click="$router.push('/login')">登录</span>
-          <span @click="$router.push('/register')">/注册</span>
-        </li>
-        <li class="loginAndRegister" @click="menuBtn" v-if="showname">
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              {{ userInfo.username
-              }}<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+        <li class="loginAndRegister" @click="menuBtn">
+          <!-- <span @click="$router.push('/login')">登录</span>
+          <span @click="$router.push('/register')">/注册</span> -->
+          <div class="user-bar">
+            <!--        <el-avatar style="position: absolute;right: 150px;top: 8px;"-->
+            <!--                   :src="require('../assets/img/sir.png')" alt="头像"></el-avatar>-->
+            <div v-if="!user">
+              <el-button type="primary" round size="small" @click="doLogin"
+                >登录/注册</el-button
+              >
+              <!--            <el-button type="primary" round size="small" @click="registVisible = true">注册</el-button>-->
+            </div>
+            <div v-if="user">
+              <span>{{ user.roles[0].nameDesc }}</span
+              ><span v-if="user.nickname" style="margin-right: 10px"
+                >: {{ user.nickname }}</span
+              >
+              <el-button type="primary" round size="small" @click="doLogout"
+                >退出</el-button
+              >
+            </div>
+          </div>
         </li>
       </ul>
       <img
@@ -76,16 +84,64 @@
         @click="menuBtn"
       />
     </div>
+    <!--    扫描二维码登录-->
+    <el-dialog
+      title="微信扫码后登录"
+      :visible.sync="loginDialogVisible"
+      width="30%"
+      center
+      append-to-body
+    >
+      <div style="text-align: center">
+        <vue-qr
+          :text="loginData.url"
+          :margin="10"
+          colorDark="#000"
+          colorLight="#fff"
+          :dotScale="1"
+          :logoSrc="loginData.icon"
+          :logoScale="0.2"
+          :size="200"
+        ></vue-qr>
+      </div>
+      <br />
+      <!--      <div style="text-align: center"><h6>分享该文</h6></div>-->
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="loginDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="loginDialogVisible = false"
+          >确定</el-button
+        >
+      </span>
+    </el-dialog>
   </el-header>
 </template>
 
 <script>
+import vueQr from "vue-qr";
 export default {
   name: "shange",
+  components: {
+    vueQr,
+  },
   data() {
     return {
       menu: true,
-      showname: false,
+      user: null,
+      loginData: {
+        // url: 'http://cxyabc.vaiwan.com/to_detail',  //需要转化成二维码的网址
+        url: "", //需要转化成二维码的网址
+        state: "",
+        icon: require("@/assets/wx_qr.png"), //二维码中间的图片,可以不设置
+      },
+      loginUser: {
+        username: "",
+        password: "Carrot97",
+        // code: '',
+        rememberMe: true,
+      },
+      // verifyCode: "/verifyCode",
+      msgCodeText: "发送验证码",
+      loginDialogVisible: false,
       userInfo: {},
       rankList: [
         {
@@ -134,11 +190,58 @@ export default {
 
     //获取用户登录信息
     getUserInfo() {
-      this.$bus.$on("showName", (res) => {
-        this.showname = res;
-        console.log(res);
-      });
       this.userInfo = JSON.parse(localStorage.getItem("userinfo"));
+    },
+
+    doLogin() {
+      // this.postRequest("/login/wxAuthorizeUrl?code=" + Date.now()).then(
+      //   (resp) => {
+      //     if (resp) {
+      //       this.loginData.url = resp.url;
+      setTimeout(() => {
+        this.loginDialogVisible = true;
+      }, 500);
+      //       this.loginData.state = resp.state;
+      //       this.loginUser.username = resp.state;
+      //       var waitWeiXin = setInterval(() => {
+      //         this.postKetValueRequest("/doLogin", this.loginUser).then(
+      //           (resp) => {
+      //             if (resp) {
+      //               this.user = resp;
+      //               window.sessionStorage.setItem("user", JSON.stringify(resp));
+      //               initMenu(router, store, true);
+      //               location.reload();
+      //               this.dialogFormVisible = false;
+      //               clearInterval(waitWeiXin);
+      //             }
+      //           }
+      //         );
+      //       }, 1000);
+      //     }
+      //   }
+      // );
+    },
+    doLogout() {
+      this.$confirm("此操作将退出用户登录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.getRequest("/logout").then(() => {
+            this.$router.replace("/policy/basic");
+            window.sessionStorage.removeItem("user");
+            this.user = null;
+            initMenu(router, store, true);
+            location.reload();
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消",
+          });
+        });
     },
   },
   mounted() {

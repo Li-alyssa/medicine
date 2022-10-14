@@ -10,7 +10,10 @@
                   src="https://www.shanghairanking.cn/_nuxt/img/top_shadow.e02e29f.png"
                 ></el-image>
                 <div class="medi-name">
-                  <span>{{ goodsInfo.name }}</span>
+                  <span
+                    >{{ goodsInfo.name }}
+                    <a class="el-icon-share" @click="shareWX"></a
+                  ></span>
                   <span>{{ goodsInfo.company }}</span>
                 </div>
                 <div class="number-container">
@@ -137,7 +140,7 @@
           </div>
         </div>
         <rank />
-        <div class="reason">
+        <div class="reason" v-show="goodsInfo.special">
           <div class="title">
             <div class="left"></div>
             <span>选择理由</span>
@@ -152,7 +155,7 @@
             </div>
           </div>
         </div>
-        <div class="tabs">
+        <div class="tabs" v-show="goodsInfo.special">
           <div class="upPhoto-container" @click="dialogVisible = true">
             <i class="el-icon-upload"></i>
           </div>
@@ -161,13 +164,24 @@
               goodsInfo.instruction
             }}</el-tab-pane>
             <el-tab-pane label="医保准入" name="second">
-              <img src="../.././assets/1.jpg" alt="" style="width: 100%" />
+              <img
+                :src="insurancePicture"
+                alt=""
+                style="width: 100%; height: 100px; object-fit: contain"
+              />
             </el-tab-pane>
             <el-tab-pane label="海外销售" name="third"
-              ><img src="../.././assets/1.jpg" alt="" style="width: 100%"
+              ><img
+                :src="salePicture"
+                alt=""
+                style="width: 100%; height: 100px; object-fit: contain"
             /></el-tab-pane>
             <el-tab-pane label="药品价格" name="fourth"
-              ><img src="../.././assets/1.jpg" alt="" style="width: 100%" />
+              ><img
+                :src="pricePicture"
+                alt=""
+                style="width: 100%; height: 100px; object-fit: contain"
+              />
             </el-tab-pane>
             <el-tab-pane label="论文列表" name="fifth">
               <el-table
@@ -237,15 +251,22 @@
             </el-tab-pane>
           </el-tabs>
         </div>
-        <div class="photos">
+        <div class="photos" v-show="goodsInfo.special">
           <div class="title">
             <div class="left"></div>
             <span>产品获奖/新闻报道</span>
           </div>
           <div class="photos-main">
-            <el-carousel :interval="4000" type="card" height="200px">
-              <el-carousel-item v-for="item in 6" :key="item">
-                <h3 class="medium">{{ item }}</h3>
+            <el-carousel :interval="4000" height="200px">
+              <el-carousel-item
+                v-for="(item, index) in NewsPicture"
+                :key="index"
+              >
+                <img
+                  :src="item.serial"
+                  alt=""
+                  style="width: 100%; height: 100%; object-fit: contain"
+                />
               </el-carousel-item>
             </el-carousel>
           </div>
@@ -266,6 +287,21 @@
               只能上传jpg/png文件,且不超过500kb
             </div>
           </el-upload>
+          <el-select
+            v-model="value"
+            placeholder="请选择上传位置"
+            size="small"
+            @change="getOptionList(value)"
+            style="margin-top: 10px; width: 180px"
+          >
+            <el-option
+              v-for="item in pictureTypeList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
             <el-button type="primary" @click="handleUpload">确认上传</el-button>
@@ -286,7 +322,7 @@ import rank from "@/components/Products/rightContainer/rank.vue";
 export default {
   data() {
     return {
-      activeName: "second",
+      activeName: "first",
       tableData: [],
       goodsInfo: {
         access: [],
@@ -305,7 +341,6 @@ export default {
       },
       paperList: [],
       patentList: [],
-
       dialogVisible: false,
       fileList: [],
       filePhoto: [],
@@ -316,6 +351,43 @@ export default {
       fileSize: 50,
       // 附件数量限制
       fileLimit: 1,
+      value: "",
+      pictureType: null,
+      pictureIndex: null,
+      pictureTypeList: [
+        {
+          value: 1,
+          label: "产品获奖或新闻报道",
+        },
+        {
+          value: 2,
+          label: "医保准入",
+        },
+        {
+          value: 3,
+          label: "海外销售",
+        },
+        {
+          value: 4,
+          label: "药品价格",
+        },
+      ],
+      serial: "",
+      //医保准入图
+      insurancePicture: "",
+      //海外销售图
+      salePicture: "",
+      //药品价格图
+      pricePicture: "",
+      newsPicture: [],
+      //新闻报道轮播图
+      newsPicture: [],
+      checkedInsurancePictureResult: [],
+      checkedSalePictureResult: [],
+      checkedPricePictureResult: [],
+      checkedNewsPictureResult: [],
+      NewsPicture: [],
+      binaryData: [],
     };
   },
   components: {
@@ -380,16 +452,16 @@ export default {
         console.log(error.message);
       }
     },
-
-    //确认上传图片  调用函数
-    async handleUpload() {
-      let data = new FormData();
-      data.append("file", this.filePhoto.raw);
-      console.log(data);
-      let result = await this.$API.reqUpLoadPhoto(data);
-      console.log(result);
-      this.dialogVisible = false;
-      this.filePhoto = [];
+    //控制分页
+    handleCurrentChangePaper(val) {
+      // console.log(val);
+      this.$set(this.paperQuery, "pageNum", val);
+      this.getProductPaper();
+    },
+    handleCurrentChangePatent(val) {
+      // console.log(val);
+      this.$set(this.patentQuery, "pageNum", val);
+      this.getProductPatent();
     },
 
     //上传文件之前
@@ -425,23 +497,191 @@ export default {
     handleSuccess(file, fileList) {
       this.filePhoto = fileList;
     },
-    //控制分页
-    handleCurrentChangePaper(val) {
-      // console.log(val);
-      this.$set(this.paperQuery, "pageNum", val);
-      this.getProductPaper();
+    //确认上传图片  调用函数
+    async handleUpload() {
+      let data = new FormData();
+      data.append("file", this.filePhoto.raw);
+      // console.log(data);
+      let result = await this.$API.reqUpLoadPhoto(data);
+      // console.log(result);
+      this.serial = result.response;
+      this.addPicture();
+      this.dialogVisible = false;
+      this.filePhoto = [];
     },
-    handleCurrentChangePatent(val) {
-      // console.log(val);
-      this.$set(this.patentQuery, "pageNum", val);
-      this.getProductPatent();
+    //添加图片
+    async addPicture() {
+      let pictureData = {
+        productId: this.$route.params.id,
+        type: this.pictureType,
+        serial: this.serial,
+      };
+      let addPictureResult = await this.$API.reqAddUpLoadPhoto(pictureData);
+      // console.log(addPictureResult);
+      // this.getCheckedPicture();
+      this.getCheckedInsurancePicture();
+      this.getCheckedSalePicture();
+      this.getCheckedPricePicture();
+      this.getCheckedNewsPicture();
     },
+
+    // 查询医保照片
+    async getCheckedInsurancePicture() {
+      let checkPictureData = {
+        productId: this.$route.params.id,
+        type: 2,
+      };
+      let checkedPictureResult = await this.$API.reqCheckUpLoadPhoto(
+        checkPictureData
+      );
+      // console.log(checkedPictureResult);
+      this.checkedInsurancePictureResult = checkedPictureResult.response;
+      this.getDownloadInsurancePicture();
+    },
+
+    // 查询海外图片
+    async getCheckedSalePicture() {
+      let checkPictureData = {
+        productId: this.$route.params.id,
+        type: 3,
+      };
+      let checkedPictureResult = await this.$API.reqCheckUpLoadPhoto(
+        checkPictureData
+      );
+      // console.log(checkedPictureResult);
+      this.checkedSalePictureResult = checkedPictureResult.response;
+      this.getDownloadSalePicture();
+    },
+    //查询价格图片
+    async getCheckedPricePicture() {
+      let checkPictureData = {
+        productId: this.$route.params.id,
+        type: 4,
+      };
+      let checkedPictureResult = await this.$API.reqCheckUpLoadPhoto(
+        checkPictureData
+      );
+      // console.log(checkedPictureResult);
+      this.checkedPricePictureResult = checkedPictureResult.response;
+      this.getDownloadPricePicture();
+    },
+
+    //获取图片
+    async getDownloadInsurancePicture() {
+      var downloadPictureResult = "";
+      var pictureSerial = "";
+      // console.log(this.checkedPricePictureResult.length == 0);
+      if (this.checkedInsurancePictureResult.length == 0) {
+        pictureSerial = "143b7b2c-9b6f-42c3-82e4-c8e1a8c0ee681664862539";
+      }
+      if (this.checkedInsurancePictureResult.length !== 0) {
+        pictureSerial = this.checkedInsurancePictureResult.pop().serial;
+      }
+      downloadPictureResult = await this.$API.reqDownloadUpLoadPhoto(
+        pictureSerial
+      );
+      // console.log(downloadPictureResult);
+      const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
+      this.insurancePicture = src;
+      // console.log(this.insurancePicture);
+    },
+
+    async getDownloadSalePicture() {
+      var downloadPictureResult = "";
+      var pictureSerial = "";
+      // console.log(this.checkedPricePictureResult.length == 0);
+      if (this.checkedSalePictureResult.length == 0) {
+        pictureSerial = "143b7b2c-9b6f-42c3-82e4-c8e1a8c0ee681664862539";
+      }
+      if (this.checkedSalePictureResult.length !== 0) {
+        pictureSerial = this.checkedSalePictureResult.pop().serial;
+      }
+      downloadPictureResult = await this.$API.reqDownloadUpLoadPhoto(
+        pictureSerial
+      );
+      // console.log(downloadPictureResult);
+      const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
+      this.salePicture = src;
+    },
+
+    async getDownloadPricePicture() {
+      var downloadPictureResult = "";
+      var pictureSerial = "";
+      // console.log(this.checkedPricePictureResult.length == 0);
+      if (this.checkedPricePictureResult.length == 0) {
+        pictureSerial = "143b7b2c-9b6f-42c3-82e4-c8e1a8c0ee681664862539";
+      }
+      if (this.checkedPricePictureResult.length !== 0) {
+        pictureSerial = this.checkedPricePictureResult.pop().serial;
+      }
+      downloadPictureResult = await this.$API.reqDownloadUpLoadPhoto(
+        pictureSerial
+      );
+      // console.log(downloadPictureResult);
+      const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
+      this.pricePicture = src;
+    },
+
+    //查询新闻图
+    async getCheckedNewsPicture() {
+      let checkPictureData = {
+        productId: this.$route.params.id,
+        type: 1,
+      };
+      let checkedPictureResult = await this.$API.reqCheckUpLoadPhoto(
+        checkPictureData
+      );
+      // console.log(checkedPictureResult);
+      this.checkedNewsPictureResult = checkedPictureResult.response;
+      this.getNewsPicture();
+    },
+
+    //获取新闻图图片流
+    getNewsPicture() {
+      this.NewsPicture = [];
+      this.checkedNewsPictureResult.forEach(async (res, index) => {
+        // console.log(res);
+        // console.log(index);
+        let downloadNewsPictureResult = await this.$API.reqDownloadUpLoadPhoto(
+          res.serial
+        );
+        // console.log(downloadNewsPictureResult);
+        this.binaryData.push(downloadNewsPictureResult);
+        // console.log(this.binaryData);
+        this.handleNewsPicture();
+      });
+    },
+    //处理新闻图图片流
+    handleNewsPicture() {
+      var data = {};
+      this.binaryData.forEach((res) => {
+        const src = window.URL.createObjectURL(res);
+        // console.log(src);
+        data["serial"] = src;
+      });
+
+      this.NewsPicture.push(data);
+      // console.log(this.NewsPicture);
+    },
+
+    //获取下拉框图片添加位置
+    getOptionList(val) {
+      console.log(val);
+      this.pictureType = val;
+    },
+
+    //分享按钮 WX
+    shareWX() {},
   },
   mounted() {
     this.getGoodInfo();
     this.getProductIntroduction();
     this.getProductPaper();
     this.getProductPatent();
+    this.getCheckedInsurancePicture();
+    this.getCheckedSalePicture();
+    this.getCheckedPricePicture();
+    this.getCheckedNewsPicture();
   },
   computed: {
     strToString() {
