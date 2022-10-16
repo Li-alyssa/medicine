@@ -2,12 +2,13 @@
 //引入二次封装的axios(带有响应请求拦截器)
 import requests from './request';
 
+const rankPrefix = "/rank"
 
 //公司列表接口
 export const reqGetCompanyList = (data) => {
     //发请求
     return requests({
-        url: '/company/',
+        url: `${rankPrefix}/company/`,
         method: 'post',
         data
     })
@@ -17,7 +18,7 @@ export const reqGetCompanyList = (data) => {
 export const reqGetProductList = (data) => {
     //发请求
     return requests({
-        url: '/product/',
+        url: `${rankPrefix}/product/`,
         method: 'post',
         data
     })
@@ -27,7 +28,7 @@ export const reqGetProductList = (data) => {
 export const reqGetProductInfo = (id) => {
     //发请求
     return requests({
-        url: `/product/${id}`,
+        url: `${rankPrefix}/product/${id}`,
         method: 'get'
     })
 }
@@ -36,7 +37,7 @@ export const reqGetProductInfo = (id) => {
 export const reqGetProductIntroduction = (id) => {
     //发请求
     return requests({
-        url: `/introduction/${id}`,
+        url: `${rankPrefix}/introduction/${id}`,
         method: 'get'
     })
 }
@@ -45,7 +46,7 @@ export const reqGetProductIntroduction = (id) => {
 export const reqGetCompanyOrProductPaper = (data) => {
     //发请求
     return requests({
-        url: '/paper/',
+        url: `${rankPrefix}/paper/`,
         method: 'post',
         data
     })
@@ -55,7 +56,7 @@ export const reqGetCompanyOrProductPaper = (data) => {
 export const reqGetCompanyOrProductPatent = (data) => {
     //发请求
     return requests({
-        url: '/patent/',
+        url: `${rankPrefix}/patent/`,
         method: 'post',
         data
     })
@@ -65,7 +66,7 @@ export const reqGetCompanyOrProductPatent = (data) => {
 export const reqGetProductRanking = (id) => {
     //发请求
     return requests({
-        url: `/ranking/${id}`,
+        url: `${rankPrefix}/ranking/${id}`,
         method: 'get'
     })
 }
@@ -74,7 +75,7 @@ export const reqGetProductRanking = (id) => {
 export const reqGetCompanySupport = (data) => {
     //发请求
     return requests({
-        url: '/support/',
+        url: `${rankPrefix}/support/`,
         method: 'post',
         data
     })
@@ -84,7 +85,7 @@ export const reqGetCompanySupport = (data) => {
 export const reqGetCompanyAward = (data) => {
     //发请求
     return requests({
-        url: '/award/',
+        url: `${rankPrefix}/award/`,
         method: 'post',
         data
     })
@@ -94,7 +95,7 @@ export const reqGetCompanyAward = (data) => {
 export const reqGetCompanyGc = (data) => {
     //发请求
     return requests({
-        url: '/gc/',
+        url: `${rankPrefix}/gc/`,
         method: 'post',
         data
     })
@@ -104,7 +105,7 @@ export const reqGetCompanyGc = (data) => {
 export const reqGetRanking = (data) => {
     //发请求
     return requests({
-        url: '/ranking/',
+        url: `${rankPrefix}/ranking/`,
         method: 'post',
         data
     })
@@ -114,7 +115,7 @@ export const reqGetRanking = (data) => {
 export const reqUpLoadPhoto = (data) => {
     //发请求
     return requests({
-        url: '/picture/upload',
+        url: `${rankPrefix}/picture/upload`,
         method: 'post',
         data
     })
@@ -124,7 +125,7 @@ export const reqUpLoadPhoto = (data) => {
 export const reqAddUpLoadPhoto = (data) => {
     //发请求
     return requests({
-        url: '/picture/',
+        url: `${rankPrefix}/picture/`,
         method: 'post',
         data
     })
@@ -134,7 +135,7 @@ export const reqAddUpLoadPhoto = (data) => {
 export const reqCheckUpLoadPhoto = (data) => {
     //发请求
     return requests({
-        url: '/picture/list',
+        url: `${rankPrefix}/picture/list`,
         method: 'post',
         data
     })
@@ -144,8 +145,50 @@ export const reqCheckUpLoadPhoto = (data) => {
 export const reqDownloadUpLoadPhoto = (serial) => {
     //发请求
     return requests({
-        url: `/picture/download/${serial}`,
+        url: `${rankPrefix}/picture/download/${serial}`,
         method: 'get',
         responseType: 'blob'
+    })
+}
+
+// 请求登录二维码
+export const reqLoginQrCode = (redirectUrl) => {
+    return requests({
+        url: "/login/wxAuthorizeUrl?code=" + Date.now() + `&url=${redirectUrl}`,
+        method: 'post'
+    })
+}
+
+// 登录请求
+export const reqDoLogin = (user) => {
+    return requests({
+        url: "/doLogin",
+        method: 'post',
+        user
+    })
+}
+
+// 登录请求
+export const reqDoLogout = () => {
+    return requests({
+        url: "/logout",
+        method: 'get',
+    })
+}
+
+// 手机端登录回调
+export const mobileDoLoginCallBack = (data) => {
+    return requests({
+        url: "/login/wxCallBack",
+        method: 'post',
+        data
+    })
+}
+
+// 手机端登录回调
+export const loadCurrentUser = () => {
+    return requests({
+        url: "/user/currentUser",
+        method: 'get'
     })
 }

@@ -1,5 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
+
 module.exports = defineConfig({
+  publicPath: '/rank',
   transpileDependencies: true,
   // 关闭eslint校验
   lintOnSave: false,
@@ -7,7 +9,7 @@ module.exports = defineConfig({
     // 配置不同的后台API地址
     proxy: {
       '/api': {
-        target: 'http://47.94.136.1/chinmedy/rank/',
+        target: 'http://47.94.136.1/chinmedy',
         ws: false,
         changeOrigin: true,
         pathRewrite: {

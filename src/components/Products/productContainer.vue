@@ -12,7 +12,7 @@
                 <div class="medi-name">
                   <span
                     >{{ goodsInfo.name }}
-                    <a class="el-icon-share" @click="shareWX"></a
+                    <a class="el-icon-share" @click="shareDialogVisible = true"></a
                   ></span>
                   <span>{{ goodsInfo.company }}</span>
                 </div>
@@ -68,7 +68,7 @@
                       <span class="active">药品介绍</span>
                     </div>
                     <p>
-                      {{ goodsInfo.instruction }}
+                      {{ goodsInfo.comment }}
                     </p>
                   </div>
                 </div>
@@ -134,7 +134,7 @@
                 <span class="active">药品介绍</span>
               </div>
               <p>
-                {{ goodsInfo.instruction }}
+                {{ goodsInfo.comment }}
               </p>
             </div>
           </div>
@@ -226,13 +226,13 @@
                 <el-table-column prop="status" label="法律状态" width="width">
                 </el-table-column>
                 <el-table-column
-                  prop="authorizationYear"
+                  prop="applicationYear"
                   label="申请年份"
                   width="width"
                 >
                 </el-table-column>
                 <el-table-column
-                  prop="applicationNum"
+                  prop="authorizationYear"
                   label="公开年份"
                   width="width"
                 >
@@ -311,11 +311,29 @@
         <!-- <remark /> -->
       </div>
     </div>
+
+    <el-dialog
+        title="请打开微信扫描二维码"
+        :visible.sync="shareDialogVisible"
+        width="30%"
+        center>
+      <div style="text-align: center">
+        <vue-qr :text="shareData.url" :margin="10" colorDark="#000" colorLight="#fff" :dotScale="1" :logoSrc="shareData.icon" :logoScale="0.2" :size="200"></vue-qr>
+      </div>
+      <br>
+      <div style="text-align: center"><h6>分享该产品</h6></div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="shareDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="shareDialogVisible = false">确定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import rank from "@/components/Products/rightContainer/rank.vue";
+import share from "@/api/share";
+import vueQr from 'vue-qr'
 // import chart from "@/components/Products/rightContainer/chart.vue";
 // import remark from "@/components/Products/rightContainer/remark.vue";
 
@@ -342,6 +360,7 @@ export default {
       paperList: [],
       patentList: [],
       dialogVisible: false,
+      shareDialogVisible: false,
       fileList: [],
       filePhoto: [],
       fileUrl: "",
@@ -388,10 +407,16 @@ export default {
       checkedNewsPictureResult: [],
       NewsPicture: [],
       binaryData: [],
+      shareData: {
+        // url: 'http://cxyabc.vaiwan.com/to_detail',  //需要转化成二维码的网址
+        url: window.location.href.toString(),  //需要转化成二维码的网址
+        icon: ""
+      },
     };
   },
   components: {
     rank,
+    vueQr
     // chart,
     // remark,
   },
@@ -669,11 +694,20 @@ export default {
       console.log(val);
       this.pictureType = val;
     },
-
-    //分享按钮 WX
-    shareWX() {},
+    getShareReady() {
+      const url = location.href.split('#')[0];
+      let dataForWeixin = {
+        title: "中医药竞争力平台 - " + this.goodsInfo.name,    // 分享标题
+        desc: this.goodsInfo.comment,            // 内容描述
+        linkurl: window.location.href.toString(), // 分享链接,该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        // img: 'http://wx.qlogo.cn/mmopen/ciaIftfPzwlo0coPuwwLS5Fw9UwGMlxY2ziaWpqXzevJI8dKeDvk4n3NxtZS4D8dNHSYUhbiaA6IIGnFsiagEbRlaExselicC3pEA/64',        // 分享内容显示的图片(图片必须是正方形的链接)
+        img: 'https://mmbiz.qpic.cn/mmbiz_jpg/7ZFySn5RZ9ZsCqkvibNvnrUwibMuZibu4dJB8hiausibibRMR45LkBEXUhL1wt0auYfnGsLHuw7YY5w48gT5icU5FyAgQ/0?wx_fmt=jpeg',        // 分享内容显示的图片(图片必须是正方形的链接)
+      };
+      share.getJSSDK(url, dataForWeixin)
+    },
   },
   mounted() {
+    this.getShareReady();
     this.getGoodInfo();
     this.getProductIntroduction();
     this.getProductPaper();
