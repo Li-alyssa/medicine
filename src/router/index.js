@@ -20,18 +20,6 @@ const routes = [
         meta: { show: true }
     },
     {
-        path: '/login',
-        name: 'Login',
-        component: () => import('../components/login/index.vue'),
-        meta: { show: false }
-    },
-    {
-        path: '/register',
-        name: 'Register',
-        component: () => import('../components/register/index.vue'),
-        meta: { show: false }
-    },
-    {
         path: '/companies',
         name: 'companies',
         component: () => import('../components/company.vue'),
@@ -43,17 +31,6 @@ const routes = [
         component: () => import('../components/companyDetails.vue'),
         meta: { show: true }
     },
-    // {
-    //     path: '/variety',
-    //     name: 'variety',
-    //     component: () => import('../components/variety.vue')
-    // },
-    // {
-    //     path: '/variety/:id',
-    //     name: 'product',
-    //     component: () => import('../components/product.vue')
-    // },
-
     {
         path: '/goods',
         name: 'goods',

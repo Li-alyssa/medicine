@@ -331,12 +331,6 @@ export default {
   mounted() {
     this.getProductInfo();
   },
-  // created() {
-  //   this.value1 = this.OtcType[0].value;
-  //   this.value2 = this.RouteType[0].value;
-  //   this.value3 = this.AccessType[0].value;
-  //   this.value4 = this.DomainType[0].value;
-  // },
 };
 </script>
 

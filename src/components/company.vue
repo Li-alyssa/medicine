@@ -82,6 +82,132 @@ export default {
       total: 0,
       companyList: [],
       companyId: 0,
+      optionsProvince: [
+        {
+          value: 31,
+          label: "北京",
+        },
+        {
+          value: 32,
+          label: "天津",
+        },
+        {
+          value: 33,
+          label: "河北",
+        },
+        {
+          value: 34,
+          label: "辽宁",
+        },
+        {
+          value: 35,
+          label: "吉林",
+        },
+        {
+          value: 36,
+          label: "黑龙江",
+        },
+        {
+          value: 37,
+          label: "山东",
+        },
+        {
+          value: 38,
+          label: "江苏",
+        },
+        {
+          value: 39,
+          label: "上海",
+        },
+        {
+          value: 310,
+          label: "浙江",
+        },
+        {
+          value: 311,
+          label: "安徽",
+        },
+        {
+          value: 312,
+          label: "福建",
+        },
+        {
+          value: 313,
+          label: "江西",
+        },
+        {
+          value: 314,
+          label: "广东",
+        },
+        {
+          value: 315,
+          label: "广西",
+        },
+        {
+          value: 316,
+          label: "海南",
+        },
+        {
+          value: 317,
+          label: "河南",
+        },
+        {
+          value: 318,
+          label: "湖南",
+        },
+        {
+          value: 319,
+          label: "湖北",
+        },
+        {
+          value: 320,
+          label: "山西",
+        },
+        {
+          value: 321,
+          label: "内蒙古",
+        },
+        {
+          value: 322,
+          label: "宁夏",
+        },
+        {
+          value: 323,
+          label: "青海",
+        },
+        {
+          value: 324,
+          label: "陕西",
+        },
+        {
+          value: 325,
+          label: "甘肃",
+        },
+        {
+          value: 326,
+          label: "新疆",
+        },
+        {
+          value: 327,
+          label: "四川",
+        },
+        {
+          value: 328,
+          label: "贵州",
+        },
+        {
+          value: 329,
+          label: "云南",
+        },
+        {
+          value: 330,
+          label: "重庆",
+        },
+        {
+          value: 331,
+          label: "西藏",
+        },
+      ],
     };
   },
   methods: {
