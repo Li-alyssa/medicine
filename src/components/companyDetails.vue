@@ -48,44 +48,44 @@
     </div>
     <div class="container">
       <el-tabs type="border-card" v-model="activeName">
-        <el-tab-pane label="生产品种" name="first">
-          <el-table
-            :data="tableData"
-            stripe
-            style="width: 100%"
-            border
-            v-if="activeName === 'first'"
-          >
-            <el-table-column
-              label="序号"
-              type="index"
-              width="80"
-              align="center"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="mingcheng"
-              label="名称"
-              width="180"
-              align="center"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="gongneng"
-              label="功能主治"
-              width="width"
-              align="center"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="caozuo"
-              label="操作"
-              width="80"
-              fixed="right"
-            >
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
+<!--        <el-tab-pane label="生产品种" name="first">-->
+<!--          <el-table-->
+<!--            :data="tableData"-->
+<!--            stripe-->
+<!--            style="width: 100%"-->
+<!--            border-->
+<!--            v-if="activeName === 'first'"-->
+<!--          >-->
+<!--            <el-table-column-->
+<!--              label="序号"-->
+<!--              type="index"-->
+<!--              width="80"-->
+<!--              align="center"-->
+<!--            >-->
+<!--            </el-table-column>-->
+<!--            <el-table-column-->
+<!--              prop="mingcheng"-->
+<!--              label="名称"-->
+<!--              width="180"-->
+<!--              align="center"-->
+<!--            >-->
+<!--            </el-table-column>-->
+<!--            <el-table-column-->
+<!--              prop="gongneng"-->
+<!--              label="功能主治"-->
+<!--              width="width"-->
+<!--              align="center"-->
+<!--            >-->
+<!--            </el-table-column>-->
+<!--            <el-table-column-->
+<!--              prop="caozuo"-->
+<!--              label="操作"-->
+<!--              width="80"-->
+<!--              fixed="right"-->
+<!--            >-->
+<!--            </el-table-column>-->
+<!--          </el-table>-->
+<!--        </el-tab-pane>-->
         <el-tab-pane label="科研论文" name="second">
           <el-table
             :data="paperList"
@@ -143,13 +143,13 @@
             <el-table-column prop="status" label="法律状态" width="width">
             </el-table-column>
             <el-table-column
-              prop="authorizationYear"
+              prop="applicationYear"
               label="申请年份"
               width="width"
             >
             </el-table-column>
             <el-table-column
-              prop="applicationNum"
+              prop="authorizationYear"
               label="公开年份"
               width="width"
             >
@@ -282,7 +282,7 @@ export default {
   data() {
     return {
       tableData: [],
-      activeName: "first",
+      activeName: "second",
       paperQuery: {
         pageNum: 1,
         pageSize: 10,
