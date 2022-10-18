@@ -6,7 +6,7 @@
           <div class="table-title">
             <div></div>
             <div>{{ $route.query.value }}</div>
-            <div>共X种产品</div>
+            <div>共{{ total }}种产品</div>
           </div>
           <div class="search-select" v-if="this.$route.query.listId == 2">
             <el-select
@@ -57,44 +57,50 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in companyList" :key="item.id">
+              <tr
+                v-for="(item, index) in companyList"
+                :key="item.id"
+                style="height: 100px"
+              >
                 <td>
                   <div class="ranking">{{ item.ranking }}</div>
                 </td>
                 <td>
                   <div class="medicine-container">
-                    <div class="logo">
+                    <!-- <div class="logo">
                       <img
                         data-v-375288e5=""
                         onerror="javascript:this.src='/images/blank.svg';"
                         src="https://www.shanghairanking.cn/_uni/logo/27532357.png"
                         alt="清华大学"
                       />
-                    </div>
+                    </div> -->
                     <div class="medicine-name">
                       <div>
-                        <div class="tooltip">
-                          <div class="link-container">
-                            <router-link
-                              :to="`/product/${item.id}`"
-                              class="name"
-                              >{{ item.productName }}</router-link
-                            >
+                        <router-link
+                          :to="`/product/${item.productId}/${item.productName}`"
+                        >
+                          <div class="tooltip">
+                            <div class="link-container">
+                              <div class="name">{{ item.productName }}</div>
+                            </div>
                           </div>
-                        </div>
+                        </router-link>
                       </div>
-                      <div>
+                      <!-- <div>
                         <div class="tooltip">
                           <div class="link-container">
                             <div class="number">国药准字Z20023377</div>
                           </div>
                         </div>
-                      </div>
-                      <p class="tags">发明专利: 0/相关论文: 1/未纳入医保</p>
+                      </div> -->
+                      <!-- <p class="tags">发明专利: 0/相关论文: 1/未纳入医保</p> -->
                     </div>
                   </div>
                 </td>
-                <td>{{ item.companyName }}</td>
+                <td>
+                  {{ item.companyName }}
+                </td>
                 <td>{{ item.score }}</td>
               </tr>
             </tbody>
@@ -305,6 +311,7 @@ export default {
       listId: 0,
       year: 2022,
       companyList: [],
+      total: 0,
     };
   },
   watch: {
@@ -328,7 +335,8 @@ export default {
           };
           let result = await this.$API.reqGetRanking(data);
           // console.log(result);
-          this.companyList = result.response;
+          this.companyList = result.response.rankList;
+          this.total = result.response.total;
         } else if (this.listId == 2) {
           const data = {
             listId: this.gnId,
@@ -336,7 +344,8 @@ export default {
           };
           let result = await this.$API.reqGetRanking(data);
           console.log(result);
-          this.companyList = result.response;
+          this.companyList = result.response.rankList;
+          this.total = result.response.total;
           // }
         } else if (this.listId == 3) {
           const data = {
@@ -345,7 +354,8 @@ export default {
           };
           let result = await this.$API.reqGetRanking(data);
           console.log(result);
-          this.companyList = result.response;
+          this.companyList = result.response.rankList;
+          this.total = result.response.total;
           // }
         } else if (this.listId == 4) {
           const data = {
@@ -354,7 +364,8 @@ export default {
           };
           let result = await this.$API.reqGetRanking(data);
           console.log(result);
-          this.companyList = result.response;
+          this.companyList = result.response.rankList;
+          this.total = result.response.total;
           // }
         } else if (this.listId == 5) {
           const data = {
@@ -363,7 +374,8 @@ export default {
           };
           let result = await this.$API.reqGetRanking(data);
           console.log(result);
-          this.companyList = result.response;
+          this.companyList = result.response.rankList;
+          this.total = result.response.total;
           // }
         } else if (this.listId == 6) {
           const data = {
@@ -372,7 +384,8 @@ export default {
           };
           let result = await this.$API.reqGetRanking(data);
           console.log(result);
-          this.companyList = result.response;
+          this.companyList = result.response.rankList;
+          this.total = result.response.total;
           // }
         } else if (this.listId == 7) {
           const data = {
@@ -381,7 +394,8 @@ export default {
           };
           let result = await this.$API.reqGetRanking(data);
           console.log(result);
-          this.companyList = result.response;
+          this.companyList = result.response.rankList;
+          this.total = result.response.total;
           // }
         }
       } catch (error) {
@@ -569,7 +583,15 @@ tbody {
   padding: 0 4px;
   line-height: 22px;
 }
-
+.rk-table tr:first-child td:first-child .ranking {
+  background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_no1.aab5386.svg);
+}
+.rk-table tr:nth-child(2) td:first-child .ranking {
+  background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_no2.081cfd5.svg);
+}
+.rk-table tr:nth-child(3) td:first-child .ranking {
+  background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_no3.57146f2.svg);
+}
 .rk-table td:nth-child(2) {
   text-align: left;
   padding-left: 15px;
@@ -590,7 +612,7 @@ tbody {
 .rk-table td .medicine-container .medicine-name {
   display: flex;
   flex-direction: column;
-  margin-left: 16px;
+  /* margin-left: 16px; */
 }
 
 .tooltip {

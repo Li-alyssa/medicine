@@ -118,7 +118,7 @@
 
 <script>
 import vueQr from "vue-qr";
-import {loadCurrentUser} from "@/api";
+import { loadCurrentUser } from "@/api";
 export default {
   name: "shange",
   components: {
@@ -144,9 +144,7 @@ export default {
       msgCodeText: "发送验证码",
       loginDialogVisible: false,
       userInfo: {},
-      backData: {
-
-      },
+      backData: {},
       rankList: [
         {
           listId: 1,
@@ -190,11 +188,17 @@ export default {
     handleWxCode() {
       let param = window.location.search.substring(1);
       if (param) {
-        this.backData.code = param.split("&")[0].split("=")[1]
-        this.backData.state = param.split("&")[1].split("=")[1]
+        this.backData.code = param.split("&")[0].split("=")[1];
+        this.backData.state = param.split("&")[1].split("=")[1];
         this.$API.mobileDoLoginCallBack(this.backData);
-        document.addEventListener('WeixinJSBridgeReady', function(){ WeixinJSBridge.call('closeWindow'); }, false);
-        WeixinJSBridge.call('closeWindow');
+        document.addEventListener(
+          "WeixinJSBridgeReady",
+          function () {
+            WeixinJSBridge.call("closeWindow");
+          },
+          false
+        );
+        WeixinJSBridge.call("closeWindow");
       }
     },
     menuBtn() {
@@ -204,34 +208,34 @@ export default {
 
     //获取用户登录信息
     getUserInfo() {
-      this.userInfo = JSON.parse(localStorage.getItem("userinfo"));
+      this.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
     },
 
     doLogin() {
       this.$API.reqLoginQrCode("").then((resp) => {
-          if (resp) {
-            this.loginData.url = resp.response.url;
-            setTimeout(() => {
-              this.loginDialogVisible = true;
-            }, 500);
-            this.loginData.state = resp.response.state;
-            this.loginUser.username = resp.response.state;
-            var waitWeiXin = setInterval(() => {
-              this.$API.reqDoLogin(this.loginUser).then(
-                  (resp) => {
-                    if (resp.respons) {
-                      this.user = resp.response;
-                      window.sessionStorage.setItem("userinfo", JSON.stringify(resp.response));
-                      location.reload();
-                      this.loginDialogVisible = false;
-                      clearInterval(waitWeiXin);
-                    }
-                  }
-              );
-            }, 1000);
-          }
+        if (resp) {
+          this.loginData.url = resp.response.url;
+          setTimeout(() => {
+            this.loginDialogVisible = true;
+          }, 500);
+          this.loginData.state = resp.response.state;
+          this.loginUser.username = resp.response.state;
+          var waitWeiXin = setInterval(() => {
+            this.$API.reqDoLogin(this.loginUser).then((resp) => {
+              if (resp.respons) {
+                this.user = resp.response;
+                window.sessionStorage.setItem(
+                  "userinfo",
+                  JSON.stringify(resp.response)
+                );
+                location.reload();
+                this.loginDialogVisible = false;
+                clearInterval(waitWeiXin);
+              }
+            });
+          }, 1000);
         }
-      );
+      });
     },
     doLogout() {
       this.$confirm("此操作将退出用户登录, 是否继续?", "提示", {
@@ -239,28 +243,28 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       })
-      .then(() => {
-        this.$API.reqDoLogout("/logout").then(() => {
-          this.$router.replace("/home");
-          window.sessionStorage.removeItem("userinfo");
-          this.user = null;
-          location.reload();
+        .then(() => {
+          this.$API.reqDoLogout("/logout").then(() => {
+            this.$router.replace("/home");
+            window.sessionStorage.removeItem("userinfo");
+            this.user = null;
+            location.reload();
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消",
+          });
         });
-      })
-      .catch(() => {
-        this.$message({
-          type: "info",
-          message: "已取消",
-        });
-      });
     },
     handleRememberMe() {
-      this.$API.loadCurrentUser("/user/currentUser").then(resp => {
+      this.$API.loadCurrentUser("/user/currentUser").then((resp) => {
         if (resp.response && resp.response !== 1) {
           this.user = resp.response;
-          window.sessionStorage.setItem("user", JSON.stringify(resp.response))
+          window.sessionStorage.setItem("user", JSON.stringify(resp.response));
         }
-      })
+      });
     },
   },
   mounted() {

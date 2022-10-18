@@ -151,6 +151,16 @@ export const reqDownloadUpLoadPhoto = (serial) => {
     })
 }
 
+// 产品评价接口
+export const reqRecommend = (data) => {
+    //发请求
+    return requests({
+        url: `${rankPrefix}/product/recommend`,
+        method: 'post',
+        data
+    })
+}
+
 // 请求登录二维码
 export const reqLoginQrCode = (redirectUrl) => {
     return requests({

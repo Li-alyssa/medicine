@@ -122,7 +122,7 @@ export default {
 
 <style scoped>
 .top-bar {
-  background-image: url(@/assets/1.jpg);
+  background-image: url(@/assets/rank-top3.jpg);
   position: relative;
   min-height: 245px;
   background-repeat: no-repeat;

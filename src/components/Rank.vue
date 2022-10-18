@@ -1,64 +1,40 @@
 <template>
   <div class="rank">
     <div class="rank-container">
-      <div class="rank-item">
+      <div
+        class="rank-item"
+        v-for="(item, index) in rankList"
+        :key="item.listId"
+      >
         <div class="rank-item-top">
           <div class="rank-item-left">
-            <router-link to="/ProvinceRank">
+            <router-link
+              :to="{
+                path: `/${item.route}`,
+                query: { listId: item.listId, value: item.value },
+              }"
+            >
               <div class="rank-item-title">
-                <span>区域排名</span>
+                <span>{{ item.value }}</span>
               </div>
-              <div class="rank-item-subtitle">quyupaiming</div>
+              <div class="rank-item-subtitle">{{ item.englishName }}</div>
             </router-link>
-            <div class="rank-item-introduction">
-              -治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！
-            </div>
+            <div class="rank-item-introduction">简介</div>
           </div>
           <div class="rank-item-right">
-            <img
-              src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-              alt=""
-            />
+            <img :src="item.imgUrl" alt="" />
           </div>
         </div>
-        <router-link to="/ProvinceRank">
-          <div class="check-rank">
+        <div class="check-rank">
+          <router-link
+            :to="{
+              path: `/${item.route}`,
+              query: { listId: item.listId, value: item.value },
+            }"
+          >
             <span>查看排名 ></span>
-          </div>
-        </router-link>
-        <div class="rank-item-blur" style="display: none">
-          <div class="rank-item-bcur-text">
-            <a href="">
-              <span>区域排名</span>
-            </a>
-          </div>
+          </router-link>
         </div>
-      </div>
-      <div class="rank-item">
-        <div class="rank-item-top">
-          <div class="rank-item-left">
-            <a href="">
-              <div class="rank-item-title">
-                <span>治疗领域排名</span>
-              </div>
-              <div class="rank-item-subtitle">zhiliaolingyupaim</div>
-            </a>
-            <div class="rank-item-introduction">
-              -治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！-治得好！治的妙！治的呱呱叫！
-            </div>
-          </div>
-          <div class="rank-item-right">
-            <img
-              src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-              alt=""
-            />
-          </div>
-        </div>
-        <a href="">
-          <div class="check-rank">
-            <span>查看排名 ></span>
-          </div>
-        </a>
         <div class="rank-item-blur" style="display: none">
           <div class="rank-item-bcur-text">
             <a href="">
@@ -74,6 +50,61 @@
 <script>
 export default {
   components: {},
+  data() {
+    return {
+      rankList: [
+        {
+          listId: 1,
+          value: "总排行榜",
+          route: "TotalRank",
+          englishName: "Overall leaderboard",
+          imgUrl: require("@/assets/Overall leaderboard.png"),
+        },
+        {
+          listId: 2,
+          value: "功能排行榜",
+          route: "FeatureRank",
+          englishName: "Feature leaderboard",
+          imgUrl: require("@/assets/Feature leaderboard.png"),
+        },
+        {
+          listId: 3,
+          value: "省份排行榜",
+          route: "ProvinceRank",
+          englishName: "Provincial leaderboard",
+          imgUrl: require("@/assets/Provincial leaderboard.png"),
+        },
+        {
+          listId: 4,
+          value: "论文排行榜",
+          route: "ThesisRank",
+          englishName: "Paper leaderboard",
+          imgUrl: require("@/assets/Paper leaderboard.png"),
+        },
+        {
+          listId: 5,
+          value: "专利排行榜",
+          route: "PatentRank",
+          englishName: "Patent leaderboard",
+          imgUrl: require("@/assets/Patent leaderboard.png"),
+        },
+        {
+          listId: 6,
+          value: "民族药排行榜",
+          route: "EthnicRank",
+          englishName: "Ethnic leaderboard",
+          imgUrl: require("@/assets/Ethnic leaderboard.png"),
+        },
+        {
+          listId: 7,
+          value: "(非)注射排行榜",
+          route: "InjectionRank",
+          englishName: "Injection leaderboard",
+          imgUrl: require("@/assets/Injection leaderboard.png"),
+        },
+      ],
+    };
+  },
 };
 </script>
 
@@ -88,7 +119,7 @@ export default {
 }
 
 .rank-item {
-  width: 50%;
+  width: 1180px;
   background-color: #fff;
   margin: 20px auto 0;
   border-radius: 4px;
@@ -136,8 +167,9 @@ export default {
 
 .rank-item-right img {
   width: 100%;
-  height: 200px;
+  height: 100%;
   border-radius: 10px;
+  object-fit: cover;
 }
 .check-rank:hover {
   background-color: #409eff;

@@ -12,7 +12,10 @@
                 <div class="medi-name">
                   <span
                     >{{ goodsInfo.name }}
-                    <a class="el-icon-share" @click="shareDialogVisible = true"></a
+                    <a
+                      class="el-icon-share"
+                      @click="shareDialogVisible = true"
+                    ></a
                   ></span>
                   <span>{{ goodsInfo.company }}</span>
                 </div>
@@ -42,19 +45,33 @@
                     <div class="rec-participate">xxx人参与</div>
                   </div>
                   <div class="rec-right">
-                    <div class="item-top">
+                    <div
+                      :class="recommend ? 'item-top-2' : 'item-top'"
+                      @click="recommendTrue"
+                    >
                       <div class="img-container">
                         <img
-                          src="https://www.shanghairanking.cn/_nuxt/img/tuijian_hui.74ac9fa.svg"
+                          :src="
+                            recommend
+                              ? 'https://www.shanghairanking.cn/_nuxt/img/tuijian.6e30c21.svg '
+                              : 'https://www.shanghairanking.cn/_nuxt/img/tuijian_hui.74ac9fa.svg'
+                          "
                           alt=""
                         />
                       </div>
                       <span>推荐</span>
                     </div>
-                    <div class="item-bottom">
+                    <div
+                      :class="unRecommend ? 'item-bottom-2' : 'item-bottom'"
+                      @click="recommendFalse"
+                    >
                       <div class="img-container">
                         <img
-                          src="https://www.shanghairanking.cn/_nuxt/img/butuijian.17030ab.svg"
+                          :src="
+                            unRecommend
+                              ? '	https://www.shanghairanking.cn/_nuxt/img/butuijian_active.dd9fbce.svg'
+                              : 'https://www.shanghairanking.cn/_nuxt/img/butuijian.17030ab.svg'
+                          "
                           alt=""
                         />
                       </div>
@@ -100,19 +117,30 @@
                 <div class="rec-participate">xxx人参与</div>
               </div>
               <div class="rec-right">
-                <div class="item-top">
+                <div
+                  :class="recommend ? 'item-top-2' : 'item-top'"
+                  @click="recommendTrue"
+                >
                   <div class="img-container">
                     <img
-                      src="https://www.shanghairanking.cn/_nuxt/img/tuijian_hui.74ac9fa.svg"
+                      :src="
+                        recommend
+                          ? 'https://www.shanghairanking.cn/_nuxt/img/tuijian.6e30c21.svg '
+                          : 'https://www.shanghairanking.cn/_nuxt/img/tuijian_hui.74ac9fa.svg'
+                      "
                       alt=""
                     />
                   </div>
                   <span>推荐</span>
                 </div>
-                <div class="item-bottom">
+                <div :class="unRecommend ? 'item-bottom-2' : 'item-bottom'">
                   <div class="img-container">
                     <img
-                      src="https://www.shanghairanking.cn/_nuxt/img/butuijian.17030ab.svg"
+                      :src="
+                        unRecommend
+                          ? '	https://www.shanghairanking.cn/_nuxt/img/butuijian_active.dd9fbce.svg'
+                          : 'https://www.shanghairanking.cn/_nuxt/img/butuijian.17030ab.svg'
+                      "
                       alt=""
                     />
                   </div>
@@ -196,7 +224,7 @@
                 </el-table-column>
                 <el-table-column prop="journal" label="期刊名称" width="180">
                 </el-table-column>
-                <el-table-column prop="year" label="发表年份">
+                <el-table-column prop="year" label="发表年份" align="center">
                 </el-table-column>
                 <el-table-column prop="type" label="期刊类型">
                 </el-table-column>
@@ -219,22 +247,29 @@
                 style="width: 100%"
                 v-if="activeName === 'sixth'"
               >
-                <el-table-column prop="name" label="专利名称" width="180">
+                <el-table-column prop="name" label="专利名称" width="width">
                 </el-table-column>
-                <el-table-column prop="type" label="专利类型" width="180">
+                <el-table-column prop="type" label="专利类型" width="120">
                 </el-table-column>
-                <el-table-column prop="status" label="法律状态" width="width">
+                <el-table-column
+                  prop="status"
+                  label="法律状态"
+                  width="100"
+                  align="center"
+                >
                 </el-table-column>
                 <el-table-column
                   prop="applicationYear"
                   label="申请年份"
-                  width="width"
+                  width="80"
+                  align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="authorizationYear"
                   label="公开年份"
-                  width="width"
+                  width="80"
+                  align="center"
                 >
                 </el-table-column>
               </el-table>
@@ -313,18 +348,30 @@
     </div>
 
     <el-dialog
-        title="请打开微信扫描二维码"
-        :visible.sync="shareDialogVisible"
-        width="30%"
-        center>
+      title="请打开微信扫描二维码"
+      :visible.sync="shareDialogVisible"
+      width="30%"
+      center
+    >
       <div style="text-align: center">
-        <vue-qr :text="shareData.url" :margin="10" colorDark="#000" colorLight="#fff" :dotScale="1" :logoSrc="shareData.icon" :logoScale="0.2" :size="200"></vue-qr>
+        <vue-qr
+          :text="shareData.url"
+          :margin="10"
+          colorDark="#000"
+          colorLight="#fff"
+          :dotScale="1"
+          :logoSrc="shareData.icon"
+          :logoScale="0.2"
+          :size="200"
+        ></vue-qr>
       </div>
-      <br>
+      <br />
       <div style="text-align: center"><h6>分享该产品</h6></div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="shareDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="shareDialogVisible = false">确定</el-button>
+        <el-button type="primary" @click="shareDialogVisible = false"
+          >确定</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -333,7 +380,7 @@
 <script>
 import rank from "@/components/Products/rightContainer/rank.vue";
 import share from "@/api/share";
-import vueQr from 'vue-qr'
+import vueQr from "vue-qr";
 // import chart from "@/components/Products/rightContainer/chart.vue";
 // import remark from "@/components/Products/rightContainer/remark.vue";
 
@@ -409,14 +456,17 @@ export default {
       binaryData: [],
       shareData: {
         // url: 'http://cxyabc.vaiwan.com/to_detail',  //需要转化成二维码的网址
-        url: window.location.href.toString(),  //需要转化成二维码的网址
-        icon: ""
+        url: window.location.href.toString(), //需要转化成二维码的网址
+        icon: "",
       },
+      userinfo: JSON.parse(sessionStorage.getItem("userinfo")),
+      recommend: false,
+      unRecommend: false,
     };
   },
   components: {
     rank,
-    vueQr
+    vueQr,
     // chart,
     // remark,
   },
@@ -454,7 +504,15 @@ export default {
         };
         let result = await this.$API.reqGetCompanyOrProductPaper(data);
         // console.log(result);
-        this.paperList = result.response.list;
+
+        for (var i = 0; i < result.response.list.length; i++) {
+          var reg = new RegExp("%", "g"); //g表示全部的
+          //         // //将json转换为字符串   将被替换内容替换为替换内容
+          let str = JSON.stringify(result.response).replace(reg, ",");
+          var replaceData = JSON.parse(str);
+          // console.log(data);
+        }
+        this.paperList = replaceData.list;
         this.paperQuery.paperTotal = result.response.total;
       } catch (error) {
         console.log(error.message);
@@ -695,15 +753,49 @@ export default {
       this.pictureType = val;
     },
     getShareReady() {
-      const url = location.href.split('#')[0];
+      const url = location.href.split("#")[0];
       let dataForWeixin = {
-        title: "中医药竞争力平台 - " + this.goodsInfo.name,    // 分享标题
-        desc: this.goodsInfo.comment,            // 内容描述
+        title: "中医药竞争力平台 - " + this.goodsInfo.name, // 分享标题
+        desc: this.goodsInfo.comment, // 内容描述
         linkurl: window.location.href.toString(), // 分享链接,该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         // img: 'http://wx.qlogo.cn/mmopen/ciaIftfPzwlo0coPuwwLS5Fw9UwGMlxY2ziaWpqXzevJI8dKeDvk4n3NxtZS4D8dNHSYUhbiaA6IIGnFsiagEbRlaExselicC3pEA/64',        // 分享内容显示的图片(图片必须是正方形的链接)
-        img: 'https://mmbiz.qpic.cn/mmbiz_jpg/7ZFySn5RZ9ZsCqkvibNvnrUwibMuZibu4dJB8hiausibibRMR45LkBEXUhL1wt0auYfnGsLHuw7YY5w48gT5icU5FyAgQ/0?wx_fmt=jpeg',        // 分享内容显示的图片(图片必须是正方形的链接)
+        img: "https://mmbiz.qpic.cn/mmbiz_jpg/7ZFySn5RZ9ZsCqkvibNvnrUwibMuZibu4dJB8hiausibibRMR45LkBEXUhL1wt0auYfnGsLHuw7YY5w48gT5icU5FyAgQ/0?wx_fmt=jpeg", // 分享内容显示的图片(图片必须是正方形的链接)
       };
-      share.getJSSDK(url, dataForWeixin)
+      share.getJSSDK(url, dataForWeixin);
+    },
+
+    //使用者推荐
+    async recommendTrue() {
+      if (this.userinfo) {
+        this.recommend = !this.recommend;
+        let data = {
+          productId: this.$route.params.id,
+          recommend: this.recommend,
+        };
+        let result = await this.$API.reqRecommend(data);
+        console.log(result);
+      } else {
+        this.$alert("您还未登录,请先登录!", {
+          confirmButtonText: "确定",
+        });
+      }
+    },
+
+    //使用者不推荐
+    async recommendFalse() {
+      if (this.userinfo) {
+        this.unRecommend = !this.unRecommend;
+        let data = {
+          productId: this.$route.params.id,
+          recommend: this.unRecommend,
+        };
+        let result = await this.$API.reqRecommend(data);
+        console.log(result);
+      } else {
+        this.$alert("您还未登录,请先登录!", {
+          confirmButtonText: "确定",
+        });
+      }
     },
   },
   mounted() {
@@ -938,7 +1030,37 @@ export default {
   color: #312f31;
   margin-left: 6px;
 }
+.item-top-2 {
+  width: 130px;
+  height: 40px;
+  background-color: #f8f8f8;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: #fbe6e6;
+}
 
+.item-top-2 .img-container {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid #d7d7d7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 12px;
+}
+.item-top-2 .img-container img {
+  width: 65%;
+}
+.item-top-2 span {
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: #312f31;
+  margin-left: 6px;
+}
 .item-bottom {
   width: 130px;
   height: 40px;
@@ -969,7 +1091,37 @@ export default {
   color: #312f31;
   margin-left: 6px;
 }
+.item-bottom-2 {
+  width: 130px;
+  height: 40px;
+  background-color: #f8f8f8;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: #eae9ea;
+}
 
+.item-bottom-2 .img-container {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid #d7d7d7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 12px;
+}
+.item-bottom-2 .img-container img {
+  width: 65%;
+}
+.item-bottom-2 span {
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: #312f31;
+  margin-left: 6px;
+}
 .medicine-introduction {
   width: 100%;
   margin-top: 20px;

@@ -345,7 +345,7 @@ export default {
 }
 .el-select {
   /* margin: 0 2%; */
-  margin: 0 30px;
+  margin: 0 10px;
 }
 
 .el-input /deep/ .el-input__inner {
@@ -508,17 +508,17 @@ img {
     width: 95%;
     margin: 16px auto 0;
   }
-}
 
-@media screen and (max-width: 768px) {
   .search {
     display: flex;
     justify-content: center;
-    flex-direction: row;
     align-items: center;
     padding-bottom: 40px;
-    padding-right: 15%;
-    padding-left: 15%;
+    /* padding-right: 30%;
+    padding-left: 30%; */
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .select {
@@ -537,14 +537,17 @@ img {
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1920px) {
+@media screen and (min-width: 894px) and (max-width: 1920px) {
   .search {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 40px;
-    padding-right: 20%;
-    padding-left: 20%;
+    /* padding-right: 20%;
+    padding-left: 20%; */
+    width: 876px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .select {
@@ -559,7 +562,7 @@ img {
   }
 
   .el-select {
-    /* width: 5%; */
+    width: 200px;
     margin: 0 5px;
   }
 }
@@ -570,8 +573,11 @@ img {
     justify-content: center;
     align-items: center;
     padding-bottom: 40px;
-    padding-right: 30%;
-    padding-left: 30%;
+    /* padding-right: 30%;
+    padding-left: 30%; */
+    width: 876px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .select {

@@ -48,44 +48,44 @@
     </div>
     <div class="container">
       <el-tabs type="border-card" v-model="activeName">
-<!--        <el-tab-pane label="生产品种" name="first">-->
-<!--          <el-table-->
-<!--            :data="tableData"-->
-<!--            stripe-->
-<!--            style="width: 100%"-->
-<!--            border-->
-<!--            v-if="activeName === 'first'"-->
-<!--          >-->
-<!--            <el-table-column-->
-<!--              label="序号"-->
-<!--              type="index"-->
-<!--              width="80"-->
-<!--              align="center"-->
-<!--            >-->
-<!--            </el-table-column>-->
-<!--            <el-table-column-->
-<!--              prop="mingcheng"-->
-<!--              label="名称"-->
-<!--              width="180"-->
-<!--              align="center"-->
-<!--            >-->
-<!--            </el-table-column>-->
-<!--            <el-table-column-->
-<!--              prop="gongneng"-->
-<!--              label="功能主治"-->
-<!--              width="width"-->
-<!--              align="center"-->
-<!--            >-->
-<!--            </el-table-column>-->
-<!--            <el-table-column-->
-<!--              prop="caozuo"-->
-<!--              label="操作"-->
-<!--              width="80"-->
-<!--              fixed="right"-->
-<!--            >-->
-<!--            </el-table-column>-->
-<!--          </el-table>-->
-<!--        </el-tab-pane>-->
+        <!--        <el-tab-pane label="生产品种" name="first">-->
+        <!--          <el-table-->
+        <!--            :data="tableData"-->
+        <!--            stripe-->
+        <!--            style="width: 100%"-->
+        <!--            border-->
+        <!--            v-if="activeName === 'first'"-->
+        <!--          >-->
+        <!--            <el-table-column-->
+        <!--              label="序号"-->
+        <!--              type="index"-->
+        <!--              width="80"-->
+        <!--              align="center"-->
+        <!--            >-->
+        <!--            </el-table-column>-->
+        <!--            <el-table-column-->
+        <!--              prop="mingcheng"-->
+        <!--              label="名称"-->
+        <!--              width="180"-->
+        <!--              align="center"-->
+        <!--            >-->
+        <!--            </el-table-column>-->
+        <!--            <el-table-column-->
+        <!--              prop="gongneng"-->
+        <!--              label="功能主治"-->
+        <!--              width="width"-->
+        <!--              align="center"-->
+        <!--            >-->
+        <!--            </el-table-column>-->
+        <!--            <el-table-column-->
+        <!--              prop="caozuo"-->
+        <!--              label="操作"-->
+        <!--              width="80"-->
+        <!--              fixed="right"-->
+        <!--            >-->
+        <!--            </el-table-column>-->
+        <!--          </el-table>-->
+        <!--        </el-tab-pane>-->
         <el-tab-pane label="科研论文" name="second">
           <el-table
             :data="paperList"
@@ -101,14 +101,21 @@
               align="center"
             >
             </el-table-column>
-            <el-table-column prop="title" label="论文名称" width="180">
+            <el-table-column prop="title" label="论文名称" width="width">
             </el-table-column>
-            <el-table-column prop="author" label="作者" width="180">
+            <el-table-column prop="author" label="作者" width="270">
             </el-table-column>
             <el-table-column prop="journal" label="期刊名称" width="180">
             </el-table-column>
-            <el-table-column prop="year" label="发表年份"> </el-table-column>
-            <el-table-column prop="type" label="期刊类型"> </el-table-column>
+            <el-table-column
+              prop="year"
+              label="发表年份"
+              width="100"
+              align="center"
+            >
+            </el-table-column>
+            <el-table-column prop="type" label="期刊类型" width="100">
+            </el-table-column>
           </el-table>
           <el-pagination
             background
@@ -136,22 +143,24 @@
               align="center"
             >
             </el-table-column>
-            <el-table-column prop="name" label="专利名称" width="180">
+            <el-table-column prop="name" label="专利名称" width="width">
             </el-table-column>
-            <el-table-column prop="type" label="专利类型" width="180">
+            <el-table-column prop="type" label="专利类型" width="120">
             </el-table-column>
-            <el-table-column prop="status" label="法律状态" width="width">
+            <el-table-column prop="status" label="法律状态" width="120">
             </el-table-column>
             <el-table-column
               prop="applicationYear"
               label="申请年份"
-              width="width"
+              width="100"
+              align="center"
             >
             </el-table-column>
             <el-table-column
               prop="authorizationYear"
               label="公开年份"
-              width="width"
+              width="100"
+              align="center"
             >
             </el-table-column>
           </el-table>
@@ -181,15 +190,20 @@
               align="center"
             >
             </el-table-column>
-            <el-table-column prop="name" label="获奖项目" width="180">
+            <el-table-column prop="name" label="获奖项目" width="width">
             </el-table-column>
             <el-table-column prop="issued" label="颁奖单位" width="180">
             </el-table-column>
-            <el-table-column prop="level" label="奖励等级" width="width">
+            <el-table-column prop="level" label="奖励等级" width="180">
             </el-table-column>
-            <el-table-column prop="type" label="奖励类型" width="width">
+            <el-table-column prop="type" label="奖励类型" width="120">
             </el-table-column>
-            <el-table-column prop="year" label="获奖年份" width="width">
+            <el-table-column
+              prop="year"
+              label="获奖年份"
+              width="100"
+              align="center"
+            >
             </el-table-column
           ></el-table>
           <el-pagination
@@ -218,13 +232,18 @@
               align="center"
             >
             </el-table-column>
-            <el-table-column prop="name" label="项目名称" width="180">
+            <el-table-column prop="name" label="项目名称" width="width">
             </el-table-column>
-            <el-table-column prop="level" label="项目等级" width="width">
+            <el-table-column prop="level" label="项目等级" width="120">
             </el-table-column>
-            <el-table-column prop="type" label="项目类型" width="width">
+            <el-table-column prop="type" label="项目类型" width="120">
             </el-table-column>
-            <el-table-column prop="year" label="项目年份" width="width">
+            <el-table-column
+              prop="year"
+              label="项目年份"
+              width="100"
+              align="center"
+            >
             </el-table-column
           ></el-table>
           <el-pagination
@@ -255,9 +274,14 @@
             </el-table-column>
             <el-table-column prop="name" label="获奖项目" width="width">
             </el-table-column>
-            <el-table-column prop="issued" label="发布单位" width="width">
+            <el-table-column prop="issued" label="发布单位" width="180">
             </el-table-column>
-            <el-table-column prop="year" label="发布时间" width="width">
+            <el-table-column
+              prop="year"
+              label="发布时间"
+              width="100"
+              align="center"
+            >
             </el-table-column
           ></el-table>
 
@@ -334,7 +358,15 @@ export default {
         };
         let result = await this.$API.reqGetCompanyOrProductPaper(data);
         // console.log(result);
-        this.paperList = result.response.list;
+        for (var i = 0; i < result.response.list.length; i++) {
+          var reg = new RegExp("%", "g"); //g表示全部的
+          //         // //将json转换为字符串   将被替换内容替换为替换内容
+          let str = JSON.stringify(result.response).replace(reg, ",");
+          var replaceData = JSON.parse(str);
+          // console.log(data);
+        }
+        this.paperList = replaceData.list;
+        // this.paperList = result.response.list;
         this.paperQuery.paperTotal = result.response.total;
       } catch (error) {
         console.log(error.message);
