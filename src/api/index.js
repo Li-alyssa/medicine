@@ -1,6 +1,7 @@
 //API进行统一管理
 //引入二次封装的axios(带有响应请求拦截器)
 import requests from './request';
+import {formatDate} from "element-ui";
 
 const rankPrefix = "/rank"
 
@@ -171,10 +172,17 @@ export const reqLoginQrCode = (redirectUrl) => {
 
 // 登录请求
 export const reqDoLogin = (user) => {
+    let formData = new FormData();
+    for (let key in user) {
+        formData.append(key, user[key]);
+    }
     return requests({
         url: "/doLogin",
         method: 'post',
-        user
+        data: formData,
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
     })
 }
 
@@ -188,10 +196,17 @@ export const reqDoLogout = () => {
 
 // 手机端登录回调
 export const mobileDoLoginCallBack = (data) => {
+    let formData = new FormData();
+    for (let key in data) {
+        formData.append(key, data[key]);
+    }
     return requests({
         url: "/login/wxCallBack",
         method: 'post',
-        data
+        data: formData,
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
     })
 }
 
