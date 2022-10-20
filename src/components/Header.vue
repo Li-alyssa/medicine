@@ -191,14 +191,14 @@ export default {
         this.backData.code = param.split("&")[0].split("=")[1];
         this.backData.state = param.split("&")[1].split("=")[1];
         this.$API.mobileDoLoginCallBack(this.backData);
-        document.addEventListener(
-          "WeixinJSBridgeReady",
-          function () {
-            WeixinJSBridge.call("closeWindow");
-          },
-          false
-        );
-        WeixinJSBridge.call("closeWindow");
+        // document.addEventListener(
+        //   "WeixinJSBridgeReady",
+        //   function () {
+        //     WeixinJSBridge.call("closeWindow");
+        //   },
+        //   false
+        // );
+        // WeixinJSBridge.call("closeWindow");
       }
     },
     menuBtn() {
