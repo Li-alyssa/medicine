@@ -208,7 +208,7 @@ export default {
 
     //获取用户登录信息
     getUserInfo() {
-      this.userInfo = JSON.parse(sessionStorage.getItem("userinfo"));
+      this.user = JSON.parse(sessionStorage.getItem("userinfo"));
     },
 
     doLogin() {

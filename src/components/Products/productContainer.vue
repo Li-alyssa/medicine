@@ -487,6 +487,7 @@ export default {
         let result = await this.$API.reqGetProductInfo(this.$route.params.id);
         // console.log(result);
         this.goodsInfo = result.response;
+        this.getShareReady();
       } catch (error) {
         console.log(error.message);
       }
@@ -809,7 +810,6 @@ export default {
     },
   },
   mounted() {
-    this.getShareReady();
     this.getGoodInfo();
     this.getProductIntroduction();
     this.getProductPaper();

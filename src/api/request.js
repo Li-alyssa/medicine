@@ -16,6 +16,7 @@ const requests = axios.create({
     baseURL: "/api",
     //代表请求超时5s
     timeout: 5000,
+    withCredentials: true
 });
 
 //请求拦截器：在请求之前，请求拦截器可以检测到，在请求发出去之前做一些事情

@@ -3,6 +3,7 @@ import axios from "axios";
 
 // 要用到微信API
 function getJSSDK(url, dataForWeixin) {
+    console.log(dataForWeixin)
     // 调用后台接口换取参数
     axios.get('http://plc.bbtcml.com/chinmedy/get_wx_config', {
         params: {
