@@ -222,13 +222,14 @@ export default {
           this.loginUser.username = resp.response.state;
           var waitWeiXin = setInterval(() => {
             this.$API.reqDoLogin(this.loginUser).then((resp) => {
-              if (resp.respons) {
+              if (resp.response) {
                 this.user = resp.response;
+                console.log(this.user)
                 window.sessionStorage.setItem(
                   "userinfo",
                   JSON.stringify(resp.response)
                 );
-                location.reload();
+                // location.reload();
                 this.loginDialogVisible = false;
                 clearInterval(waitWeiXin);
               }
