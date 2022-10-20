@@ -735,7 +735,7 @@ tbody {
 
   .rk-table-box .rk-table thead tr th:nth-child(4) {
     width: 0;
-    display: none;
+    /* display: none; */
   }
 
   .rk-table td:nth-child(4) {
@@ -744,7 +744,7 @@ tbody {
     text-align: center;
     font-size: 14px;
     font-family: PingFangSC-Regular;
-    display: none;
+    /* display: none; */
   }
 }
 
@@ -762,12 +762,12 @@ tbody {
 
   .rk-table-box .rk-table thead tr th:nth-child(3) {
     width: 0;
-    display: none;
+    /* display: none; */
   }
 
   .rk-table-box .rk-table thead tr th:nth-child(4) {
     width: 0;
-    display: none;
+    /* display: none; */
   }
   .el-select {
     width: 100px;
@@ -778,7 +778,7 @@ tbody {
     text-align: center;
     font-size: 14px;
     font-family: PingFangSC-Regular;
-    display: none;
+    /* display: none; */
   }
   .rk-table td:nth-child(4) {
     color: #383638;
@@ -786,7 +786,7 @@ tbody {
     text-align: center;
     font-size: 14px;
     font-family: PingFangSC-Regular;
-    display: none;
+    /* display: none; */
   }
 }
 </style>

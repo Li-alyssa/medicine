@@ -259,6 +259,31 @@ export default {
   .round:after {
     display: none;
   }
+
+  .rank-latest {
+    width: 25%;
+  }
+
+  .rank-line {
+    width: 75%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .rank-line {
+    width: 75%;
+    padding: 19px 0;
+  }
+  .rank {
+    height: 25px;
+    line-height: 25px;
+    font-family: PingFang SC;
+    font-size: 15px;
+  }
+
+  .year {
+    font-size: 12px;
+  }
 }
 
 @media screen and (min-width: 850px) and (max-width: 1250px) {

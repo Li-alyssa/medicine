@@ -503,6 +503,14 @@ img {
   margin-left: 8px;
 }
 
+@media screen and (max-width: 500px) {
+  .el-select {
+    margin: 0;
+    width: 45%;
+    margin-top: 10px;
+  }
+}
+
 @media screen and (max-width: 894px) {
   .medicine_container .medi_container {
     width: 95%;

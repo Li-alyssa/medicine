@@ -103,7 +103,13 @@
                 src="https://www.shanghairanking.cn/_nuxt/img/top_shadow.e02e29f.png"
               ></el-image>
               <div class="medi-name">
-                <span>{{ goodsInfo.name }}</span>
+                <span
+                  >{{ goodsInfo.name }}
+                  <a
+                    class="el-icon-share"
+                    @click="shareDialogVisible = true"
+                  ></a
+                ></span>
                 <span>{{ goodsInfo.company }}</span>
               </div>
               <div class="number-container">
@@ -247,28 +253,28 @@
                 style="width: 100%"
                 v-if="activeName === 'sixth'"
               >
-                <el-table-column prop="name" label="专利名称" width="width">
+                <el-table-column prop="name" label="专利名称" width="300">
                 </el-table-column>
                 <el-table-column prop="type" label="专利类型" width="120">
                 </el-table-column>
                 <el-table-column
                   prop="status"
                   label="法律状态"
-                  width="100"
+                  width="120"
                   align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="applicationYear"
                   label="申请年份"
-                  width="80"
+                  width="100"
                   align="center"
                 >
                 </el-table-column>
                 <el-table-column
                   prop="authorizationYear"
                   label="公开年份"
-                  width="80"
+                  width="100"
                   align="center"
                 >
                 </el-table-column>
@@ -306,7 +312,11 @@
             </el-carousel>
           </div>
         </div>
-        <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+        <el-dialog
+          title="提示"
+          :visible.sync="dialogVisible"
+          customClass="dialog"
+        >
           <el-upload
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
@@ -350,7 +360,7 @@
     <el-dialog
       title="请打开微信扫描二维码"
       :visible.sync="shareDialogVisible"
-      width="30%"
+      customClass="dialog"
       center
     >
       <div style="text-align: center">
@@ -819,7 +829,21 @@ export default {
   },
 };
 </script>
-
+<style>
+.dialog {
+  width: 30%;
+}
+@media only screen and (max-width: 850px) {
+  .dialog {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .dialog {
+    width: 80%;
+  }
+}
+</style>
 <style scoped>
 .out-container {
   position: relative;
@@ -1289,6 +1313,7 @@ div::-webkit-scrollbar-thumb {
   color: #409eff;
   cursor: pointer;
 }
+
 @media only screen and (max-width: 850px) {
   .left-container {
     display: none;
@@ -1297,7 +1322,7 @@ div::-webkit-scrollbar-thumb {
     width: 100%;
   }
   .right-container {
-    width: 80%;
+    width: 100%;
     float: none;
     margin-left: auto;
     margin-right: auto;
@@ -1311,6 +1336,34 @@ div::-webkit-scrollbar-thumb {
     background-color: #fff;
     border-radius: 4px;
     padding: 0 16px 16px;
+  }
+
+  .recommed-container {
+    padding: 8px;
+    width: 90%;
+    height: 88px;
+    box-shadow: 0 0 12px rgb(0 0 0 / 12%);
+    border-radius: 4px;
+    margin: 20px auto 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .recommed-container .rec-left {
+    width: 50%;
+    padding: 8px 12px;
+    height: 72px;
+    background-color: #f8f8f8;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .upPhoto-container {
+    position: absolute;
+    top: 85%;
+    /* bottom: 0; */
+    right: 0;
   }
 }
 

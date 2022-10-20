@@ -88,7 +88,7 @@
     <el-dialog
       title="微信扫码后登录"
       :visible.sync="loginDialogVisible"
-      width="30%"
+      customClass="dialog"
       center
       append-to-body
     >
