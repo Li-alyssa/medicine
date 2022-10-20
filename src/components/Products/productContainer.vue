@@ -833,12 +833,12 @@ export default {
 .dialog {
   width: 30%;
 }
-@media only screen and (max-width: 850px) {
+@media screen and (max-width: 850px) {
   .dialog {
     width: 50%;
   }
 }
-@media only screen and (max-width: 500px) {
+@media screen and (max-width: 500px) {
   .dialog {
     width: 80%;
   }
@@ -1314,7 +1314,7 @@ div::-webkit-scrollbar-thumb {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 850px) {
+@media screen and (max-width: 850px) {
   .left-container {
     display: none;
   }

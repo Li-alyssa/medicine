@@ -147,7 +147,7 @@ a {
   }
 }
 
-@media only screen and (max-width: 850px) {
+@media screen and (max-width: 850px) {
   .page-tail {
     width: 100%;
   }
@@ -179,7 +179,7 @@ a {
   }
 }
 
-@media only screen and (max-width: 475px) {
+@media screen and (max-width: 475px) {
   .part2 {
     width: 300px;
     margin-top: 20px;

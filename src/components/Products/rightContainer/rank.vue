@@ -255,7 +255,7 @@ export default {
   color: #605e60;
 }
 
-@media only screen and (max-width: 850px) {
+@media screen and (max-width: 850px) {
   .round:after {
     display: none;
   }
@@ -269,7 +269,7 @@ export default {
   }
 }
 
-@media only screen and (max-width: 500px) {
+@media screen and (max-width: 500px) {
   .rank-line {
     width: 75%;
     padding: 19px 0;

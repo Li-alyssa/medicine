@@ -553,7 +553,7 @@ export default {
 #companyDetails .introduction-container-mobile {
   display: none;
 }
-@media only screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   #companyDetails .introduction-container {
     width: 100%;
     display: none;

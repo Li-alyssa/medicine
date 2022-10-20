@@ -355,7 +355,7 @@ export default {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 850px) {
+@media screen and (max-width: 850px) {
   .header_nav {
     padding: 0;
   }
