@@ -212,7 +212,7 @@ export default {
     },
 
     doLogin() {
-      this.$API.reqLoginQrCode("").then((resp) => {
+      this.$API.reqLoginQrCode("http://plc.bbtcml.com/rank").then((resp) => {
         if (resp) {
           this.loginData.url = resp.response.url;
           setTimeout(() => {
