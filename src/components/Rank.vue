@@ -223,7 +223,7 @@ export default {
     /* background-color: yellow; */
   }
 }
-@media only screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .rank-item {
     width: 80%;
     /* height: 100%; */

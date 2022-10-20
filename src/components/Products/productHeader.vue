@@ -50,7 +50,7 @@ export default {
   background-size: 100% 100%;
 }
 
-@media only screen and (max-width: 850px) {
+@media screen and (max-width: 850px) {
   .breadcrumb-header {
     /* width: 100vmin; */
     display: none;

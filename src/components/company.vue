@@ -41,7 +41,7 @@
                               font-size: small;
                             "
                           >
-                            主营品种:
+                            标签:
                           </p>
                           <span
                             v-for="(tag, index) in JSON.parse(company.tagJson)"

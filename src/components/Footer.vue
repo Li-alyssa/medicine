@@ -16,7 +16,7 @@
           <div class="part2">
             <!--            微信公众号:-->
 
-            <span style="margin-left: 10px; display: flex">
+            <span style="display: flex">
               <img
                 style="margin-right: 10px"
                 src="@/assets/gongzhonghao2.jpg"
@@ -101,7 +101,7 @@ export default {
   text-align: left;
 }
 .part2 {
-  width: 240px;
+  width: 280px;
   margin-bottom: 10px;
 }
 
@@ -147,7 +147,7 @@ a {
   }
 }
 
-@media only screen and (max-width: 850px) {
+@media screen and (max-width: 850px) {
   .page-tail {
     width: 100%;
   }
@@ -176,6 +176,15 @@ a {
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .part2 {
+    width: 300px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: -35px;
   }
 }
 </style>

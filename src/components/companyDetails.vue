@@ -53,7 +53,7 @@
         <!--            :data="tableData"-->
         <!--            stripe-->
         <!--            style="width: 100%"-->
-        <!--            border-->
+        <!--            -->
         <!--            v-if="activeName === 'first'"-->
         <!--          >-->
         <!--            <el-table-column-->
@@ -91,7 +91,6 @@
             :data="paperList"
             stripe
             style="width: 100%"
-            border
             v-if="activeName === 'second'"
           >
             <el-table-column
@@ -101,7 +100,7 @@
               align="center"
             >
             </el-table-column>
-            <el-table-column prop="title" label="论文名称" width="width">
+            <el-table-column prop="title" label="论文名称" width="420">
             </el-table-column>
             <el-table-column prop="author" label="作者" width="270">
             </el-table-column>
@@ -133,7 +132,6 @@
             :data="patentList"
             stripe
             style="width: 100%"
-            border
             v-if="activeName === 'third'"
           >
             <el-table-column
@@ -143,11 +141,11 @@
               align="center"
             >
             </el-table-column>
-            <el-table-column prop="name" label="专利名称" width="width">
+            <el-table-column prop="name" label="专利名称" width="580">
             </el-table-column>
-            <el-table-column prop="type" label="专利类型" width="120">
+            <el-table-column prop="type" label="专利类型" width="140">
             </el-table-column>
-            <el-table-column prop="status" label="法律状态" width="120">
+            <el-table-column prop="status" label="法律状态" width="140">
             </el-table-column>
             <el-table-column
               prop="applicationYear"
@@ -180,7 +178,6 @@
             :data="awardList"
             stripe
             style="width: 100%"
-            border
             v-if="activeName === 'forth'"
           >
             <el-table-column
@@ -190,7 +187,7 @@
               align="center"
             >
             </el-table-column>
-            <el-table-column prop="name" label="获奖项目" width="width">
+            <el-table-column prop="name" label="获奖项目" width="490">
             </el-table-column>
             <el-table-column prop="issued" label="颁奖单位" width="180">
             </el-table-column>
@@ -222,7 +219,6 @@
             :data="supportList"
             stripe
             style="width: 100%"
-            border
             v-if="activeName === 'fifth'"
           >
             <el-table-column
@@ -232,7 +228,7 @@
               align="center"
             >
             </el-table-column>
-            <el-table-column prop="name" label="项目名称" width="width">
+            <el-table-column prop="name" label="项目名称" width="730">
             </el-table-column>
             <el-table-column prop="level" label="项目等级" width="120">
             </el-table-column>
@@ -262,7 +258,6 @@
             :data="gcList"
             stripe
             style="width: 100%"
-            border
             v-if="activeName === 'sixth'"
           >
             <el-table-column
@@ -272,7 +267,7 @@
               align="center"
             >
             </el-table-column>
-            <el-table-column prop="name" label="获奖项目" width="width">
+            <el-table-column prop="name" label="获奖项目" width="790">
             </el-table-column>
             <el-table-column prop="issued" label="发布单位" width="180">
             </el-table-column>
@@ -558,7 +553,7 @@ export default {
 #companyDetails .introduction-container-mobile {
   display: none;
 }
-@media only screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   #companyDetails .introduction-container {
     width: 100%;
     display: none;
