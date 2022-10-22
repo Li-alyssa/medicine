@@ -92,7 +92,6 @@ export default {
       data["pageSize"] = this.pageSize;
       try {
         let result = await this.$API.reqGetCompanyList(data);
-        console.log(result);
         this.companyList = result.response.list;
         this.total = result.response.total;
       } catch (error) {

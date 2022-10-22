@@ -263,7 +263,6 @@ export default {
   methods: {
     //商品控制分页模块
     handleCurrentChange(val) {
-      console.log(val);
       this.$set(this, "pageNum", val);
       this.getProductInfo();
     },
@@ -279,7 +278,6 @@ export default {
       };
       try {
         let result = await this.$API.reqGetProductList(data);
-        console.log(result);
         this.goodList = result.response.list;
         this.total = result.response.total;
       } catch (error) {
@@ -299,7 +297,6 @@ export default {
       };
       try {
         let result = await this.$API.reqGetProductList(data);
-        console.log(result);
         this.goodList = result.response.list;
         this.total = result.response.total;
       } catch (error) {
@@ -308,23 +305,19 @@ export default {
     },
     //查看选择器选项
     getOptionOneList(val) {
-      console.log(val);
       this.otc = val;
       this.getProductInfo();
     },
     getOptionTwoList(val) {
-      this.route = val;
       console.log(val);
       this.getProductInfo();
     },
     getOptionThreeList(val) {
       this.access = val;
-      console.log(val);
       this.getProductInfo();
     },
     getOptionFourList(val) {
       this.domain = val;
-      console.log(val);
       this.getProductInfo();
     },
   },

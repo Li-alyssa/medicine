@@ -224,7 +224,6 @@ export default {
             this.$API.reqDoLogin(this.loginUser).then((resp) => {
               if (resp.response) {
                 this.user = resp.response;
-                console.log(this.user)
                 window.sessionStorage.setItem(
                   "userinfo",
                   JSON.stringify(resp.response)

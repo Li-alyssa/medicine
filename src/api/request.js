@@ -13,7 +13,7 @@ import "nprogress/nprogress.css"
 const requests = axios.create({
     //配置对象
     //基础路径，发请求时，路径中出现api
-    baseURL: "/api",
+    baseURL: "/chinmedy",
     //代表请求超时5s
     timeout: 5000,
     withCredentials: true

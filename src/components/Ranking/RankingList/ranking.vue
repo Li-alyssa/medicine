@@ -343,7 +343,6 @@ export default {
             year: this.year,
           };
           let result = await this.$API.reqGetRanking(data);
-          console.log(result);
           this.companyList = result.response.rankList;
           this.total = result.response.total;
           // }
@@ -353,7 +352,6 @@ export default {
             year: this.year,
           };
           let result = await this.$API.reqGetRanking(data);
-          console.log(result);
           this.companyList = result.response.rankList;
           this.total = result.response.total;
           // }
@@ -363,7 +361,6 @@ export default {
             year: this.year,
           };
           let result = await this.$API.reqGetRanking(data);
-          console.log(result);
           this.companyList = result.response.rankList;
           this.total = result.response.total;
           // }
@@ -373,7 +370,6 @@ export default {
             year: this.year,
           };
           let result = await this.$API.reqGetRanking(data);
-          console.log(result);
           this.companyList = result.response.rankList;
           this.total = result.response.total;
           // }
@@ -383,7 +379,6 @@ export default {
             year: this.year,
           };
           let result = await this.$API.reqGetRanking(data);
-          console.log(result);
           this.companyList = result.response.rankList;
           this.total = result.response.total;
           // }
@@ -393,7 +388,6 @@ export default {
             year: this.year,
           };
           let result = await this.$API.reqGetRanking(data);
-          console.log(result);
           this.companyList = result.response.rankList;
           this.total = result.response.total;
           // }

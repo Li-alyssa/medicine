@@ -410,7 +410,6 @@ export default {
           pageSize: this.supportQuery.pageSize,
         };
         let result = await this.$API.reqGetCompanySupport(data);
-        console.log(result);
         this.supportList = result.response.list;
         this.supportQuery.supportTotal = result.response.total;
       } catch (error) {
@@ -426,7 +425,6 @@ export default {
           pageSize: this.gcQuery.pageSize,
         };
         let result = await this.$API.reqGetCompanyGc(data);
-        console.log(result);
         this.gcList = result.response.list;
         this.gcQuery.gcTotal = result.response.total;
       } catch (error) {

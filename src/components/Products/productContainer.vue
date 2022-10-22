@@ -40,9 +40,9 @@
 
                 <div class="recommed-container">
                   <div class="rec-left">
-                    <div class="rec-num">98%</div>
+                    <div class="rec-num">{{goodsInfo.recommend.percent}}%</div>
                     <div class="rec-text">使用者推荐</div>
-                    <div class="rec-participate">xxx人参与</div>
+                    <div class="rec-participate">{{goodsInfo.recommend.up+goodsInfo.recommend.down}}人参与</div>
                   </div>
                   <div class="rec-right">
                     <div
@@ -760,7 +760,6 @@ export default {
 
     //获取下拉框图片添加位置
     getOptionList(val) {
-      console.log(val);
       this.pictureType = val;
     },
     getShareReady() {

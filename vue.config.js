@@ -8,12 +8,12 @@ module.exports = defineConfig({
   devServer: {
     // 配置不同的后台API地址
     proxy: {
-      '/api': {
+      '/chinmedy': {
         target: 'http://47.94.136.1/chinmedy',
         ws: false,
         changeOrigin: true,
         pathRewrite: {
-          '^/api': ''
+          '^/chinmedy': ''
         }
       }
     }
