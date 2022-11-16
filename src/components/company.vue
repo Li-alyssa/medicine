@@ -72,6 +72,8 @@
 </template>
 
 <script>
+import companyDetails from "@/components/companyDetails";
+
 export default {
   name: "company",
   data() {
@@ -93,6 +95,9 @@ export default {
       try {
         let result = await this.$API.reqGetCompanyList(data);
         this.companyList = result.response.list;
+        this.companyList.forEach(company => {
+          company.details = company.details.length>240? company.details.substring(0,240) + "...": company.details;
+        })
         this.total = result.response.total;
       } catch (error) {
         console.log(error.message);

@@ -101,7 +101,7 @@
                 <td>
                   {{ item.companyName }}
                 </td>
-                <td>{{ item.score }}</td>
+                <td>{{ item.score.toFixed(3) }}</td>
               </tr>
             </tbody>
           </table>
