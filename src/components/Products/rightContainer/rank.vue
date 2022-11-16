@@ -4,7 +4,11 @@
       <div class="left"></div>
       <span>药品排名</span>
     </div>
-    <div class="ranking-main">
+    <div
+      class="ranking-main"
+      v-for="(rankInfo, index) in rankList"
+      :key="index"
+    >
       <div class="container-one">
         <div class="rank-latest">
           <div class="rank-lates-rank">
@@ -52,7 +56,8 @@
 export default {
   data() {
     return {
-      rankInfo: {},
+      // rankInfo: {},
+      rankList: [],
     };
   },
   methods: {
@@ -62,7 +67,9 @@ export default {
           this.$route.params.id
         );
         // console.log(result);
-        this.rankInfo = result.response[0];
+        this.rankList = result.response;
+        // console.log(result.response);
+        // this.rankInfo = result.response[0];
       } catch (error) {
         console.log(error.message);
       }
@@ -113,6 +120,7 @@ export default {
   display: flex;
   align-items: center;
   position: relative;
+  margin-bottom: 10px;
 }
 
 .container-one {
@@ -166,6 +174,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: small;
 }
 
 .category-latest span {
@@ -269,7 +278,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 520px) {
   .rank-line {
     width: 75%;
     padding: 19px 0;
@@ -284,6 +293,17 @@ export default {
   .year {
     font-size: 12px;
   }
+  /* .category-latest {
+    font-size: 12px;
+  }
+  .rank-latest {
+    width: 25%;
+    height: 100%;
+  }
+  .rank-line {
+    width: 75%;
+    height: 100%;
+  } */
 }
 
 @media screen and (min-width: 850px) and (max-width: 1250px) {

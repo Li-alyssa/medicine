@@ -40,19 +40,31 @@
 
                 <div class="recommed-container">
                   <div class="rec-left">
-                    <div class="rec-num">{{goodsInfo.recommend.percent}}%</div>
+                    <div class="rec-num" v-if="goodsInfo.recommend">
+                      {{ goodsInfo.recommend.percent }}%
+                    </div>
                     <div class="rec-text">使用者推荐</div>
-                    <div class="rec-participate">{{goodsInfo.recommend.up+goodsInfo.recommend.down}}人参与</div>
+                    <div class="rec-participate" v-if="goodsInfo.recommend">
+                      {{
+                        goodsInfo.recommend.up + goodsInfo.recommend.down
+                      }}人参与
+                    </div>
                   </div>
                   <div class="rec-right">
                     <div
-                      :class="recommend ? 'item-top-2' : 'item-top'"
+                      v-if="goodsInfo.recommend"
+                      :class="
+                        goodsInfo.recommend.recommend
+                          ? 'item-top-2'
+                          : 'item-top'
+                      "
                       @click="recommendTrue"
                     >
                       <div class="img-container">
                         <img
+                          v-if="goodsInfo.recommend"
                           :src="
-                            recommend
+                            goodsInfo.recommend.recommend
                               ? 'https://www.shanghairanking.cn/_nuxt/img/tuijian.6e30c21.svg '
                               : 'https://www.shanghairanking.cn/_nuxt/img/tuijian_hui.74ac9fa.svg'
                           "
@@ -67,11 +79,7 @@
                     >
                       <div class="img-container">
                         <img
-                          :src="
-                            unRecommend
-                              ? '	https://www.shanghairanking.cn/_nuxt/img/butuijian_active.dd9fbce.svg'
-                              : 'https://www.shanghairanking.cn/_nuxt/img/butuijian.17030ab.svg'
-                          "
+                          src="https://www.shanghairanking.cn/_nuxt/img/butuijian.17030ab.svg"
                           alt=""
                         />
                       </div>
@@ -116,15 +124,31 @@
                 <div class="items">联系电话:{{ goodsInfo.phone }}</div>
               </div>
             </div>
+          </div>
+          <div class="top-introduce">
+            <div class="contant-msg">
+              <span>【标签】{{ strTags }}</span>
+              <span>【处方药/OTC】{{ goodsInfo.otc }}</span>
+              <span>【给药途径】{{ goodsInfo.route }}</span>
+              <span>【市场准入】{{ strToString }}</span>
+              <span>【治疗领域】{{ goodsInfo.domain }}</span>
+            </div>
             <div class="recommed-container">
               <div class="rec-left">
-                <div class="rec-num">98%</div>
+                <div class="rec-num" v-if="goodsInfo.recommend">
+                  {{ goodsInfo.recommend.percent }}%
+                </div>
                 <div class="rec-text">使用者推荐</div>
-                <div class="rec-participate">xxx人参与</div>
+                <div class="rec-participate" v-if="goodsInfo.recommend">
+                  {{ goodsInfo.recommend.up + goodsInfo.recommend.down }}人参与
+                </div>
               </div>
               <div class="rec-right">
                 <div
-                  :class="recommend ? 'item-top-2' : 'item-top'"
+                  v-if="goodsInfo.recommend"
+                  :class="
+                    goodsInfo.recommend.recommend ? 'item-top-2' : 'item-top'
+                  "
                   @click="recommendTrue"
                 >
                   <div class="img-container">
@@ -139,29 +163,19 @@
                   </div>
                   <span>推荐</span>
                 </div>
-                <div :class="unRecommend ? 'item-bottom-2' : 'item-bottom'">
+                <div
+                  :class="unRecommend ? 'item-bottom-2' : 'item-bottom'"
+                  @click="recommendFalse"
+                >
                   <div class="img-container">
                     <img
-                      :src="
-                        unRecommend
-                          ? '	https://www.shanghairanking.cn/_nuxt/img/butuijian_active.dd9fbce.svg'
-                          : 'https://www.shanghairanking.cn/_nuxt/img/butuijian.17030ab.svg'
-                      "
+                      src="https://www.shanghairanking.cn/_nuxt/img/butuijian.17030ab.svg"
                       alt=""
                     />
                   </div>
                   <span>不推荐</span>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="top-introduce">
-            <div class="contant-msg">
-              <span>【标签】{{ strTags }}</span>
-              <span>【处方药/OTC】{{ goodsInfo.otc }}</span>
-              <span>【给药途径】{{ goodsInfo.route }}</span>
-              <span>【市场准入】{{ strToString }}</span>
-              <span>【治疗领域】{{ goodsInfo.domain }}</span>
             </div>
             <div class="medicine-title">
               <div class="info-tab">
@@ -469,8 +483,8 @@ export default {
         url: window.location.href.toString(), //需要转化成二维码的网址
         icon: "",
       },
-      userinfo: JSON.parse(sessionStorage.getItem("userinfo")),
-      recommend: false,
+      userinfo: JSON.parse(sessionStorage.getItem("user")),
+      recommend: true,
       unRecommend: false,
     };
   },
@@ -485,7 +499,7 @@ export default {
     async getGoodInfo() {
       try {
         let result = await this.$API.reqGetProductInfo(this.$route.params.id);
-        // console.log(result);
+        console.log(result);
         this.goodsInfo = result.response;
         this.getShareReady();
       } catch (error) {
@@ -777,13 +791,29 @@ export default {
     //使用者推荐
     async recommendTrue() {
       if (this.userinfo) {
-        this.recommend = !this.recommend;
-        let data = {
-          productId: this.$route.params.id,
-          recommend: this.recommend,
-        };
-        let result = await this.$API.reqRecommend(data);
-        console.log(result);
+        if (this.goodsInfo.recommend.recommend == true) {
+          // console.log(this.recommend);
+          this.$message({
+            message: "重复投票!",
+          });
+        } else if (this.goodsInfo.recommend.recommend == false) {
+          this.$message({
+            message: "重复投票!",
+          });
+        } else {
+          let data = {
+            productId: this.$route.params.id,
+            recommend: true,
+          };
+          let result = await this.$API.reqRecommend(data);
+          console.log(result);
+          this.$message({
+            message: "推荐成功!",
+            type: "success",
+          });
+          this.recommend = !this.recommend;
+          this.getGoodInfo();
+        }
       } else {
         this.$alert("您还未登录,请先登录!", {
           confirmButtonText: "确定",
@@ -794,13 +824,29 @@ export default {
     //使用者不推荐
     async recommendFalse() {
       if (this.userinfo) {
-        this.unRecommend = !this.unRecommend;
-        let data = {
-          productId: this.$route.params.id,
-          recommend: this.unRecommend,
-        };
-        let result = await this.$API.reqRecommend(data);
-        console.log(result);
+        if (this.goodsInfo.recommend.recommend == true) {
+          // console.log(this.recommend);
+          this.$message({
+            message: "重复投票!",
+          });
+        } else if (this.goodsInfo.recommend.recommend == false) {
+          this.$message({
+            message: "重复投票!",
+          });
+        } else {
+          let data = {
+            productId: this.$route.params.id,
+            recommend: false,
+          };
+          let result = await this.$API.reqRecommend(data);
+          console.log(result);
+          this.$message({
+            message: "不推荐成功!",
+            type: "warning",
+          });
+          this.unRecommend = !this.unRecommend;
+          this.getGoodInfo();
+        }
       } else {
         this.$alert("您还未登录,请先登录!", {
           confirmButtonText: "确定",

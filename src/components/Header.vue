@@ -35,16 +35,18 @@
 
               <el-dropdown-menu slot="dropdown">
                 <ul>
-                  <li v-for="(rank, index) in rankList" :key="rank.id">
+                  <li
+                    v-for="(rank, index) in rankList"
+                    :key="rank.id"
+                    @click="menuBtn"
+                  >
                     <router-link
                       :to="{
                         path: `/${rank.route}`,
                         query: { listId: rank.listId, value: rank.value },
                       }"
                       ><el-dropdown-item
-                        ><span @click="menuBtn">{{
-                          rank.value
-                        }}</span></el-dropdown-item
+                        ><span>{{ rank.value }}</span></el-dropdown-item
                       ></router-link
                     >
                   </li>
