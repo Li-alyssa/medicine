@@ -2,20 +2,33 @@
   <div class="top-bg">
     <div class="input-container">
       <div class="select-wrap">
-        <input placeholder="药品搜索" class="input" />
-        <div class="search">搜索</div>
+        <el-input
+          class="input"
+          placeholder="请输入内容"
+          v-model="input"
+          clearable
+          @keyup.enter.native="handleSearch()"
+        >
+        </el-input>
+        <div class="search" @click="handleSearch">搜索</div>
       </div>
     </div>
     <div class="suggest">
       热门搜索
-      <router-link to="/variety/:id" class="tags">谢谢谢谢</router-link>
+      <span v-for="item in goodList">
+        <router-link
+          :to="'/product/' + item.id + '/' + item.name"
+          class="tags"
+          >{{ item.name }}</router-link
+        >
+      </span>
     </div>
     <div class="bottom-container">
       <div class="title-container">
         <div class="title-border">
           <div>
             <span>中药大品种科技竞争力排行榜</span>
-            <span>RANKIINGS</span>
+            <span>RANKINGS</span>
           </div>
         </div>
       </div>
@@ -24,7 +37,52 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      input: "",
+      goodList: [],
+    };
+  },
+  mounted() {
+    this.getProductInfo();
+  },
+  methods: {
+    //首页搜索
+    async handleSearch() {
+      this.$router.push({
+        name: "goods",
+        params: {
+          input: this.input,
+        },
+      });
+      // const data = {
+      //   name: this.input,
+      // };
+      // try {
+      //   let result = await this.$API.reqGetProductList(data);
+      //   // this.goodList = result.response.list;
+      //   console.log(result);
+
+      // } catch (error) {
+      //   console.log(error.message);
+      // }
+    },
+
+    async getProductInfo() {
+      const data = {
+        pageNum: 1,
+        pageSize: 5,
+      };
+      try {
+        let result = await this.$API.reqGetProductList(data);
+        this.goodList = result.response.list.slice(0, 4);
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -49,6 +107,7 @@ export default {};
 }
 
 .select-wrap {
+  width: 100%;
   position: relative;
   display: flex;
   align-items: center;
@@ -56,6 +115,7 @@ export default {};
 
 .input {
   height: 55px;
+  line-height: 55px;
   width: 550px;
   margin-left: 12px;
   padding: 0 10px;
@@ -134,5 +194,43 @@ export default {};
   font-size: 18px;
   color: #aeaeae;
   letter-spacing: 0;
+}
+
+@media screen and (min-width: 895px) and (max-width: 1210px) {
+  .input-container {
+    width: 90%;
+  }
+
+  .input {
+    width: 100%;
+  }
+
+  .title-container {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 894px) {
+  .input-container {
+    width: 90%;
+  }
+  .suggest {
+    width: 90%;
+    height: 50px;
+    font-size: 12px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .suggest .tags {
+    height: 100%;
+    padding: 7px 10px;
+    margin-left: 12px;
+  }
+  .input {
+    width: 83%;
+  }
+  .title-container {
+    width: 80%;
+  }
 }
 </style>

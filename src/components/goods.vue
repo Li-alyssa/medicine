@@ -76,17 +76,35 @@
           <div class="medi_title">共查询到{{ total }}种药品</div>
           <ul>
             <li v-for="(goods, index) in goodList" :key="goods.id">
-              <router-link :to="`/product/${goods.id}/${goods.name}`">
-                <div class="medi_main">
-                  <div class="main_container">
-                    <!-- <div class="logo_container">
-                      <img
-                        data-v-375288e5=""
-                        onerror="javascript:this.src='/images/blank.svg';"
-                        src="https://www.shanghairanking.cn/_uni/logo/27532357.png"
-                        alt="清华大学"
-                      />
-                    </div> -->
+              <div class="medi_main">
+                <div class="main_container">
+                  <router-link :to="`/product/${goods.id}/${goods.name}`">
+                    <div class="logo_container">
+                      <img :src.async="goods.serial" />
+                    </div>
+                  </router-link>
+                  <div
+                    style="position: absolute; bottom: 10px; right: 10px"
+                    v-if="
+                      (user && user.roles[1].nameDesc == '政策系统普通用户') ||
+                      ''
+                    "
+                  >
+                    <el-button
+                      size="small"
+                      type="warning"
+                      @click="editList(goods)"
+                      >编辑</el-button
+                    >
+                    <el-button
+                      size="small"
+                      type="danger"
+                      @click="deleteList(goods)"
+                      >删除</el-button
+                    >
+                  </div>
+
+                  <router-link :to="`/product/${goods.id}/${goods.name}`">
                     <div class="title_container">
                       <div>
                         <span>{{ goods.name }}</span>
@@ -101,19 +119,19 @@
                         </div>
                       </div>
                     </div>
-                    <div
-                      :class="
-                        goods.special ? 'container-badge el-icon-guide' : ''
-                      "
-                    >
-                      <span v-show="goods.special">入驻产品</span>
-                    </div>
-                    <div
-                      :class="goods.special ? 'container-badge-right' : ''"
-                    ></div>
+                  </router-link>
+                  <div
+                    :class="
+                      goods.special ? 'container-badge el-icon-guide' : ''
+                    "
+                  >
+                    <span v-show="goods.special">入驻产品</span>
                   </div>
+                  <div
+                    :class="goods.special ? 'container-badge-right' : ''"
+                  ></div>
                 </div>
-              </router-link>
+              </div>
             </li>
           </ul>
           <el-pagination
@@ -138,7 +156,7 @@ export default {
   name: "goods",
   data() {
     return {
-      input: "",
+      input: this.$route.params.input,
       value1: "",
       value2: "",
       value3: "",
@@ -258,7 +276,13 @@ export default {
         },
       ],
       goodList: [],
+      user: JSON.parse(window.sessionStorage.getItem("userinfo")),
     };
+  },
+  watch: {
+    sendInput() {
+      this.handleSearch();
+    },
   },
   methods: {
     //商品控制分页模块
@@ -276,9 +300,20 @@ export default {
         pageNum: this.pageNum,
         pageSize: this.pageSize,
       };
+      var downloadPictureResult = "";
+      var pictureSerial = "";
       try {
         let result = await this.$API.reqGetProductList(data);
+        result.response.list.forEach(async (goods) => {
+          pictureSerial = goods.serial;
+          downloadPictureResult = await this.$API.reqDownloadUpLoadProductPhoto(
+            pictureSerial
+          );
+          const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
+          goods.serial = src;
+        });
         this.goodList = result.response.list;
+        // console.log(this.goodList);
         this.total = result.response.total;
       } catch (error) {
         console.log(error.message);
@@ -320,6 +355,28 @@ export default {
       this.domain = val;
       this.getProductInfo();
     },
+
+    //编辑
+    editList(goods) {
+      // console.log(goods);
+      this.$router.push({
+        name: "goodsManager",
+        params: {
+          form: goods,
+        },
+      });
+    },
+    //删除
+    async deleteList(goods) {
+      // console.log(goods);
+      try {
+        let result = await this.$API.deleteProductInfo(goods.id);
+        // console.log(result);
+        this.getProductInfo();
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
   },
   mounted() {
     this.getProductInfo();
@@ -354,7 +411,7 @@ export default {
   overflow: hidden;
 }
 
-.el-button {
+.search .el-button {
   padding: 0 15px;
   font-size: 16px;
   background: #409eff;

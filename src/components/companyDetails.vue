@@ -2,29 +2,41 @@
   <div id="companyDetails">
     <div class="introduction">
       <div class="introduction-container">
-        <!-- <div class="company-img">
-          <el-image
-            src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
-          >
+        <div class="company-img">
+          <el-image :src="CompanyInfo.serial">
             <div slot="placeholder" class="image-slot">
               加载中<span class="dot">...</span>
             </div>
           </el-image>
-        </div> -->
+        </div>
         <div class="company-title">
-          <div class="company-title-name">{{ CompanyInfo.name }}</div>
-          <div class="company-title-tag">
-            {{ CompanyInfo.tagJson.toString() }}
+          <div>
+            <div class="company-title-name">{{ CompanyInfo.name }}</div>
+            <div class="company-title-tag">
+              {{ CompanyInfo.tagJson.toString() }}
+            </div>
           </div>
         </div>
         <div class="company-introduce">
           <div class="company-introduce-container">
-            公司简介:{{ CompanyInfo.details }}
+            <span :class="showDetail ? 'showFalse' : ''"
+              >公司简介:{{ CompanyInfo.details }}</span
+            >
+            <span
+              @click="
+                exchangeButton = !exchangeButton;
+                showDetail = !showDetail;
+              "
+            >
+              <span style="cursor: pointer; color: #409eff">
+                {{ exchangeButton ? "展开" : "收起" }}
+              </span>
+            </span>
           </div>
         </div>
       </div>
       <div class="introduction-container-mobile">
-        <!-- <div class="company-img">
+        <div class="company-img">
           <el-image
             src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
           >
@@ -32,7 +44,7 @@
               加载中<span class="dot">...</span>
             </div>
           </el-image>
-        </div> -->
+        </div>
         <div class="company-title">
           <div class="company-title-name">{{ CompanyInfo.name }}</div>
           <div class="company-title-tag">
@@ -41,51 +53,38 @@
         </div>
         <div class="company-introduce">
           <div class="company-introduce-container">
-            公司简介:{{ CompanyInfo.details }}
+            <span :class="showDetail ? 'showFalse' : ''"
+              >公司简介:{{ CompanyInfo.details }}</span
+            >
+            <div
+              @click="
+                exchangeButton = !exchangeButton;
+                showDetail = !showDetail;
+              "
+            >
+              <p style="cursor: pointer">
+                {{ exchangeButton ? "展开" : "收起" }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="container">
+      <div
+        class="search"
+        style="width: 200px; position: absolute; top: 0; right: 0; z-index: 1"
+      >
+        <el-input
+          placeholder="请输入搜索年份"
+          v-model="searchYear"
+          suffix-icon="el-icon-search"
+          @keyup.enter.native="seachEnter"
+        >
+        </el-input>
+      </div>
       <el-tabs type="border-card" v-model="activeName">
-        <!--        <el-tab-pane label="生产品种" name="first">-->
-        <!--          <el-table-->
-        <!--            :data="tableData"-->
-        <!--            stripe-->
-        <!--            style="width: 100%"-->
-        <!--            -->
-        <!--            v-if="activeName === 'first'"-->
-        <!--          >-->
-        <!--            <el-table-column-->
-        <!--              label="序号"-->
-        <!--              type="index"-->
-        <!--              width="80"-->
-        <!--              align="center"-->
-        <!--            >-->
-        <!--            </el-table-column>-->
-        <!--            <el-table-column-->
-        <!--              prop="mingcheng"-->
-        <!--              label="名称"-->
-        <!--              width="180"-->
-        <!--              align="center"-->
-        <!--            >-->
-        <!--            </el-table-column>-->
-        <!--            <el-table-column-->
-        <!--              prop="gongneng"-->
-        <!--              label="功能主治"-->
-        <!--              width="width"-->
-        <!--              align="center"-->
-        <!--            >-->
-        <!--            </el-table-column>-->
-        <!--            <el-table-column-->
-        <!--              prop="caozuo"-->
-        <!--              label="操作"-->
-        <!--              width="80"-->
-        <!--              fixed="right"-->
-        <!--            >-->
-        <!--            </el-table-column>-->
-        <!--          </el-table>-->
-        <!--        </el-tab-pane>-->
         <el-tab-pane label="科研论文" name="second">
           <el-table
             :data="paperList"
@@ -101,6 +100,15 @@
             >
             </el-table-column>
             <el-table-column prop="title" label="论文名称" width="420">
+              <template slot-scope="scope">
+                <!-- tips悬浮提示 -->
+                <el-tooltip placement="top" :open-delay="500" effect="light">
+                  <div slot="content">{{ scope.row.title }}</div>
+                  <div class="mytitle">
+                    {{ scope.row.title }}
+                  </div>
+                </el-tooltip>
+              </template>
             </el-table-column>
             <el-table-column prop="author" label="作者" width="270">
             </el-table-column>
@@ -336,13 +344,25 @@ export default {
       CompanyInfo: {
         tagJson: "",
       },
+      exchangeButton: true,
+      showDetail: true,
+      searchYear: "",
     };
   },
+
   created() {
     //获取父级传递的信息
     this.CompanyInfo = this.$route.query;
   },
   methods: {
+    //回车搜索
+    seachEnter() {
+      this.getCompanyPaper();
+      this.getCompanyPatent();
+      this.getCompanyAward();
+      this.getCompanySupport();
+      this.getCompanyGc();
+    },
     //获取产品论文列表
     async getCompanyPaper() {
       try {
@@ -350,6 +370,7 @@ export default {
           companyId: this.$route.query.id,
           pageNum: this.paperQuery.pageNum,
           pageSize: this.paperQuery.pageSize,
+          year: this.searchYear,
         };
         let result = await this.$API.reqGetCompanyOrProductPaper(data);
         // console.log(result);
@@ -375,6 +396,7 @@ export default {
           companyId: this.$route.query.id,
           pageNum: this.patentQuery.pageNum,
           pageSize: this.patentQuery.pageSize,
+          year: this.searchYear,
         };
         let result = await this.$API.reqGetCompanyOrProductPatent(data);
         // console.log(result);
@@ -391,6 +413,7 @@ export default {
           companyId: this.$route.query.id,
           pageNum: this.awardQuery.pageNum,
           pageSize: this.awardQuery.pageSize,
+          year: this.searchYear,
         };
         let result = await this.$API.reqGetCompanyAward(data);
         // console.log(result);
@@ -408,6 +431,7 @@ export default {
           companyId: this.$route.query.id,
           pageNum: this.supportQuery.pageNum,
           pageSize: this.supportQuery.pageSize,
+          year: this.searchYear,
         };
         let result = await this.$API.reqGetCompanySupport(data);
         this.supportList = result.response.list;
@@ -423,6 +447,7 @@ export default {
           companyId: this.$route.query.id,
           pageNum: this.gcQuery.pageNum,
           pageSize: this.gcQuery.pageSize,
+          year: this.searchYear,
         };
         let result = await this.$API.reqGetCompanyGc(data);
         this.gcList = result.response.list;
@@ -485,7 +510,7 @@ export default {
   width: 1180px;
   margin-right: auto;
   margin-left: auto;
-  height: 200px;
+  height: 100%;
   background-color: #fff;
   border-radius: 10px;
 }
@@ -505,13 +530,11 @@ export default {
 #companyDetails .company-title {
   /* background-color: #ccc; */
   height: 100%;
-  margin-top: 10vmin;
+  /* margin-top: 10vmin; */
   width: 15%;
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
-  /* justify-content: center; */
-  /* flex-direction: column; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #companyDetails .company-title-name {
   /* margin-top: 20%; */
@@ -532,6 +555,7 @@ export default {
   /* border-left: 1px solid #ccc; */
   height: 100%;
   width: 65%;
+  line-height: 40px;
 }
 #companyDetails .company-introduce-container {
   margin-top: 30px;
@@ -543,6 +567,7 @@ export default {
   margin-left: auto;
   background-color: #fff;
   border-radius: 10px;
+  position: relative;
 }
 #companyDetails .el-tabs {
   width: 100%;
@@ -551,6 +576,22 @@ export default {
 #companyDetails .introduction-container-mobile {
   display: none;
 }
+.showFalse {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.mytitle {
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 @media screen and (max-width: 768px) {
   #companyDetails .introduction-container {
     width: 100%;

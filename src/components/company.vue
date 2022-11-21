@@ -18,26 +18,50 @@
           <div class="medi_title">共查询到{{ total }}家企业</div>
           <ul>
             <li v-for="(company, index) in companyList" :key="company.id">
-              <div @click="toCompanyDetail(company)">
+              <div>
                 <div class="medi_main">
                   <div class="main_container">
-                    <!-- <div class="logo_container">
+                    <div class="logo_container">
                       <img
-                        data-v-375288e5=""
-                        src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                        :src.async="company.serial"
                         alt=""
+                        style="width: 100px; height: 100px; object-fit: contain"
                       />
-                    </div> -->
-                    <div class="title_container">
+                    </div>
+                    <div
+                      style="position: absolute; top: 10px; right: 10px"
+                      v-if="
+                        (user &&
+                          user.roles[1].nameDesc == '政策系统普通用户') ||
+                        ''
+                      "
+                    >
+                      <el-button
+                        size="small"
+                        type="warning"
+                        @click="editList(company)"
+                        >编辑</el-button
+                      >
+                      <el-button
+                        size="small"
+                        type="danger"
+                        @click="deleteList(company)"
+                        >删除</el-button
+                      >
+                    </div>
+                    <div
+                      class="title_container"
+                      @click="toCompanyDetail(company)"
+                    >
                       <div>
                         <span>{{ company.name }}</span>
-                        <div>省份:{{ company.province }}</div>
-                        <div>简介:{{ company.details }}</div>
                         <div>
+                          省份:{{ company.province }}
                           <p
                             style="
                               display: inline-block;
-                              color: #111;
+                              margin-left: 3px;
+                              color: #8e8c8e;
                               font-size: small;
                             "
                           >
@@ -48,6 +72,8 @@
                             >{{ tag }}
                           </span>
                         </div>
+
+                        <div>简介:{{ company.details }}</div>
                       </div>
                     </div>
                   </div>
@@ -72,8 +98,6 @@
 </template>
 
 <script>
-import companyDetails from "@/components/companyDetails";
-
 export default {
   name: "company",
   data() {
@@ -84,21 +108,42 @@ export default {
       total: 0,
       companyList: [],
       companyId: 0,
+
+      user: JSON.parse(window.sessionStorage.getItem("userinfo")),
     };
   },
   methods: {
     //获取公司列表
     async getCompanyList() {
       let data = {};
+      var downloadPictureResult = "";
+      var pictureSerial = "";
       data["pageNum"] = this.pageNum;
       data["pageSize"] = this.pageSize;
       try {
         let result = await this.$API.reqGetCompanyList(data);
+        result.response.list.forEach(async (company) => {
+          // console.log(company);
+          company.details =
+            company.details.length > 240
+              ? company.details.substring(0, 240) + "..."
+              : company.details;
+
+          pictureSerial = company.serial;
+          downloadPictureResult = await this.$API.reqDownloadUpLoadCompanyPhoto(
+            pictureSerial
+          );
+
+          const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
+          company.serial = src;
+          // console.log(company.serial);
+        });
+        // console.log(result.response.list);
         this.companyList = result.response.list;
-        this.companyList.forEach(company => {
-          company.details = company.details.length>240? company.details.substring(0,240) + "...": company.details;
-        })
+        // console.log(this.companyList);
+
         this.total = result.response.total;
+        // console.log(this.total);
       } catch (error) {
         console.log(error.message);
       }
@@ -117,6 +162,7 @@ export default {
           id: query.id,
           name: query.name,
           details: query.details,
+          serial: query.serial,
           tagJson: JSON.parse(query.tagJson),
         },
       });
@@ -133,6 +179,27 @@ export default {
         // console.log(result);
         this.companyList = result.response.list;
         this.total = result.response.total;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    //编辑
+    editList(company) {
+      // console.log(company);
+      this.$router.push({
+        name: "companyManager",
+        params: {
+          form: company,
+        },
+      });
+    },
+    //删除
+    async deleteList(company) {
+      // console.log(company);
+      try {
+        let result = await this.$API.deleteCompanyInfo(company.id);
+        console.log(result);
+        this.getCompanyList();
       } catch (error) {
         console.log(error.message);
       }
@@ -209,7 +276,7 @@ export default {
   overflow: hidden;
 }
 
-.el-button {
+.search .el-button {
   padding: 0 15px;
   font-size: 16px;
   background: #409eff;
@@ -248,7 +315,7 @@ export default {
 .medi_main .main_container {
   position: relative;
   display: flex;
-  padding: 20px 0 20px 20px;
+  padding: 20px;
   background-color: #fff;
   border-radius: 4px;
 }
@@ -299,13 +366,18 @@ img {
   font-size: 14px;
   color: #8e8c8e;
   margin-top: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
-.medi_main .main_container .title_container div:nth-child(4) {
+/* .medi_main .main_container .title_container div:nth-child(4) {
   margin-top: 3px;
-}
+} */
 
-.medi_main .main_container .title_container div:nth-child(4) span {
+.medi_main .main_container .title_container div:nth-child(2) span {
   height: 20px;
   background-color: #f8f8f8;
   border-radius: 4px;

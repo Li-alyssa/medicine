@@ -1,22 +1,29 @@
 <template>
   <div class="index-container">
     <div class="main-container">
-      <div class="card-item">
+      <div
+        class="card-item"
+        v-for="item in rankList"
+        :key="item.listId"
+        :style="{ background: item.bgc }"
+      >
         <div class="right-area">
-          <img
-            src="https://upfile2.asqql.com/upfile/hdimg/wmtp/wmtp/2016-1/27/19186sAkacEsSN2.jpg"
-            alt=""
-          />
+          <img :src="item.imgUrl" alt="" />
         </div>
         <div class="card-box">
-          <div class="card-titles">
-            <div class="card-title">总排行榜</div>
-            <div class="card-subtitle">Overall leaderboard</div>
-          </div>
-          <div class="card-content">
-            <div class="expansion-content">
-              得分回复冷酷棒啊讲噶揽功郎我爱国jog闹了那就外港狼得分回复冷酷棒啊讲噶揽功郎我爱国jog闹了那就外港狼得分回复冷酷棒啊讲噶揽功郎我爱国jog闹了那就外港狼得分回复冷酷棒啊讲噶揽功郎我爱国jog闹了那就外港狼得分回复冷酷棒啊讲噶揽功郎我爱国jog闹了那就外港狼得分回复冷酷棒啊讲噶揽功郎我爱国jog闹了那就外港狼
+          <router-link
+            :to="{
+              path: `/${item.route}`,
+              query: { listId: item.listId, value: item.value },
+            }"
+          >
+            <div class="card-titles">
+              <div class="card-title">{{ item.value }}</div>
+              <div class="card-subtitle">{{ item.englishName }}</div>
             </div>
+          </router-link>
+          <div class="card-content">
+            <div class="expansion-content">简介</div>
           </div>
         </div>
       </div>
@@ -25,7 +32,70 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      rankList: [
+        {
+          listId: 1,
+          value: "总排行榜",
+          route: "TotalRank",
+          englishName: "Overall leaderboard",
+          imgUrl: require("@/assets/Overall leaderboard.jpg"),
+          bgc: "#606EE7",
+        },
+        {
+          listId: 2,
+          value: "功能排行榜",
+          route: "FeatureRank",
+          englishName: "Feature leaderboard",
+          imgUrl: require("@/assets/Feature leaderboard.jpg"),
+          bgc: "#0080EC",
+        },
+        {
+          listId: 3,
+          value: "省份排行榜",
+          route: "ProvinceRank",
+          englishName: "Provincial leaderboard",
+          imgUrl: require("@/assets/Provincial leaderboard.jpg"),
+          bgc: "#0089DB",
+        },
+        {
+          listId: 4,
+          value: "论文排行榜",
+          route: "ThesisRank",
+          englishName: "Paper leaderboard",
+          imgUrl: require("@/assets/Paper leaderboard.jpg"),
+          bgc: "#008CB9",
+        },
+        {
+          listId: 5,
+          value: "专利排行榜",
+          route: "PatentRank",
+          englishName: "Patent leaderboard",
+          imgUrl: require("@/assets/Patent leaderboard.jpg"),
+          bgc: "#008C8E",
+        },
+        {
+          listId: 6,
+          value: "民族药排行榜",
+          route: "EthnicRank",
+          englishName: "Ethnic leaderboard",
+          imgUrl: require("@/assets/Ethnic leaderboard.jpg"),
+          bgc: "#008963",
+        },
+        {
+          listId: 7,
+          value: "(非)注射排行榜",
+          route: "InjectionRank",
+          englishName: "Injection leaderboard",
+          imgUrl: require("@/assets/Injection leaderboard.jpg"),
+          bgc: "#518071",
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -41,8 +111,11 @@ export default {};
 .card-item {
   width: 100%;
   float: left;
-  /* background-image: url(https://www.shanghairanking.cn/_nuxt/img/bcmr-bg.b4fb3d9.png); */
-  background-color: #849b49;
+  /* background-image: url(@/assets/homeBackground.jpg); */
+  /* -webkit-filter: grayscale(50%);*/
+  /* filter: grayscale(50%); */
+  /* opacity: 0.4; */
+  /* background-color: #849b49; */
   background-size: 100% auto;
   background-repeat: no-repeat;
   margin-bottom: 10px;
@@ -80,6 +153,7 @@ export default {};
 
 .card-titles {
   cursor: pointer;
+  color: #fff;
 }
 
 .card-title {
@@ -88,6 +162,7 @@ export default {};
   line-height: 48px;
   height: 48px;
   overflow: hidden;
+  color: #fff;
 }
 
 .card-subtitle {
@@ -96,6 +171,7 @@ export default {};
   line-height: 28px;
   height: 28px;
   overflow: hidden;
+  color: #fff;
 }
 
 .card-content {
@@ -104,5 +180,45 @@ export default {};
   line-height: 21px;
   text-align: justify;
   color: #fff;
+}
+
+@media screen and (min-width: 895px) and (max-width: 1210px) {
+  .main-container {
+    width: 80%;
+  }
+
+  .right-area img {
+    float: right;
+    width: 90%;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-right: 20px;
+  }
+}
+@media screen and (max-width: 894px) {
+  .main-container {
+    width: 90%;
+  }
+  .card-box {
+    width: 54%;
+  }
+  .right-area {
+    width: 45%;
+    border-left: none;
+  }
+  .right-area img {
+    object-fit: contain;
+    width: 90%;
+    height: 100%;
+  }
+  .card-title {
+    font-size: 24px;
+    margin-top: 10px;
+    line-height: 30px;
+    height: 30px;
+    overflow: hidden;
+    color: #fff;
+  }
 }
 </style>

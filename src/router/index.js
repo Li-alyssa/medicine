@@ -25,7 +25,8 @@ const routes = [
         component: () => import('../components/company.vue'),
         meta: { show: true }
 
-    }, {
+    },
+    {
         path: '/companyDetails',
         name: 'companyDetails',
         component: () => import('../components/companyDetails.vue'),
@@ -43,6 +44,25 @@ const routes = [
         component: () => import('../components/product.vue'),
         meta: { show: true }
 
+    },
+    {
+        path: '/manage',
+        name: 'manage',
+        redirect: "/manage/companyManager",
+        component: () => import('../components/Manage/manager.vue'),
+        meta: { show: true },
+        children: [
+            {
+                path: '/manage/companyManager', name: 'companyManager',
+                component: () => import('../components/Manage/companyManager.vue'),
+                meta: { show: true },
+            },
+            {
+                path: '/manage/goodsManager', name: 'goodsManager',
+                component: () => import('../components/Manage/goodsManager.vue'),
+                meta: { show: true },
+            },
+        ]
     },
     {
         path: '/Rank',

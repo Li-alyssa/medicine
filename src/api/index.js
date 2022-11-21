@@ -1,7 +1,6 @@
 //API进行统一管理
 //引入二次封装的axios(带有响应请求拦截器)
 import requests from './request';
-import {formatDate} from "element-ui";
 
 const rankPrefix = "/rank"
 
@@ -152,6 +151,24 @@ export const reqDownloadUpLoadPhoto = (serial) => {
     })
 }
 
+//下载企业图片接口
+export const reqDownloadUpLoadCompanyPhoto = (serial) => {
+    //发请求
+    return requests({
+        url: `${rankPrefix}/picture/download/company/${serial}`,
+        method: 'get',
+        responseType: 'blob'
+    })
+}
+//下载产品图片接口
+export const reqDownloadUpLoadProductPhoto = (serial) => {
+    //发请求
+    return requests({
+        url: `${rankPrefix}/picture/download/product/${serial}`,
+        method: 'get',
+        responseType: 'blob'
+    })
+}
 // 产品评价接口
 export const reqRecommend = (data) => {
     //发请求
@@ -215,5 +232,68 @@ export const loadCurrentUser = () => {
     return requests({
         url: "/user/currentUser",
         method: 'get'
+    })
+}
+
+
+// 公司信息上传和修改
+export const updateCompanyInfo = (data) => {
+    return requests({
+        url: `${rankPrefix}/company/insertorupdate`,
+        method: 'post',
+        data
+    })
+}
+
+// 产品信息上传和修改
+export const updateProductInfo = (data) => {
+    return requests({
+        url: `${rankPrefix}/product/insertorupdate`,
+        method: 'post',
+        data
+    })
+
+}
+// 企业信息删除
+export const deleteCompanyInfo = (id) => {
+    return requests({
+        url: `${rankPrefix}/company/delete/${id}`,
+        method: 'get',
+
+    })
+}
+// 产品信息删除
+export const deleteProductInfo = (id) => {
+    return requests({
+        url: `${rankPrefix}/product/delete/${id}`,
+        method: 'get',
+
+    })
+}
+
+// 富文本添加
+export const addquill = (data) => {
+    return requests({
+        url: `${rankPrefix}/content/insert`,
+        method: 'post',
+        data
+    })
+}
+
+// 富文本查询
+export const checkquill = (data) => {
+    return requests({
+        url: `${rankPrefix}/content/find`,
+        method: 'post',
+        data
+    })
+}
+
+// 富文本更新
+export const updatequill = (data) => {
+    return requests({
+        url: `${rankPrefix}/content/update`,
+        method: 'post',
+        data
     })
 }

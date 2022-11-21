@@ -27,7 +27,7 @@ export default {
 #home {
   padding-top: 60px;
   overflow: hidden;
-  height: calc(100vh - 124px);
+  height: 100%;
   background-color: #fff;
 }
 .el-main {

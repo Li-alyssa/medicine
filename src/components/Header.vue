@@ -10,9 +10,12 @@
         <li class="active" @click="menuBtn">
           <router-link to="/home">首页</router-link>
         </li>
-        <!-- <li>
-                <router-link to="/variety">品种</router-link>
-              </li> -->
+        <!-- <li @click="menuBtn">
+          <router-link to="/manager">系统管理</router-link>
+        </li> -->
+        <li v-if="(user && user.roles[1].nameDesc == '政策系统普通用户') || ''">
+          <router-link to="/manage">系统管理</router-link>
+        </li>
         <li @click="menuBtn">
           <router-link to="/companies">企业</router-link>
         </li>
@@ -55,9 +58,8 @@
             </el-dropdown>
           </el-col>
         </li>
+
         <li class="loginAndRegister" @click="menuBtn">
-          <!-- <span @click="$router.push('/login')">登录</span>
-          <span @click="$router.push('/register')">/注册</span> -->
           <div class="user-bar">
             <!--        <el-avatar style="position: absolute;right: 150px;top: 8px;"-->
             <!--                   :src="require('../assets/img/sir.png')" alt="头像"></el-avatar>-->
@@ -210,7 +212,8 @@ export default {
 
     //获取用户登录信息
     getUserInfo() {
-      this.user = JSON.parse(sessionStorage.getItem("userinfo"));
+      this.user = JSON.parse(window.sessionStorage.getItem("userinfo"));
+      // console.log(this.user);
     },
 
     doLogin() {
