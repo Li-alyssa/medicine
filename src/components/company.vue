@@ -124,11 +124,6 @@ export default {
         let result = await this.$API.reqGetCompanyList(data);
         result.response.list.forEach(async (company) => {
           // console.log(company);
-          company.details =
-            company.details.length > 240
-              ? company.details.substring(0, 240) + "..."
-              : company.details;
-
           pictureSerial = company.serial;
           downloadPictureResult = await this.$API.reqDownloadUpLoadCompanyPhoto(
             pictureSerial
@@ -324,7 +319,7 @@ export default {
   width: 60px;
   height: 60px;
   object-fit: contain;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 img,
 input,

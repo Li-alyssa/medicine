@@ -29,7 +29,19 @@
         </el-form-item>
       </el-form>
       <el-form-item label="企业Logo">
-        <img
+        <el-upload
+          action=""
+          class="avatar-uploader"
+          :file-list="fileList"
+          :auto-upload="true"
+          accept="image/png,image/gif,image/jpg,image/jpeg"
+          :show-file-list="false"
+          :http-request="handleUpload"
+        >
+          <img v-if="form.logo" :src="form.logo" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+        <!-- <img
           v-if="this.form.logo != ''"
           :src="form.logo"
           alt=""
@@ -60,7 +72,7 @@
             <el-button @click="updatedialogVisible = false">取 消</el-button>
             <el-button type="primary" @click="handleUpload">确认上传</el-button>
           </span>
-        </el-dialog>
+        </el-dialog> -->
       </el-form-item>
       <el-form-item label="企业标签">
         <el-tag
@@ -397,53 +409,24 @@ export default {
       this.form.inputValue = "";
     },
 
-    //上传文件之前
-    beforeUpload(file) {
-      if (file.type != "" || file.type != null || file.type != undefined) {
-        //截取文件的后缀，判断文件类型
-        const FileExt = file.name.replace(/.+\./, "").toLowerCase();
-        //计算文件的大小
-        const isLt5M = file.size / 1024 / 1024 < 50; //这里做文件大小限制
-        //如果大于50M
-        if (!isLt5M) {
-          this.$showMessage("上传文件大小不能超过 50MB!");
-          return false;
-        }
-        //如果文件类型不在允许上传的范围内
-        if (this.fileType.includes(FileExt)) {
-          return true;
-        } else {
-          this.$message.error("上传文件格式不正确!");
-          return false;
-        }
-      }
-    },
-
-    //超出文件个数的回调
-    handleExceed() {
-      this.$message({
-        type: "warning",
-        message: "超出最大上传文件数量的限制！",
-      });
-      return;
-    },
-
-    //上传文件成功
-    handleSuccess(file, fileList) {
-      this.filePhoto = fileList;
-      console.log(this.filePhoto);
-    },
     //确认上传图片  调用函数
-    async handleUpload() {
+    async handleUpload(param) {
+      // console.log(param);
       let data = new FormData();
-      data.append("file", this.filePhoto.raw);
+      data.append("file", param.file);
+      // data.append("file", this.filePhoto.raw);
       data.append("type", "company");
       // console.log(data);
       let result = await this.$API.reqUpLoadPhoto(data);
-      // console.log(result);
+      console.log(result);
       this.serial = result.response;
-      this.getDownloadPicture();
-      this.updatedialogVisible = false;
+      var downloadPictureResult = await this.$API.reqDownloadUpLoadCompanyPhoto(
+        this.serial
+      );
+      const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
+      this.form.logo = src;
+      console.log(this.form.logo);
+      // this.updatedialogVisible = false;
       this.filePhoto = [];
     },
     //获取图片

@@ -80,7 +80,14 @@
                 <div class="main_container">
                   <router-link :to="`/product/${goods.id}/${goods.name}`">
                     <div class="logo_container">
-                      <img :src.async="goods.serial" />
+                      <img
+                        :src.async="goods.serial"
+                        style="width: 100px; height: 100px; object-fit: contain"
+                      />
+                      <!-- <el-image
+                        :src="goods.serial"
+                        style="width: 100px; height: 100px; object-fit: contain"
+                      ></el-image> -->
                     </div>
                   </router-link>
                   <div
@@ -169,6 +176,7 @@ export default {
       pageNum: 1,
       pageSize: 10,
       total: 0,
+      url: require("@/assets/wx_qr.png"),
       OtcType: [
         {
           value: 1,
@@ -305,15 +313,24 @@ export default {
       try {
         let result = await this.$API.reqGetProductList(data);
         result.response.list.forEach(async (goods) => {
-          pictureSerial = goods.serial;
-          downloadPictureResult = await this.$API.reqDownloadUpLoadProductPhoto(
-            pictureSerial
-          );
-          const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
-          goods.serial = src;
+          if (goods.serial != "") {
+            pictureSerial = goods.serial;
+            goods.serialPicture = pictureSerial;
+            downloadPictureResult =
+              await this.$API.reqDownloadUpLoadProductPhoto(pictureSerial);
+            const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
+            goods.serial = src;
+          } else if (goods.serial == "") {
+            pictureSerial = "76ad59de-f630-4970-b380-ce72d876132d1669106871";
+            goods.serialPicture = pictureSerial;
+            downloadPictureResult =
+              await this.$API.reqDownloadUpLoadProductPhoto(pictureSerial);
+            const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
+            goods.serial = src;
+          }
         });
         this.goodList = result.response.list;
-        // console.log(this.goodList);
+        console.log(this.goodList);
         this.total = result.response.total;
       } catch (error) {
         console.log(error.message);
@@ -344,7 +361,7 @@ export default {
       this.getProductInfo();
     },
     getOptionTwoList(val) {
-      console.log(val);
+      // console.log(val);
       this.getProductInfo();
     },
     getOptionThreeList(val) {
@@ -486,7 +503,7 @@ export default {
   width: 60px;
   height: 60px;
   object-fit: contain;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 img,
 input,

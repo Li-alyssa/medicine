@@ -35,19 +35,32 @@
         </el-form-item>
       </el-form>
       <el-form-item label="产品Logo">
-        <img
+        <el-upload
+          action=""
+          class="avatar-uploader"
+          :file-list="fileList"
+          :auto-upload="true"
+          accept="image/png,image/gif,image/jpg,image/jpeg"
+          :show-file-list="false"
+          :http-request="handleUpload"
+        >
+          <img v-if="form.logo" :src="form.logo" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+        <!-- <img
           v-if="this.form.logo != ''"
           :src="form.logo"
           alt=""
           style="width: 100px; height: 100px; object-fit: contain"
-        />
-        <el-button @click="updatedialogVisible = true">点击上传</el-button>
+        /> -->
+        <!-- <el-button @click="updatedialogVisible = true">点击上传</el-button>
         <el-dialog
           title="提示"
           :visible.sync="updatedialogVisible"
           customClass="dialog"
-        >
-          <el-upload
+        > -->
+
+        <!-- <el-upload
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
             :on-exceed="handleExceed"
@@ -61,12 +74,12 @@
             <div slot="tip" class="el-upload__tip">
               只能上传jpg/png文件,且不超过500kb
             </div>
-          </el-upload>
-          <span slot="footer" class="dialog-footer">
+          </el-upload> -->
+        <!-- <span slot="footer" class="dialog-footer">
             <el-button @click="updatedialogVisible = false">取 消</el-button>
             <el-button type="primary" @click="handleUpload">确认上传</el-button>
-          </span>
-        </el-dialog>
+          </span> -->
+        <!-- </el-dialog> -->
       </el-form-item>
       <el-form-item label="产品标签">
         <el-tag
@@ -169,7 +182,11 @@
           <quill-editor v-model="form.content"></quill-editor>
         </el-form-item>
         <el-form-item>
-          <el-select v-model="form.type" placeholder="请选择上传区域">
+          <el-select
+            v-model="form.type"
+            placeholder="请选择上传区域"
+            @change="checkQuill(form.type)"
+          >
             <el-option
               v-for="(item, index) in pictureTypeList"
               :key="index"
@@ -199,7 +216,6 @@ export default {
   data() {
     return {
       form: {
-        id: "",
         name: "", //产品名
         english_name: "", //英文名
         company_id: "", //所属公司
@@ -234,6 +250,7 @@ export default {
       fileSize: 50,
       // 附件数量限制
       fileLimit: 1,
+      QuillId: null,
       OtcType: [
         {
           value: 1,
@@ -487,15 +504,18 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$route);
     if (this.$route.params.form) {
-      this.form.id = this.$route.params.form.id;
+      console.log(this.$route.params.form.serialPicture);
+      this.serial = this.$route.params.form.serialPicture;
+      console.log(this.serial);
+      this.getDownloadPicture();
+      console.log(this.form);
       this.form.name = this.$route.params.form.name;
       this.form.province = this.$route.params.form.province;
       this.form.phone = this.$route.params.form.phone;
       this.form.website = this.$route.params.form.website;
       this.form.description = this.$route.params.form.details;
-      // this.form.logo = this.$route.params.form.serial;
+      // this.serial = this.$route.params.form.serial;
       this.dynamicTags = this.$route.params.form.tagJson;
       this.form.english_name = this.$route.params.form.englishName;
       this.form.company_id = this.$route.params.form.company;
@@ -508,6 +528,8 @@ export default {
       this.form.Settled = this.$route.params.form.special;
       this.dynamicTags = this.$route.params.form.tags;
     }
+    // this.handleUpload();
+    // console.log(this.form.logo);
   },
   methods: {
     //表单提交
@@ -517,7 +539,7 @@ export default {
       const final_data = Array.from(this.dynamicTags);
       if (this.$route.params.form) {
         const formData = {
-          id: this.form.id,
+          id: this.$route.params.form.id,
           name: this.form.name,
           englishName: this.form.english_name,
           company: this.form.company_id,
@@ -597,68 +619,115 @@ export default {
     },
 
     async addQuill() {
-      const data = {
-        productId: this.$route.params.form.id,
-        type: this.form.type,
-        content: this.form.content,
-      };
-      console.log(data);
-      try {
-        let result = await this.$API.addquill(data);
-        console.log(result);
-      } catch (error) {
-        console.log(error.message);
+      // console.log(this.QuillId);
+      if (this.QuillId) {
+        const data = {
+          id: this.QuillId,
+          productId: this.$route.params.form.id,
+          type: this.form.type,
+          content: this.form.content,
+        };
+        // console.log(data);
+        try {
+          let result = await this.$API.updatequill(data);
+          // console.log(result);
+        } catch (error) {
+          console.log(error.message);
+        }
+      } else {
+        const data = {
+          productId: this.$route.params.form.id,
+          type: this.form.type,
+          content: this.form.content,
+        };
+        // console.log(data);
+        try {
+          let result = await this.$API.addquill(data);
+          // console.log(result);
+        } catch (error) {
+          console.log(error.message);
+        }
       }
       this.dialogVisible = false;
     },
-    // 上传头像
-    //上传文件之前
-    beforeUpload(file) {
-      if (file.type != "" || file.type != null || file.type != undefined) {
-        //截取文件的后缀，判断文件类型
-        const FileExt = file.name.replace(/.+\./, "").toLowerCase();
-        //计算文件的大小
-        const isLt5M = file.size / 1024 / 1024 < 50; //这里做文件大小限制
-        //如果大于50M
-        if (!isLt5M) {
-          this.$showMessage("上传文件大小不能超过 50MB!");
-          return false;
-        }
-        //如果文件类型不在允许上传的范围内
-        if (this.fileType.includes(FileExt)) {
-          return true;
+
+    async checkQuill(value) {
+      const data = {
+        productId: this.$route.params.form.id,
+        type: value,
+      };
+      // console.log(data);
+      try {
+        let result = await this.$API.checkquill(data);
+        // console.log(result);
+        if (result.response) {
+          this.QuillId = result.response.id;
+          this.form.content = result.response.content;
         } else {
-          this.$message.error("上传文件格式不正确!");
-          return false;
+          this.QuillId = null;
+          this.form.content = "";
         }
+        // this.QuillId = result.response.id;
+      } catch (error) {
+        console.log(error.message);
       }
     },
+    // 上传头像
+    //上传文件之前
+    // beforeUpload(file) {
+    //   if (file.type != "" || file.type != null || file.type != undefined) {
+    //     //截取文件的后缀，判断文件类型
+    //     const FileExt = file.name.replace(/.+\./, "").toLowerCase();
+    //     //计算文件的大小
+    //     const isLt5M = file.size / 1024 / 1024 < 50; //这里做文件大小限制
+    //     //如果大于50M
+    //     if (!isLt5M) {
+    //       this.$showMessage("上传文件大小不能超过 50MB!");
+    //       return false;
+    //     }
+    //     //如果文件类型不在允许上传的范围内
+    //     if (this.fileType.includes(FileExt)) {
+    //       return true;
+    //     } else {
+    //       this.$message.error("上传文件格式不正确!");
+    //       return false;
+    //     }
+    //   }
+    // },
 
     //超出文件个数的回调
-    handleExceed() {
-      this.$message({
-        type: "warning",
-        message: "超出最大上传文件数量的限制！",
-      });
-      return;
-    },
+    // handleExceed() {
+    //   this.$message({
+    //     type: "warning",
+    //     message: "超出最大上传文件数量的限制！",
+    //   });
+    //   return;
+    // },
 
-    //上传文件成功
-    handleSuccess(file, fileList) {
-      this.filePhoto = fileList;
-      console.log(this.filePhoto);
-    },
+    // //上传文件成功
+    // handleSuccess(file, fileList) {
+    //   this.filePhoto = fileList;
+    //   // console.log(this.filePhoto);
+    // },
     //确认上传图片  调用函数
-    async handleUpload() {
+    async handleUpload(param) {
       let data = new FormData();
-      data.append("file", this.filePhoto.raw);
+      data.append("file", param.file);
       data.append("type", "product");
       // console.log(data);
       let result = await this.$API.reqUpLoadPhoto(data);
-      // console.log(result);
+      console.log(result);
       this.serial = result.response;
-      this.getDownloadPicture();
-      this.updatedialogVisible = false;
+      console.log(this.serial);
+      var downloadPictureResult = await this.$API.reqDownloadUpLoadProductPhoto(
+        this.serial
+      );
+
+      // console.log(downloadPictureResult);
+      const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
+      this.form.logo = src;
+      console.log(this.form.logo);
+      // this.updatedialogVisible = false;
       this.filePhoto = [];
     },
     //获取图片
