@@ -62,6 +62,11 @@ const routes = [
                 component: () => import('../components/Manage/goodsManager.vue'),
                 meta: { show: true },
             },
+            {
+                path: '/manage/fileManager', name: 'fileManager',
+                component: () => import('../components/Manage/fileManager.vue'),
+                meta: { show: true },
+            },
         ]
     },
     {

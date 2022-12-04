@@ -14,6 +14,14 @@ module.exports = defineConfig({
         pathRewrite: {
           '^/chinmedy': ''
         }
+      },
+      '/import': {
+        target: 'http://47.94.136.1:8086',
+        ws: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/import': ''
+        }
       }
     },
 

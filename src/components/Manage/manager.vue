@@ -10,6 +10,7 @@
       >
         <el-menu-item index="/manage/companyManager">企业管理</el-menu-item>
         <el-menu-item index="/manage/goodsManager">产品管理</el-menu-item>
+        <el-menu-item index="/manage/fileManager">上传管理</el-menu-item>
         <!-- <el-menu-item index="/index/menu1">富文本编辑</el-menu-item> -->
       </el-menu>
       <el-main>

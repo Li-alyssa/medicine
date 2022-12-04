@@ -28,10 +28,34 @@
         </div>
       </div>
     </div>
+    <div class="index-pdf">
+      <div class="pdf-title">
+        <div class="left"></div>
+        <span>pdf下载</span>
+      </div>
+      <div class="pdf-container">
+        <div
+          class="pdfList"
+          v-for="item in pdfList"
+          :key="item.id"
+          @click="downLoadPdf(item)"
+        >
+          <el-tooltip
+            class="item"
+            effect="light"
+            content="点击下载PDF文件"
+            placement="bottom"
+          >
+            <div class="pdf-name">{{ item.name }}</div>
+          </el-tooltip>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import download from "downloadjs";
 export default {
   data() {
     return {
@@ -93,7 +117,29 @@ export default {
           bgc: "#518071",
         },
       ],
+      pdfList: [],
     };
+  },
+
+  methods: {
+    async getPDFList() {
+      const data = {
+        page: 1,
+        size: 10,
+      };
+      let result = await this.$API.getPdfList(data);
+      // console.log(result);
+      this.pdfList = result.response.list;
+    },
+
+    async downLoadPdf(item) {
+      // console.log(item);
+      let result = await this.$API.downloadPDF(item.serial);
+      download(new Blob([result]), `${item.name}` + ".pdf", "application/pdf");
+    },
+  },
+  mounted() {
+    this.getPDFList();
   },
 };
 </script>
@@ -129,7 +175,7 @@ export default {
   width: 34%;
   height: 182px;
   display: table;
-  border-left: 1px solid #fff;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .right-area img {
@@ -181,7 +227,71 @@ export default {
   text-align: justify;
   color: #fff;
 }
+.index-pdf {
+  width: 1070px;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+}
 
+.pdf-title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 45px;
+  /* margin-left: -16px; */
+  pointer-events: none;
+}
+.left {
+  position: absolute;
+  top: 0;
+  left: 14px;
+  width: 36px;
+  height: 4px;
+  background-color: #409eff;
+  border-radius: 0 0 2px 2px;
+}
+
+.pdf-title span {
+  margin-left: 12px;
+  font-family: PingFangSC-Semibold;
+  font-size: 16px;
+  color: #312f31;
+}
+
+.pdf-container {
+  display: flex;
+  flex-wrap: nowrap;
+  /* justify-content: center; */
+  width: 100%;
+  /* overflow: hidden; */
+  padding: 5px;
+}
+
+.pdfList {
+  position: relative;
+  width: 24%;
+  margin-right: 1%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  background-image: url(@/assets/page_tail.png);
+  background-size: cover;
+  border-radius: 4px;
+  min-height: 140px;
+  /* z-index: 100; */
+}
+
+.pdf-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 10px;
+  text-align: center;
+}
 @media screen and (min-width: 895px) and (max-width: 1210px) {
   .main-container {
     width: 80%;

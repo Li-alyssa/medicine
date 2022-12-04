@@ -391,6 +391,7 @@
             <div v-html="newsContent"></div>
           </div>
         </div>
+        <recommend :productId="productId" />
       </div>
     </div>
 
@@ -426,12 +427,14 @@
 
 <script>
 import rank from "@/components/Products/rightContainer/rank.vue";
+import recommend from "@/components/Products/rightContainer/recommend.vue";
 import share from "@/api/share";
 import vueQr from "vue-qr";
 
 export default {
   data() {
     return {
+      productId: this.$route.params.id,
       activeName: "first",
       activeName2: "first",
       tableData: [],
@@ -521,6 +524,7 @@ export default {
   },
   components: {
     rank,
+    recommend,
     vueQr,
   },
   methods: {

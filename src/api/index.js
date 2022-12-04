@@ -1,6 +1,7 @@
 //API进行统一管理
 //引入二次封装的axios(带有响应请求拦截器)
 import requests from './request';
+import imports from './imports';
 
 const rankPrefix = "/rank"
 
@@ -293,6 +294,52 @@ export const checkquill = (data) => {
 export const updatequill = (data) => {
     return requests({
         url: `${rankPrefix}/content/update`,
+        method: 'post',
+        data
+    })
+}
+
+
+//获取推荐列表
+export const getRecommendList = (id) => {
+    return requests({
+        url: `${rankPrefix}/product/recommend/${id}`,
+        method: 'get',
+    })
+}
+// 获取pdf列表
+export const getPdfList = (data) => {
+    return requests({
+        url: '/pdf/list',
+        method: 'post',
+        // responseType: "blob",
+        data
+    })
+}
+
+//下载pdf
+export const downloadPDF = (serial) => {
+    return requests({
+        url: `/file/download/${serial}`,
+        method: 'get',
+        responseType: "blob",
+    })
+}
+
+//上传PDF文件
+export const uploadPDF = (data) => {
+    return requests({
+        url: '/file/upload',
+        method: 'post',
+        data
+    })
+}
+
+
+//上传压缩文件
+export const uploadFile = (data) => {
+    return imports({
+        url: '/file',
         method: 'post',
         data
     })
