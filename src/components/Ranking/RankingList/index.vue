@@ -49,12 +49,8 @@ export default {
   name: "index",
   data() {
     return {
-      value: "2022",
+      value: "2021",
       options: [
-        {
-          value: 2022,
-          label: "2022",
-        },
         {
           value: 2021,
           label: "2021",
@@ -100,14 +96,8 @@ export default {
   },
   watch: {
     $route() {
-      // this.listId = this.$route.query.listId;
-      this.value = 2022;
-      // this.getProductList();
+      this.value = 2021;
     },
-    // listId() {
-    //   this.year = 2022;
-    //   this.getProductList();
-    // },
   },
   methods: {
     sendYear(value) {

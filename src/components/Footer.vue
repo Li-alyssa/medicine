@@ -28,7 +28,7 @@
           </div>
           <div class="part3">
             <br />
-            <p style="color: #fff; margin-top: 5px; font-size: 1rem">
+            <p style="color: #fff; margin-top: 5px">
               友情链接：
               <a href="http://www.nhc.gov.cn/">国家卫健委</a>
               <a href="http://www.satcm.gov.cn/">国家中医药管理局</a>
@@ -116,23 +116,55 @@ a {
   color: #fff;
 }
 
-@media screen and (min-width: 850px) and (max-width: 1520px) {
-  .page-tail {
+@media screen and (min-width: 1350px) and (max-width: 1520px) {
+  /* .page-tail {
     width: 100%;
-  }
+  } */
 
   .tail-part1 {
-    display: flex;
-    flex-direction: column;
+    /* transform: scale(1); */
+    width: 50%;
+    /* display: flex;
+    flex-direction: column; */
   }
   .part1 {
-    width: 100%;
+    width: 20%;
     font-size: 1rem;
     padding: 0;
     text-align: center;
+    margin: auto;
+    /* background-color: red; */
   }
   .part2 {
-    width: 240px;
+    width: 40%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    /* background-color: blue; */
+  }
+
+  .part3 {
+    width: 40%;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    /* background-color: green; */
+  }
+}
+@media screen and (min-width: 1000px) and (max-width: 1350px) {
+  .tail-part1 {
+    width: 70%;
+  }
+  .part1 {
+    width: 20%;
+    font-size: 1rem;
+    padding: 0;
+    text-align: center;
+    margin: auto;
+  }
+  .part2 {
+    width: 40%;
     margin-top: 20px;
     margin-bottom: 10px;
     margin-left: auto;
@@ -140,31 +172,26 @@ a {
   }
 
   .part3 {
-    width: 80%;
+    width: 40%;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
   }
 }
 
-@media screen and (max-width: 850px) {
-  .page-tail {
-    width: 100%;
-  }
-
+@media screen and (min-width: 850px) and (max-width: 1000px) {
   .tail-part1 {
-    display: flex;
-    flex-direction: column;
+    width: 80%;
   }
-
   .part1 {
-    width: 100%;
+    width: 20%;
     font-size: 1rem;
     padding: 0;
     text-align: center;
+    margin: auto;
   }
   .part2 {
-    width: 240px;
+    width: 40%;
     margin-top: 20px;
     margin-bottom: 10px;
     margin-left: auto;
@@ -172,19 +199,100 @@ a {
   }
 
   .part3 {
-    width: 80%;
+    width: 40%;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
   }
 }
 
-@media screen and (max-width: 475px) {
+@media screen and (min-width: 600px) and (max-width: 850px) {
+  .tail-part1 {
+    width: 90%;
+  }
+
+  .part1 {
+    width: 20%;
+    font-size: 0.5rem;
+    padding: 0;
+    text-align: center;
+    margin: auto;
+  }
   .part2 {
-    width: 300px;
+    transform: scale(0.8);
+    width: 50%;
     margin-top: 20px;
     margin-bottom: 10px;
-    margin-left: -35px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .part3 {
+    width: 40%;
+    font-size: 0.5rem;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media screen and (min-width: 500px) and (max-width: 600px) {
+  .tail-part1 {
+    width: 90%;
+  }
+
+  .part1 {
+    width: 20%;
+    font-size: 0.5rem;
+    padding: 0;
+    text-align: center;
+    margin: auto;
+  }
+  .part2 {
+    transform: scale(0.6);
+    width: 50%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .part3 {
+    width: 40%;
+    font-size: 0.5rem;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .tail-part1 {
+    width: 100%;
+  }
+
+  .part1 {
+    width: 40%;
+    font-size: 1rem;
+    padding: 0;
+    text-align: center;
+    margin: auto;
+  }
+  .part2 {
+    transform: scale(0.8);
+    width: 50%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    /* margin-left: auto;
+    margin-right: auto; */
+  }
+
+  .part3 {
+    display: none;
+    width: 30%;
+    font-size: 0.6rem;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 </style>

@@ -88,7 +88,7 @@ export default {
 <style scoped>
 .top-bg {
   position: relative;
-  background: url(https://www.shanghairanking.cn/_nuxt/img/bj1.51928e3.jpg);
+  background: url(@/assets/homeBgc.jpg);
   background-size: cover;
   height: 250px;
   padding-top: 130px;

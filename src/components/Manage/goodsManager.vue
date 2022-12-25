@@ -163,6 +163,31 @@
       <el-form-item label="富文本编辑器" v-if="this.$route.params.form">
         <el-button @click="dialogVisible = true">点击上传</el-button>
       </el-form-item>
+      <el-form-item label="轮播图上传" v-if="this.$route.params.form">
+        <el-upload
+          action=""
+          :file-list="fileList"
+          :auto-upload="true"
+          accept="image/png,image/gif,image/jpg,image/jpeg"
+          :show-file-list="false"
+          :http-request="uploadCarouselPicture"
+        >
+          <el-button>点击上传</el-button>
+        </el-upload>
+        <el-dialog
+          title="上传轮播图富文本"
+          :visible.sync="dialogCarouselVisible"
+          width="47%"
+        >
+          <div>
+            <quill-editor v-model="CarouselNews"></quill-editor>
+          </div>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogCarouselVisible = false">取 消</el-button>
+            <el-button type="primary" @click="addCarouselNews">确 定</el-button>
+          </div>
+        </el-dialog>
+      </el-form-item>
       <el-form-item label="是否入驻">
         <el-radio-group v-model="form.Settled">
           <el-radio :label="true">是</el-radio>
@@ -240,6 +265,7 @@ export default {
       dynamicTags: [],
       inputVisible: false,
       dialogVisible: false,
+      dialogCarouselVisible: false,
       updatedialogVisible: false,
       fileList: [],
       filePhoto: [],
@@ -500,7 +526,13 @@ export default {
           value: 4,
           label: "药品价格",
         },
+        {
+          value: 5,
+          label: "说明书文件",
+        },
       ],
+      carouselPicture: "",
+      CarouselNews: "",
     };
   },
   mounted() {
@@ -741,7 +773,42 @@ export default {
       // console.log(downloadPictureResult);
       const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
       this.form.logo = src;
-      console.log(this.form.logo);
+      // console.log(this.form.logo);
+    },
+
+    //上传轮播图图片
+    async uploadCarouselPicture(param) {
+      try {
+        let data = new FormData();
+        data.append("file", param.file);
+        data.append("type", "product");
+        // console.log(data);
+        let result = await this.$API.reqUpLoadPhoto(data);
+        this.carouselPicture = result.response;
+        console.log(this.carouselPicture);
+        this.$message.success("图片上传成功");
+        this.dialogCarouselVisible = true;
+      } catch (error) {
+        this.$message(error);
+      }
+    },
+    //轮播图添加信息
+    async addCarouselNews() {
+      try {
+        let data = [
+          {
+            productId: this.$route.params.form.id,
+            serial: this.carouselPicture,
+            news: this.CarouselNews,
+          },
+        ];
+        let result = await this.$API.addProductAwardPictureNews(data);
+        this.$message.success("添加信息成功");
+        // console.log(result);
+        this.dialogCarouselVisible = false;
+      } catch (error) {
+        this.$message.error(error);
+      }
     },
   },
 };

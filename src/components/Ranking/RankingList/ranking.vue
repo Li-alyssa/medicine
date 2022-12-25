@@ -67,34 +67,14 @@
                 </td>
                 <td>
                   <div class="medicine-container">
-                    <!-- <div class="logo">
-                      <img
-                        data-v-375288e5=""
-                        onerror="javascript:this.src='/images/blank.svg';"
-                        src="https://www.shanghairanking.cn/_uni/logo/27532357.png"
-                        alt="清华大学"
-                      />
-                    </div> -->
                     <div class="medicine-name">
                       <div>
                         <router-link
                           :to="`/product/${item.productId}/${item.productName}`"
                         >
-                          <div class="tooltip">
-                            <div class="link-container">
-                              <div class="name">{{ item.productName }}</div>
-                            </div>
-                          </div>
+                          <div class="name">{{ item.productName }}</div>
                         </router-link>
                       </div>
-                      <!-- <div>
-                        <div class="tooltip">
-                          <div class="link-container">
-                            <div class="number">国药准字Z20023377</div>
-                          </div>
-                        </div>
-                      </div> -->
-                      <!-- <p class="tags">发明专利: 0/相关论文: 1/未纳入医保</p> -->
                     </div>
                   </div>
                 </td>
@@ -309,7 +289,7 @@ export default {
       gnId: 21,
       provinceId: 31,
       listId: 0,
-      year: 2022,
+      year: 2021,
       companyList: [],
       total: 0,
     };
@@ -317,11 +297,11 @@ export default {
   watch: {
     $route() {
       this.listId = this.$route.query.listId;
-      this.year = 2022;
+      this.year = 2021;
       this.getProductList();
     },
     listId() {
-      this.year = 2022;
+      this.year = 2021;
       this.getProductList();
     },
   },
@@ -416,7 +396,7 @@ export default {
       this.getProductList();
       // console.log(res);
     });
-    this.year = 2022;
+    this.year = 2021;
     this.listId = this.$route.query.listId;
     this.value = this.options[0].value;
     this.valueProvince = this.optionsProvince[0].value;
@@ -496,7 +476,7 @@ export default {
   padding-right: 25px;
   font-family: PingFangSC-Regular;
   color: #312f31;
-  background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_search.09b85c9.svg);
+  background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_search.e818a76.svg);
   background-repeat: no-repeat;
   background-position: right 5px top 8px;
 }
@@ -532,17 +512,17 @@ export default {
 }
 
 .rk-table-box .rk-table thead tr th:nth-child(2) {
-  width: 43%;
-  text-align: left;
-  padding-left: 15px;
+  width: 30%;
+  /* text-align: left;
+  padding-left: 15px; */
 }
 
 .rk-table-box .rk-table thead tr th:nth-child(3) {
-  width: 28%;
+  width: 40%;
 }
 
 .rk-table-box .rk-table thead tr th:nth-child(4) {
-  width: 22%;
+  width: 23%;
 }
 
 tbody {
@@ -578,38 +558,38 @@ tbody {
   line-height: 22px;
 }
 .rk-table tr:first-child td:first-child .ranking {
-  background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_no1.aab5386.svg);
+  background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_no1.5376b24.svg);
 }
 .rk-table tr:nth-child(2) td:first-child .ranking {
-  background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_no2.081cfd5.svg);
+  background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_no2.2669ecc.svg);
 }
 .rk-table tr:nth-child(3) td:first-child .ranking {
-  background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_no3.57146f2.svg);
+  background-image: url(https://www.shanghairanking.cn/_nuxt/img/icon_no3.1518c9b.svg);
 }
-.rk-table td:nth-child(2) {
-  text-align: left;
+/* .rk-table td:nth-child(2) {
+  text-align: right;
   padding-left: 15px;
-}
+} */
 
-.rk-table td .medicine-container {
+/* .rk-table td .medicine-container {
   display: flex;
   align-items: center;
   padding: 16px 0;
-}
+} */
 
-.rk-table td .medicine-container .logo img {
+/* .rk-table td .medicine-container .logo img {
   width: 60px;
   height: 60px;
   object-fit: contain;
-}
+} */
 
-.rk-table td .medicine-container .medicine-name {
+/* .rk-table td .medicine-container .medicine-name {
   display: flex;
   flex-direction: column;
   /* margin-left: 16px; */
-}
+/* } */
 
-.tooltip {
+/* .tooltip {
   position: relative;
   display: inline-block;
 }
@@ -621,10 +601,11 @@ tbody {
   overflow: hidden;
   display: flex;
   align-items: center;
-}
+} */
 
 .name {
   font-family: PingFangSC-Regular;
+  text-align: center;
   font-size: 16px;
   line-height: 22px;
   color: #383638;

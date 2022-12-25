@@ -6,24 +6,28 @@
     </div>
     <div class="recommend-main">
       <div class="container">
-        <div class="recommendList" v-for="item in recommendList" :key="index">
+        <div
+          class="recommendList"
+          v-for="item in recommendList"
+          :key="index"
+          @click="goProductInfo(item)"
+        >
           <div class="side-item">
             <div class="pic">
               <img src="@/assets/page_tail.png" alt="" />
             </div>
             <div class="univ">
               <div class="logo-container">
-                <img src="@/assets/wx_qr.png" alt="头像" />
+                <img :src="item.serial" />
               </div>
               <div class="medicine-text">
-                <div class="name">中文名</div>
-                <div class="enName">英文名</div>
+                <div class="name">{{ item.name }}</div>
+                <div class="enName">{{ item.englishName }}</div>
               </div>
               <div class="tag">
-                <span class="label">标签</span>
-                <span class="label">标签</span>
-                <span class="label">标签</span>
-                <span class="label">标签</span>
+                <span class="label" v-for="tags in item.tags" :key="index">{{
+                  tags
+                }}</span>
               </div>
             </div>
           </div>
@@ -45,8 +49,23 @@ export default {
   methods: {
     async getRecommendList() {
       let result = await this.$API.getRecommendList(this.productId);
-      //   console.log(result);
+      console.log(result);
+      result.response.forEach(async (company) => {
+        console.log(company.serial);
+        var pictureSerial = company.serial;
+        var downloadPictureResult =
+          await this.$API.reqDownloadUpLoadProductPhoto(pictureSerial);
+
+        const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
+        company.serial = src;
+        console.log(company.serial);
+      });
       this.recommendList = result.response;
+      console.log(this.recommendList);
+    },
+
+    goProductInfo(item) {
+      this.$router.push(`/product/${item.id}/${item.name}`);
     },
   },
   mounted() {
@@ -176,6 +195,7 @@ export default {
 .medicine-text {
   display: flex;
   flex-direction: column;
+  margin-left: 10px;
 }
 
 .medicine-text .name {

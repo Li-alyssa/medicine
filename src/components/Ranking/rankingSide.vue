@@ -19,10 +19,6 @@
             class="rank-table-item"
           >
             <span>{{ item.value }}</span>
-            <img
-              src="https://www.shanghairanking.cn/_nuxt/img/arrow_right.955c17a.svg"
-              alt=""
-            />
           </router-link>
         </li>
       </ul>

@@ -344,3 +344,32 @@ export const uploadFile = (data) => {
         data
     })
 }
+
+
+//产品筛选
+export const getProductQuery = (data) => {
+    return requests({
+        url: `${rankPrefix}/product/query`,
+        method: 'post',
+        data
+    })
+}
+
+
+//获取获奖信息
+export const getProductAwardPicture = (productId) => {
+    return requests({
+        url: `/report/list/${productId}`,
+        method: 'get',
+    })
+}
+
+
+//添加获奖信息
+export const addProductAwardPictureNews = (data) => {
+    return requests({
+        url: '/report/insert',
+        method: 'post',
+        data
+    })
+}

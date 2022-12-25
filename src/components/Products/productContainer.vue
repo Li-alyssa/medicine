@@ -11,7 +11,7 @@
                   <span
                     >{{ goodsInfo.name }}
                     <a
-                      class="el-icon-share"
+                      class="iconfont icon-wechat-fill"
                       @click="shareDialogVisible = true"
                     ></a
                   ></span>
@@ -22,10 +22,7 @@
                 </div>
               </div>
               <div class="labels-head">
-                <img
-                  src="https://www.shanghairanking.cn/_nuxt/img/top_shadow.e02e29f.png"
-                  alt=""
-                />
+                <img src="@/assets/top_shadow.png" alt="" />
               </div>
               <div class="scroll-container">
                 <div class="contant-msg">
@@ -62,9 +59,7 @@
                         <img
                           v-if="goodsInfo.recommend"
                           :src="
-                            goodsInfo.recommend.recommend
-                              ? 'https://www.shanghairanking.cn/_nuxt/img/tuijian.6e30c21.svg '
-                              : 'https://www.shanghairanking.cn/_nuxt/img/tuijian_hui.74ac9fa.svg'
+                            goodsInfo.recommend.recommend ? imgUrl : imgUrl2
                           "
                           alt=""
                         />
@@ -76,10 +71,7 @@
                       @click="recommendFalse"
                     >
                       <div class="img-container">
-                        <img
-                          src="https://www.shanghairanking.cn/_nuxt/img/butuijian.17030ab.svg"
-                          alt=""
-                        />
+                        <img src="@/assets/butuijian.png" alt="" />
                       </div>
                       <span>不推荐</span>
                     </div>
@@ -110,7 +102,7 @@
                 <span
                   >{{ goodsInfo.name }}
                   <a
-                    class="el-icon-share"
+                    class="iconfont icon-wechat-fill"
                     @click="shareDialogVisible = true"
                   ></a
                 ></span>
@@ -148,14 +140,7 @@
                   @click="recommendTrue"
                 >
                   <div class="img-container">
-                    <img
-                      :src="
-                        recommend
-                          ? 'https://www.shanghairanking.cn/_nuxt/img/tuijian.6e30c21.svg '
-                          : 'https://www.shanghairanking.cn/_nuxt/img/tuijian_hui.74ac9fa.svg'
-                      "
-                      alt=""
-                    />
+                    <img :src="recommend ? mgUrl : imgUrl2" alt="" />
                   </div>
                   <span>推荐</span>
                 </div>
@@ -164,10 +149,7 @@
                   @click="recommendFalse"
                 >
                   <div class="img-container">
-                    <img
-                      src="https://www.shanghairanking.cn/_nuxt/img/butuijian.17030ab.svg"
-                      alt=""
-                    />
+                    <img src="@/assets/butuijian.png" alt="" />
                   </div>
                   <span>不推荐</span>
                 </div>
@@ -204,9 +186,9 @@
             <i class="el-icon-upload"></i>
           </div> -->
           <el-tabs v-model="activeName">
-            <el-tab-pane label="说明书文件" name="first">{{
-              goodsInfo.instruction
-            }}</el-tab-pane>
+            <el-tab-pane label="说明书文件" name="first">
+              <div v-html="instructionContent"></div>
+            </el-tab-pane>
             <el-tab-pane label="论文列表" name="second">
               <el-table
                 :data="paperList"
@@ -387,9 +369,26 @@
             <div class="left"></div>
             <span>产品获奖/新闻报道</span>
           </div>
-          <div class="photos-main">
-            <div v-html="newsContent"></div>
-          </div>
+          <el-carousel
+            :interval="5000"
+            arrow="always"
+            style="width: 100%"
+            height="300px"
+          >
+            <el-carousel-item v-for="(item, index) in pictureList" :key="index">
+              <img
+                class="carouselImg"
+                :src.async="item.serial"
+                alt=""
+                @click="getCarouselInfo(item)"
+              />
+            </el-carousel-item>
+          </el-carousel>
+          <el-drawer :visible.sync="drawer" :with-header="false">
+            <div class="photos-main">
+              <div v-html="pictureContent"></div>
+            </div>
+          </el-drawer>
         </div>
         <recommend :productId="productId" />
       </div>
@@ -430,10 +429,13 @@ import rank from "@/components/Products/rightContainer/rank.vue";
 import recommend from "@/components/Products/rightContainer/recommend.vue";
 import share from "@/api/share";
 import vueQr from "vue-qr";
+import "@/assets/iconfont/iconfont.css";
 
 export default {
   data() {
     return {
+      imgUrl: require("@/assets/tuijian.png"),
+      imgUrl2: require("@/assets/tuijian_hui.png"),
       productId: this.$route.params.id,
       activeName: "first",
       activeName2: "first",
@@ -512,6 +514,7 @@ export default {
       //药品价格图
       priceContent: "",
       newsContent: "",
+      instructionContent: "",
       shareData: {
         // url: 'http://cxyabc.vaiwan.com/to_detail',  //需要转化成二维码的网址
         url: window.location.href.toString(), //需要转化成二维码的网址
@@ -520,6 +523,9 @@ export default {
       userinfo: JSON.parse(sessionStorage.getItem("user")),
       recommend: true,
       unRecommend: false,
+      drawer: false,
+      pictureList: [],
+      pictureContent: "",
     };
   },
   components: {
@@ -733,6 +739,22 @@ export default {
       }
     },
 
+    //获取说明书富文本
+    async getInstructionContent() {
+      const data = {
+        productId: this.$route.params.id,
+        type: "5",
+      };
+      // console.log(data);
+      try {
+        let result = await this.$API.checkquill(data);
+        this.instructionContent = result.response.content;
+        // console.log(result);
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+
     //使用者推荐
     async recommendTrue() {
       if (this.userinfo) {
@@ -798,6 +820,34 @@ export default {
         });
       }
     },
+
+    //获取轮播图
+    async getCarousel() {
+      let id = this.$route.params.id;
+      let result = await this.$API.getProductAwardPicture(id);
+      console.log(result);
+      var downloadPictureResult = "";
+      var pictureSerial = "";
+      result.response.forEach(async (picture) => {
+        // console.log(company);
+        pictureSerial = picture.serial;
+        downloadPictureResult = await this.$API.reqDownloadUpLoadProductPhoto(
+          pictureSerial
+        );
+        const src = window.URL.createObjectURL(downloadPictureResult); //这里也是关键,调用window的这个方法URL方法
+        picture.serial = src;
+        // console.log(company.serial);
+      });
+      console.log(result);
+      this.pictureList = result.response;
+    },
+
+    //获取轮播图内容
+    getCarouselInfo(item) {
+      console.log(item);
+      this.drawer = true;
+      this.pictureContent = item.news;
+    },
   },
   mounted() {
     this.getGoodInfo();
@@ -817,6 +867,8 @@ export default {
     this.getsaleContent();
     this.getpriceContent();
     this.getnewsContent();
+    this.getInstructionContent();
+    this.getCarousel();
   },
   computed: {
     strToString() {
@@ -829,6 +881,9 @@ export default {
 };
 </script>
 <style>
+img {
+  width: 100%;
+}
 .dialog {
   width: 30%;
 }
@@ -844,6 +899,13 @@ export default {
 }
 </style>
 <style scoped>
+img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+.icon-wechat-fill {
+  font-size: 24px;
+}
 .out-container {
   position: relative;
   overflow: visible;
@@ -1211,6 +1273,8 @@ export default {
   background-color: #fff;
   border-radius: 4px;
   padding: 0 16px 16px;
+  /* width: 100%; */
+  height: 100%;
 }
 
 .title {
@@ -1244,9 +1308,17 @@ export default {
   /* align-items: center; */
   /* position: relative; */
   width: 100%;
+  padding: 10px 10px;
+  font-size: 20px;
+  line-height: 2;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 .el-carousel__item {
   border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .el-carousel__item h3 {
   color: #475669;
@@ -1256,14 +1328,19 @@ export default {
   margin: 0;
 }
 
-.el-carousel__item:nth-child(2n) {
+/* .el-carousel__item:nth-child(2n) {
   background-color: #99a9bf;
 }
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
-}
+} */
 
+.carouselImg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
 /* // 滚动条宽度 */
 div::-webkit-scrollbar {
   height: 8px;

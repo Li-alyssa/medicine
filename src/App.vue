@@ -3,7 +3,7 @@
     <el-container>
       <Header v-show="$route.meta.show" />
       <el-main>
-        <router-view> </router-view>
+        <router-view v-if="showRouter" :key="$route.fullPath"> </router-view>
       </el-main>
       <Footer v-show="$route.meta.show" />
     </el-container>
@@ -16,9 +16,27 @@ import Footer from "./components/Footer.vue";
 
 export default {
   name: "App",
+  data() {
+    return {
+      showRouter: true,
+    };
+  },
   components: {
     Header,
     Footer,
+  },
+  provide() {
+    return {
+      reload: this.reload,
+    };
+  },
+  methods: {
+    reload() {
+      this.showRouter = false;
+      this.$nextTick(() => {
+        this.showRouter = true;
+      });
+    },
   },
 };
 </script>

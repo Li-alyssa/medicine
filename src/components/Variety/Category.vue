@@ -9,7 +9,6 @@
               <img
                 data-v-375288e5=""
                 onerror="javascript:this.src='/images/blank.svg';"
-                src="https://www.shanghairanking.cn/_uni/logo/27532357.png"
                 alt="清华大学"
               />
             </div>
@@ -33,7 +32,6 @@
               <img
                 data-v-375288e5=""
                 onerror="javascript:this.src='/images/blank.svg';"
-                src="https://www.shanghairanking.cn/_uni/logo/27532357.png"
                 alt="清华大学"
               />
             </div>
@@ -57,7 +55,6 @@
               <img
                 data-v-375288e5=""
                 onerror="javascript:this.src='/images/blank.svg';"
-                src="https://www.shanghairanking.cn/_uni/logo/27532357.png"
                 alt="清华大学"
               />
             </div>

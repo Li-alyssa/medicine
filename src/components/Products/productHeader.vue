@@ -18,7 +18,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .breadcrumb-header {
   width: 1180px;
   margin-right: auto;

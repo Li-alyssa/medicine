@@ -6,20 +6,18 @@
     </div>
     <div
       class="ranking-main"
-      v-for="(rankInfo, index) in rankList"
+      v-for="(rankInfo, index) in showHandleList"
       :key="index"
     >
       <div class="container-one">
         <div class="rank-latest">
           <div class="rank-lates-rank">
             <div class="icon-latest">
-              <img
-                src="https://www.shanghairanking.cn/_nuxt/img/left_ornaments_gold.1421cac.svg"
-                alt=""
-              />
+              <img style="width: 20px" src="@/assets/left_ornaments_gold.png" />
               <span>{{ rankInfo.best }}</span>
               <img
-                src="https://www.shanghairanking.cn/_nuxt/img/right_ornaments_gold.2482357.svg"
+                style="width: 20px"
+                src="@/assets/right_ornaments_gold.png"
                 alt=""
               />
             </div>
@@ -38,9 +36,7 @@
               <div class="rank">{{ rk.ranking }}</div>
               <div
                 :class="
-                  index !== rankInfo.list.length - 1
-                    ? 'round el-icon-medal'
-                    : 'round-last el-icon-medal-1'
+                  index !== rankInfo.list.length - 1 ? 'round ' : 'round-last '
                 "
               ></div>
               <div class="year">{{ rk.year }}</div>
@@ -48,6 +44,13 @@
           </ul>
         </div>
       </div>
+    </div>
+    <div
+      class="show-more"
+      v-if="rankList.length > 3"
+      @click="showAll = !showAll"
+    >
+      {{ word }}
     </div>
   </div>
 </template>
@@ -58,8 +61,38 @@ export default {
     return {
       // rankInfo: {},
       rankList: [],
+      showAll: false,
     };
   },
+  computed: {
+    showHandleList() {
+      if (this.showAll == false) {
+        //收起状态-显示“展示”
+        var showList = []; //定义⼀个空数组
+        if (this.rankList.length > 3) {
+          //控制显⽰前三个
+          for (var i = 0; i < 3; i++) {
+            showList.push(this.rankList[i]); //将数组的前3条存放到showList数组中
+          }
+        } else {
+          showList = this.rankList; //个数足够显示，不需要再截取
+        }
+        return showList; //返回当前数组
+      } else {
+        // 展开状态-显示“收起”
+        return this.rankList;
+      }
+    },
+    word() {
+      if (this.showAll == false) {
+        //对⽂字进⾏处理
+        return "展开";
+      } else {
+        return "收起";
+      }
+    },
+  },
+
   methods: {
     async getProductRanking() {
       try {
@@ -232,9 +265,9 @@ export default {
 }
 .round {
   border: 1px solid #409eff;
-  background-color: #409eff;
-  width: 16px;
-  height: 16px;
+  background-color: #fff;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   position: relative;
   margin: 30px 0 5px;
@@ -242,9 +275,9 @@ export default {
 }
 .round-last {
   border: 1px solid #409eff;
-  background-color: #fff;
-  width: 16px;
-  height: 16px;
+  background-color: #409eff;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   position: relative;
   margin: 30px 0 5px;
@@ -264,6 +297,13 @@ export default {
   color: #605e60;
 }
 
+.show-more {
+  text-align: center;
+  cursor: pointer;
+}
+.show-more:hover {
+  color: #409eff;
+}
 @media screen and (max-width: 850px) {
   .round:after {
     display: none;

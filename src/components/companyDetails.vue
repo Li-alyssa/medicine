@@ -72,7 +72,7 @@
     </div>
 
     <div class="container">
-      <div
+      <!-- <div
         class="search"
         style="width: 200px; position: absolute; top: 0; right: 0; z-index: 1"
       >
@@ -83,7 +83,7 @@
           @keyup.enter.native="seachEnter"
         >
         </el-input>
-      </div>
+      </div> -->
       <el-tabs type="border-card" v-model="activeName">
         <el-tab-pane label="科研论文" name="second">
           <el-table
@@ -300,12 +300,57 @@
           </el-pagination
         ></el-tab-pane>
       </el-tabs>
+      <div id="content-side-product">
+        <div class="rank-table-box">
+          <div class="title">
+            <div></div>
+            <span>筛选产品</span>
+            <span class="el-icon-refresh" @click="refresh"></span>
+          </div>
+          <ul>
+            <li
+              class="rank-table-line"
+              v-for="(item, index) in productList"
+              :key="index"
+              @click="change(index)"
+              :class="{ activeColors: index == current }"
+            >
+              <span class="rank-table-item" @click="getProductInfo(item.id)">
+                <span>{{ item.name }}</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="content-side">
+        <div class="rank-table-box">
+          <div class="title">
+            <div></div>
+            <span>筛选年份</span>
+            <span class="el-icon-refresh" @click="refresh"></span>
+          </div>
+          <ul>
+            <li
+              class="rank-table-line"
+              v-for="(item, index) in options"
+              :key="item.value"
+              @click="changeYearIndex(index)"
+              :class="{ activeColors: index == currentYear }"
+            >
+              <span class="rank-table-item" @click="getYearInfo(item.value)">
+                <span>{{ item.value }}</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  inject: ["reload"],
   data() {
     return {
       tableData: [],
@@ -347,6 +392,51 @@ export default {
       exchangeButton: true,
       showDetail: true,
       searchYear: "",
+      options: [
+        {
+          value: 2021,
+          label: "2021",
+        },
+        {
+          value: 2020,
+          label: "2020",
+        },
+        {
+          value: 2019,
+          label: "2019",
+        },
+        {
+          value: 2018,
+          label: "2018",
+        },
+        {
+          value: 2017,
+          label: "2017",
+        },
+        {
+          value: 2016,
+          label: "2016",
+        },
+        {
+          value: 2015,
+          label: "2015",
+        },
+        {
+          value: 2014,
+          label: "2014",
+        },
+        {
+          value: 2013,
+          label: "2013",
+        },
+        {
+          value: 2012,
+          label: "2012",
+        },
+      ],
+      productList: [],
+      current: -1,
+      currentYear: -1,
     };
   },
 
@@ -356,7 +446,24 @@ export default {
   },
   methods: {
     //回车搜索
-    seachEnter() {
+    // seachEnter() {
+    //   this.getCompanyPaper();
+    //   this.getCompanyPatent();
+    //   this.getCompanyAward();
+    //   this.getCompanySupport();
+    //   this.getCompanyGc();
+    // },
+    change(index) {
+      this.current = index;
+    },
+    changeYearIndex(index) {
+      this.currentYear = index;
+    },
+
+    //年份选择
+    getYearInfo(year) {
+      console.log(year);
+      this.searchYear = year;
       this.getCompanyPaper();
       this.getCompanyPatent();
       this.getCompanyAward();
@@ -456,6 +563,61 @@ export default {
         console.log(error.message);
       }
     },
+    //获取产品筛选
+    async getProductQuery() {
+      try {
+        const data = {
+          companyId: this.$route.query.id,
+          // year: this.searchYear,
+        };
+        let result = await this.$API.getProductQuery(data);
+        console.log(result);
+        this.productList = result.response;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+
+    //刷新页面 更新为原始列表
+    refresh() {
+      this.reload();
+    },
+
+    //获取产品信息列表
+    async getProductInfo(id) {
+      try {
+        const data = {
+          productId: id,
+          pageNum: this.supportQuery.pageNum,
+          pageSize: this.supportQuery.pageSize,
+        };
+        let resultPaper = await this.$API.reqGetCompanyOrProductPaper(data);
+        let resultPatent = await this.$API.reqGetCompanyOrProductPatent(data);
+        let resultAward = await this.$API.reqGetCompanyAward(data);
+        let resultSupport = await this.$API.reqGetCompanySupport(data);
+        let resultGc = await this.$API.reqGetCompanyGc(data);
+
+        for (var i = 0; i < resultPaper.response.list.length; i++) {
+          var reg = new RegExp("%", "g"); //g表示全部的
+          //         // //将json转换为字符串   将被替换内容替换为替换内容
+          let str = JSON.stringify(resultPaper.response).replace(reg, ",");
+          var replaceData = JSON.parse(str);
+          // console.log(data);
+        }
+        this.paperList = replaceData.list;
+        this.paperQuery.paperTotal = resultPaper.response.total;
+        this.patentList = resultPatent.response.list;
+        this.patentQuery.patentTotal = resultPatent.response.total;
+        this.awardList = resultAward.response.list;
+        this.awardQuery.awardTotal = resultAward.response.total;
+        this.supportList = resultSupport.response.list;
+        this.supportQuery.supportTotal = resultSupport.response.total;
+        this.gcList = resultGc.response.list;
+        this.gcQuery.gcTotal = resultGc.response.total;
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
 
     handleCurrentChangePaper(val) {
       // console.log(val);
@@ -489,11 +651,17 @@ export default {
     this.getCompanyAward();
     this.getCompanySupport();
     this.getCompanyGc();
+    this.getProductQuery();
   },
 };
 </script>
 
-<style>
+<style scoped>
+.activeColors {
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #409eff;
+}
+
 #companyDetails {
   overflow: hidden;
   margin-top: 60px;
@@ -591,7 +759,76 @@ export default {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+#content-side {
+  position: absolute;
+  width: 100px;
+  top: 0px;
+  right: -110px;
+}
+#content-side-product {
+  position: absolute;
+  width: 100px;
+  top: 0px;
+  left: -130px;
+}
 
+.rank-table-box {
+  width: 120px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.rank-table-box .title {
+  height: 50px;
+  border-bottom: 1px solid #eaeaea;
+  display: flex;
+  align-items: center;
+}
+
+.rank-table-box .title div {
+  width: 4px;
+  height: 18px;
+  background-color: #409eff;
+  border-radius: 0 2px 2px 0;
+}
+.rank-table-box .title span {
+  font-family: PingFangSC-Semibold;
+  font-size: 16px;
+  line-height: 50px;
+  color: #383638;
+  padding-left: 12px;
+}
+
+.rank-table-box .rank-table-line:hover {
+  background-color: #f9f9f9;
+}
+
+.rank-table-box .rank-table-line .rank-table-item {
+  width: 120px;
+  height: 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eaeaea;
+  margin: 0 auto;
+}
+
+.rank-table-box .rank-table-line .rank-table-item span {
+  font-weight: 500;
+  font-size: 14px;
+  font-family: PingFang SC;
+  color: #312f31;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.rank-table-box .rank-table-line .rank-table-item span:hover {
+  color: #d60b0a;
+}
+
+.rank-table-box .rank-table-line .rank-table-item img {
+  width: 14px;
+}
 @media screen and (max-width: 768px) {
   #companyDetails .introduction-container {
     width: 100%;

@@ -31,7 +31,7 @@ export default {
   background-color: #fff;
 }
 .el-main {
-  background-color: #fff;
+  background-color: #f4f3f4;
   width: 100%;
   height: 100%;
   margin: 0;
